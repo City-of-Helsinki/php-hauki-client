@@ -1,0 +1,6 @@
+hauki.json
+.travis.yml
+git_push.sh
+phpunit.xml.dist
+composer.lock
+vendor/
