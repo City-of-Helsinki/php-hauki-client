@@ -65,12 +65,14 @@ class Resource implements ModelInterface, ArrayAccess, \JsonSerializable
         'name' => 'string',
         'description' => 'string',
         'address' => 'string',
-        'resource_type' => '\Hauki\Model\ResourceTypeEnum',
+        'resource_type' => 'ResourceTypeEnum',
         'children' => 'int[]',
         'parents' => 'int[]',
         'organization' => 'string',
         'origins' => '\Hauki\Model\ResourceOrigin[]',
         'last_modified_by' => 'User',
+        'created' => '\DateTime',
+        'modified' => '\DateTime',
         'extra_data' => 'map[string,mixed]',
         'is_public' => 'bool',
         'timezone' => 'string'
@@ -94,6 +96,8 @@ class Resource implements ModelInterface, ArrayAccess, \JsonSerializable
         'organization' => null,
         'origins' => null,
         'last_modified_by' => null,
+        'created' => 'date-time',
+        'modified' => 'date-time',
         'extra_data' => null,
         'is_public' => null,
         'timezone' => null
@@ -136,6 +140,8 @@ class Resource implements ModelInterface, ArrayAccess, \JsonSerializable
         'organization' => 'organization',
         'origins' => 'origins',
         'last_modified_by' => 'last_modified_by',
+        'created' => 'created',
+        'modified' => 'modified',
         'extra_data' => 'extra_data',
         'is_public' => 'is_public',
         'timezone' => 'timezone'
@@ -157,6 +163,8 @@ class Resource implements ModelInterface, ArrayAccess, \JsonSerializable
         'organization' => 'setOrganization',
         'origins' => 'setOrigins',
         'last_modified_by' => 'setLastModifiedBy',
+        'created' => 'setCreated',
+        'modified' => 'setModified',
         'extra_data' => 'setExtraData',
         'is_public' => 'setIsPublic',
         'timezone' => 'setTimezone'
@@ -178,6 +186,8 @@ class Resource implements ModelInterface, ArrayAccess, \JsonSerializable
         'organization' => 'getOrganization',
         'origins' => 'getOrigins',
         'last_modified_by' => 'getLastModifiedBy',
+        'created' => 'getCreated',
+        'modified' => 'getModified',
         'extra_data' => 'getExtraData',
         'is_public' => 'getIsPublic',
         'timezone' => 'getTimezone'
@@ -253,6 +263,8 @@ class Resource implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->container['organization'] = $data['organization'] ?? null;
         $this->container['origins'] = $data['origins'] ?? null;
         $this->container['last_modified_by'] = $data['last_modified_by'] ?? null;
+        $this->container['created'] = $data['created'] ?? null;
+        $this->container['modified'] = $data['modified'] ?? null;
         $this->container['extra_data'] = $data['extra_data'] ?? null;
         $this->container['is_public'] = $data['is_public'] ?? null;
         $this->container['timezone'] = $data['timezone'] ?? null;
@@ -276,6 +288,12 @@ class Resource implements ModelInterface, ArrayAccess, \JsonSerializable
 
         if ($this->container['last_modified_by'] === null) {
             $invalidProperties[] = "'last_modified_by' can't be null";
+        }
+        if ($this->container['created'] === null) {
+            $invalidProperties[] = "'created' can't be null";
+        }
+        if ($this->container['modified'] === null) {
+            $invalidProperties[] = "'modified' can't be null";
         }
         return $invalidProperties;
     }
@@ -395,7 +413,7 @@ class Resource implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets resource_type
      *
-     * @return \Hauki\Model\ResourceTypeEnum|null
+     * @return ResourceTypeEnum|null
      */
     public function getResourceType()
     {
@@ -405,7 +423,7 @@ class Resource implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets resource_type
      *
-     * @param \Hauki\Model\ResourceTypeEnum|null $resource_type resource_type
+     * @param ResourceTypeEnum|null $resource_type resource_type
      *
      * @return self
      */
@@ -532,6 +550,54 @@ class Resource implements ModelInterface, ArrayAccess, \JsonSerializable
     public function setLastModifiedBy($last_modified_by)
     {
         $this->container['last_modified_by'] = $last_modified_by;
+
+        return $this;
+    }
+
+    /**
+     * Gets created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->container['created'];
+    }
+
+    /**
+     * Sets created
+     *
+     * @param \DateTime $created created
+     *
+     * @return self
+     */
+    public function setCreated($created)
+    {
+        $this->container['created'] = $created;
+
+        return $this;
+    }
+
+    /**
+     * Gets modified
+     *
+     * @return \DateTime
+     */
+    public function getModified()
+    {
+        return $this->container['modified'];
+    }
+
+    /**
+     * Sets modified
+     *
+     * @param \DateTime $modified modified
+     *
+     * @return self
+     */
+    public function setModified($modified)
+    {
+        $this->container['modified'] = $modified;
 
         return $this;
     }

@@ -64,8 +64,8 @@ class Rule implements ModelInterface, ArrayAccess, \JsonSerializable
         'group' => 'int',
         'name' => 'string',
         'description' => 'string',
-        'context' => '\Hauki\Model\ContextEnum',
-        'subject' => '\Hauki\Model\SubjectEnum',
+        'context' => 'ContextEnum',
+        'subject' => 'SubjectEnum',
         'start' => 'int',
         'frequency_ordinal' => 'int',
         'frequency_modifier' => 'OneOfFrequencyModifierEnumBlankEnumNullEnum',
@@ -407,7 +407,7 @@ class Rule implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets context
      *
-     * @return \Hauki\Model\ContextEnum
+     * @return ContextEnum
      */
     public function getContext()
     {
@@ -417,7 +417,7 @@ class Rule implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets context
      *
-     * @param \Hauki\Model\ContextEnum $context context
+     * @param ContextEnum $context context
      *
      * @return self
      */
@@ -431,7 +431,7 @@ class Rule implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets subject
      *
-     * @return \Hauki\Model\SubjectEnum
+     * @return SubjectEnum
      */
     public function getSubject()
     {
@@ -441,7 +441,7 @@ class Rule implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets subject
      *
-     * @param \Hauki\Model\SubjectEnum $subject subject
+     * @param SubjectEnum $subject subject
      *
      * @return self
      */

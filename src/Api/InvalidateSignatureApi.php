@@ -120,15 +120,14 @@ class InvalidateSignatureApi
      *
      * Invalidate the current Hauki Signed Auth signature
      *
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function invalidateSignature($format = null)
+    public function invalidateSignature()
     {
-        $this->invalidateSignatureWithHttpInfo($format);
+        $this->invalidateSignatureWithHttpInfo();
     }
 
     /**
@@ -136,15 +135,14 @@ class InvalidateSignatureApi
      *
      * Invalidate the current Hauki Signed Auth signature
      *
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function invalidateSignatureWithHttpInfo($format = null)
+    public function invalidateSignatureWithHttpInfo()
     {
-        $request = $this->invalidateSignatureRequest($format);
+        $request = $this->invalidateSignatureRequest();
 
         try {
             $options = $this->createHttpClientOption();
@@ -188,14 +186,13 @@ class InvalidateSignatureApi
      *
      * Invalidate the current Hauki Signed Auth signature
      *
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function invalidateSignatureAsync($format = null)
+    public function invalidateSignatureAsync()
     {
-        return $this->invalidateSignatureAsyncWithHttpInfo($format)
+        return $this->invalidateSignatureAsyncWithHttpInfo()
             ->then(
                 function ($response) {
                     return $response[0];
@@ -208,15 +205,14 @@ class InvalidateSignatureApi
      *
      * Invalidate the current Hauki Signed Auth signature
      *
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function invalidateSignatureAsyncWithHttpInfo($format = null)
+    public function invalidateSignatureAsyncWithHttpInfo()
     {
         $returnType = '';
-        $request = $this->invalidateSignatureRequest($format);
+        $request = $this->invalidateSignatureRequest();
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -244,12 +240,11 @@ class InvalidateSignatureApi
     /**
      * Create request for operation 'invalidateSignature'
      *
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function invalidateSignatureRequest($format = null)
+    public function invalidateSignatureRequest()
     {
 
         $resourcePath = '/invalidate_signature/';
@@ -259,17 +254,6 @@ class InvalidateSignatureApi
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
 
@@ -320,9 +304,10 @@ class InvalidateSignatureApi
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];

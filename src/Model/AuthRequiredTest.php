@@ -1,6 +1,6 @@
 <?php
 /**
- * DataSource
+ * AuthRequiredTest
  *
  * PHP version 7.2
  *
@@ -33,10 +33,9 @@ use \ArrayAccess;
 use \Hauki\ObjectSerializer;
 
 /**
- * DataSource Class Doc Comment
+ * AuthRequiredTest Class Doc Comment
  *
  * @category Class
- * @description Moves &#x60;UniqueValidator&#x60;&#39;s from the validation stage to the save stage. It solves the problem with nested validation for unique fields on update.  If you want more details, you can read related issues and articles: https://github.com/beda-software/drf-writable-nested/issues/1 http://www.django-rest-framework.org/api-guide/validators/#updating-nested-serializers  Example of usage: &#x60;&#x60;&#x60;     class Child(models.Model):     field &#x3D; models.CharField(unique&#x3D;True)   class Parent(models.Model):     child &#x3D; models.ForeignKey(&#39;Child&#39;)   class ChildSerializer(UniqueFieldsMixin, serializers.ModelSerializer):     class Meta:         model &#x3D; Child   class ParentSerializer(NestedUpdateMixin, serializers.ModelSerializer):     child &#x3D; ChildSerializer()      class Meta:         model &#x3D; Parent &#x60;&#x60;&#x60;  Note: &#x60;UniqueFieldsMixin&#x60; must be applied only on the serializer which has unique fields.  Note: When you are using both mixins (&#x60;UniqueFieldsMixin&#x60; and &#x60;NestedCreateMixin&#x60; or &#x60;NestedUpdateMixin&#x60;) you should put &#x60;UniqueFieldsMixin&#x60; ahead.
  * @package  Hauki
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
@@ -44,7 +43,7 @@ use \Hauki\ObjectSerializer;
  * @template TKey int|null
  * @template TValue mixed|null  
  */
-class DataSource implements ModelInterface, ArrayAccess, \JsonSerializable
+class AuthRequiredTest implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -53,7 +52,7 @@ class DataSource implements ModelInterface, ArrayAccess, \JsonSerializable
       *
       * @var string
       */
-    protected static $openAPIModelName = 'DataSource';
+    protected static $openAPIModelName = 'auth_required_test';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -61,8 +60,9 @@ class DataSource implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
-        'id' => 'string',
-        'name' => 'string'
+        'message' => 'string',
+        'username' => 'string',
+        'organization_ids' => 'mixed[]'
     ];
 
     /**
@@ -73,8 +73,9 @@ class DataSource implements ModelInterface, ArrayAccess, \JsonSerializable
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'id' => null,
-        'name' => null
+        'message' => null,
+        'username' => null,
+        'organization_ids' => null
     ];
 
     /**
@@ -104,8 +105,9 @@ class DataSource implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'id' => 'id',
-        'name' => 'name'
+        'message' => 'message',
+        'username' => 'username',
+        'organization_ids' => 'organization_ids'
     ];
 
     /**
@@ -114,8 +116,9 @@ class DataSource implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'id' => 'setId',
-        'name' => 'setName'
+        'message' => 'setMessage',
+        'username' => 'setUsername',
+        'organization_ids' => 'setOrganizationIds'
     ];
 
     /**
@@ -124,8 +127,9 @@ class DataSource implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'id' => 'getId',
-        'name' => 'getName'
+        'message' => 'getMessage',
+        'username' => 'getUsername',
+        'organization_ids' => 'getOrganizationIds'
     ];
 
     /**
@@ -188,8 +192,9 @@ class DataSource implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = $data['id'] ?? null;
-        $this->container['name'] = $data['name'] ?? null;
+        $this->container['message'] = $data['message'] ?? null;
+        $this->container['username'] = $data['username'] ?? null;
+        $this->container['organization_ids'] = $data['organization_ids'] ?? null;
     }
 
     /**
@@ -201,15 +206,14 @@ class DataSource implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['id'] === null) {
-            $invalidProperties[] = "'id' can't be null";
+        if ($this->container['message'] === null) {
+            $invalidProperties[] = "'message' can't be null";
         }
-        if ((mb_strlen($this->container['id']) > 100)) {
-            $invalidProperties[] = "invalid value for 'id', the character length must be smaller than or equal to 100.";
+        if ($this->container['username'] === null) {
+            $invalidProperties[] = "'username' can't be null";
         }
-
-        if ($this->container['name'] === null) {
-            $invalidProperties[] = "'name' can't be null";
+        if ($this->container['organization_ids'] === null) {
+            $invalidProperties[] = "'organization_ids' can't be null";
         }
         return $invalidProperties;
     }
@@ -227,53 +231,73 @@ class DataSource implements ModelInterface, ArrayAccess, \JsonSerializable
 
 
     /**
-     * Gets id
+     * Gets message
      *
      * @return string
      */
-    public function getId()
+    public function getMessage()
     {
-        return $this->container['id'];
+        return $this->container['message'];
     }
 
     /**
-     * Sets id
+     * Sets message
      *
-     * @param string $id id
+     * @param string $message message
      *
      * @return self
      */
-    public function setId($id)
+    public function setMessage($message)
     {
-        if ((mb_strlen($id) > 100)) {
-            throw new \InvalidArgumentException('invalid length for $id when calling DataSource., must be smaller than or equal to 100.');
-        }
-
-        $this->container['id'] = $id;
+        $this->container['message'] = $message;
 
         return $this;
     }
 
     /**
-     * Gets name
+     * Gets username
      *
      * @return string
      */
-    public function getName()
+    public function getUsername()
     {
-        return $this->container['name'];
+        return $this->container['username'];
     }
 
     /**
-     * Sets name
+     * Sets username
      *
-     * @param string $name name
+     * @param string $username username
      *
      * @return self
      */
-    public function setName($name)
+    public function setUsername($username)
     {
-        $this->container['name'] = $name;
+        $this->container['username'] = $username;
+
+        return $this;
+    }
+
+    /**
+     * Gets organization_ids
+     *
+     * @return mixed[]
+     */
+    public function getOrganizationIds()
+    {
+        return $this->container['organization_ids'];
+    }
+
+    /**
+     * Sets organization_ids
+     *
+     * @param mixed[] $organization_ids organization_ids
+     *
+     * @return self
+     */
+    public function setOrganizationIds($organization_ids)
+    {
+        $this->container['organization_ids'] = $organization_ids;
 
         return $this;
     }

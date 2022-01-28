@@ -6,7 +6,7 @@ jobs:
   update-definitions:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/city-of-helsinki/php-openapi-generator:1.0
+      image: ghcr.io/city-of-helsinki/php-openapi-generator:latest
     steps:
       - uses: actions/checkout@v2
       - name: Update definitions

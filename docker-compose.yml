@@ -1,0 +1,9 @@
+version: '3.7'
+
+services:
+  app:
+    container_name: "openapi-generator"
+    image: "ghcr.io/city-of-helsinki/php-openapi-generator:latest"
+    volumes:
+      - .:/app:delegated
+    tty: true

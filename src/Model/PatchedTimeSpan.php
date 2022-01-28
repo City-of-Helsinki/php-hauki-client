@@ -68,8 +68,8 @@ class PatchedTimeSpan implements ModelInterface, ArrayAccess, \JsonSerializable
         'end_time' => 'string',
         'end_time_on_next_day' => 'bool',
         'full_day' => 'bool',
-        'weekdays' => 'int[]',
-        'resource_state' => '\Hauki\Model\ResourceStateEnum',
+        'weekdays' => 'WeekdaysEnum[]',
+        'resource_state' => 'ResourceStateEnum',
         'created' => '\DateTime',
         'modified' => '\DateTime'
     ];
@@ -218,33 +218,8 @@ class PatchedTimeSpan implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
-    const WEEKDAYS_1 = 1;
-    const WEEKDAYS_2 = 2;
-    const WEEKDAYS_3 = 3;
-    const WEEKDAYS_4 = 4;
-    const WEEKDAYS_5 = 5;
-    const WEEKDAYS_6 = 6;
-    const WEEKDAYS_7 = 7;
     
 
-    
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getWeekdaysAllowableValues()
-    {
-        return [
-            self::WEEKDAYS_1,
-            self::WEEKDAYS_2,
-            self::WEEKDAYS_3,
-            self::WEEKDAYS_4,
-            self::WEEKDAYS_5,
-            self::WEEKDAYS_6,
-            self::WEEKDAYS_7,
-        ];
-    }
     
 
     /**
@@ -503,7 +478,7 @@ class PatchedTimeSpan implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets weekdays
      *
-     * @return int[]|null
+     * @return WeekdaysEnum[]|null
      */
     public function getWeekdays()
     {
@@ -513,21 +488,12 @@ class PatchedTimeSpan implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets weekdays
      *
-     * @param int[]|null $weekdays weekdays
+     * @param WeekdaysEnum[]|null $weekdays weekdays
      *
      * @return self
      */
     public function setWeekdays($weekdays)
     {
-        $allowedValues = $this->getWeekdaysAllowableValues();
-        if (!is_null($weekdays) && array_diff($weekdays, $allowedValues)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'weekdays', must be one of '%s'",
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
         $this->container['weekdays'] = $weekdays;
 
         return $this;
@@ -536,7 +502,7 @@ class PatchedTimeSpan implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets resource_state
      *
-     * @return \Hauki\Model\ResourceStateEnum|null
+     * @return ResourceStateEnum|null
      */
     public function getResourceState()
     {
@@ -546,7 +512,7 @@ class PatchedTimeSpan implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets resource_state
      *
-     * @param \Hauki\Model\ResourceStateEnum|null $resource_state resource_state
+     * @param ResourceStateEnum|null $resource_state resource_state
      *
      * @return self
      */

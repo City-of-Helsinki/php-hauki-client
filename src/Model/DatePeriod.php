@@ -67,7 +67,7 @@ class DatePeriod implements ModelInterface, ArrayAccess, \JsonSerializable
         'description' => 'string',
         'start_date' => '\DateTime',
         'end_date' => '\DateTime',
-        'resource_state' => '\Hauki\Model\ResourceStateEnum',
+        'resource_state' => 'ResourceStateEnum',
         'override' => 'bool',
         'origins' => '\Hauki\Model\PeriodOrigin[]',
         'created' => '\DateTime',
@@ -443,7 +443,7 @@ class DatePeriod implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets resource_state
      *
-     * @return \Hauki\Model\ResourceStateEnum|null
+     * @return ResourceStateEnum|null
      */
     public function getResourceState()
     {
@@ -453,7 +453,7 @@ class DatePeriod implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets resource_state
      *
-     * @param \Hauki\Model\ResourceStateEnum|null $resource_state resource_state
+     * @param ResourceStateEnum|null $resource_state resource_state
      *
      * @return self
      */

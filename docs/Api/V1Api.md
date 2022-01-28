@@ -4,62 +4,62 @@ All URIs are relative to http://localhost.
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**v1AuthRequiredTestRetrieve()**](V1Api.md#v1AuthRequiredTestRetrieve) | **GET** /v1/auth_required_test/ | Authentication test
+[**v1AuthRequiredTestList()**](V1Api.md#v1AuthRequiredTestList) | **GET** /v1/auth_required_test/ | Authentication test
 [**v1DatePeriodCreate()**](V1Api.md#v1DatePeriodCreate) | **POST** /v1/date_period/ | Create a Date Period
 [**v1DatePeriodDestroy()**](V1Api.md#v1DatePeriodDestroy) | **DELETE** /v1/date_period/{id}/ | Delete existing Date Period
 [**v1DatePeriodList()**](V1Api.md#v1DatePeriodList) | **GET** /v1/date_period/ | List Date Periods
 [**v1DatePeriodPartialUpdate()**](V1Api.md#v1DatePeriodPartialUpdate) | **PATCH** /v1/date_period/{id}/ | Update existing Date Period partially
-[**v1DatePeriodPermissionCheckCreate()**](V1Api.md#v1DatePeriodPermissionCheckCreate) | **POST** /v1/date_period/{id}/permission_check/ | 
-[**v1DatePeriodPermissionCheckDestroy()**](V1Api.md#v1DatePeriodPermissionCheckDestroy) | **DELETE** /v1/date_period/{id}/permission_check/ | 
-[**v1DatePeriodPermissionCheckPartialUpdate()**](V1Api.md#v1DatePeriodPermissionCheckPartialUpdate) | **PATCH** /v1/date_period/{id}/permission_check/ | 
-[**v1DatePeriodPermissionCheckRetrieve()**](V1Api.md#v1DatePeriodPermissionCheckRetrieve) | **GET** /v1/date_period/{id}/permission_check/ | 
-[**v1DatePeriodPermissionCheckUpdate()**](V1Api.md#v1DatePeriodPermissionCheckUpdate) | **PUT** /v1/date_period/{id}/permission_check/ | 
+[**v1DatePeriodPermissionCheckCreate()**](V1Api.md#v1DatePeriodPermissionCheckCreate) | **POST** /v1/date_period/{id}/permission_check/ | Check method permission for object
+[**v1DatePeriodPermissionCheckDestroy()**](V1Api.md#v1DatePeriodPermissionCheckDestroy) | **DELETE** /v1/date_period/{id}/permission_check/ | Check method permission for object
+[**v1DatePeriodPermissionCheckPartialUpdate()**](V1Api.md#v1DatePeriodPermissionCheckPartialUpdate) | **PATCH** /v1/date_period/{id}/permission_check/ | Check method permission for object
+[**v1DatePeriodPermissionCheckRetrieve()**](V1Api.md#v1DatePeriodPermissionCheckRetrieve) | **GET** /v1/date_period/{id}/permission_check/ | Check method permission for object
+[**v1DatePeriodPermissionCheckUpdate()**](V1Api.md#v1DatePeriodPermissionCheckUpdate) | **PUT** /v1/date_period/{id}/permission_check/ | Check method permission for object
 [**v1DatePeriodRetrieve()**](V1Api.md#v1DatePeriodRetrieve) | **GET** /v1/date_period/{id}/ | Find Date Period by ID
 [**v1DatePeriodUpdate()**](V1Api.md#v1DatePeriodUpdate) | **PUT** /v1/date_period/{id}/ | Update existing Date Period
-[**v1OpeningHoursList()**](V1Api.md#v1OpeningHoursList) | **GET** /v1/opening_hours/ | 
+[**v1OpeningHoursList()**](V1Api.md#v1OpeningHoursList) | **GET** /v1/opening_hours/ | List opening hours
 [**v1OrganizationList()**](V1Api.md#v1OrganizationList) | **GET** /v1/organization/ | List Organizations
 [**v1OrganizationRetrieve()**](V1Api.md#v1OrganizationRetrieve) | **GET** /v1/organization/{id}/ | Find Organizations by ID
 [**v1ResourceCreate()**](V1Api.md#v1ResourceCreate) | **POST** /v1/resource/ | Create a Resource
 [**v1ResourceDestroy()**](V1Api.md#v1ResourceDestroy) | **DELETE** /v1/resource/{id}/ | Delete existing Resource
-[**v1ResourceIsOpenNowRetrieve()**](V1Api.md#v1ResourceIsOpenNowRetrieve) | **GET** /v1/resource/{id}/is_open_now/ | 
+[**v1ResourceIsOpenNowRetrieve()**](V1Api.md#v1ResourceIsOpenNowRetrieve) | **GET** /v1/resource/{id}/is_open_now/ | Is Resource open now?
 [**v1ResourceList()**](V1Api.md#v1ResourceList) | **GET** /v1/resource/ | List Resources
-[**v1ResourceOpeningHoursRetrieve()**](V1Api.md#v1ResourceOpeningHoursRetrieve) | **GET** /v1/resource/{id}/opening_hours/ | 
+[**v1ResourceOpeningHoursRetrieve()**](V1Api.md#v1ResourceOpeningHoursRetrieve) | **GET** /v1/resource/{id}/opening_hours/ | Get opening hours for Resource
 [**v1ResourcePartialUpdate()**](V1Api.md#v1ResourcePartialUpdate) | **PATCH** /v1/resource/{id}/ | Update existing Resource partially
-[**v1ResourcePermissionCheckCreate()**](V1Api.md#v1ResourcePermissionCheckCreate) | **POST** /v1/resource/{id}/permission_check/ | 
-[**v1ResourcePermissionCheckDestroy()**](V1Api.md#v1ResourcePermissionCheckDestroy) | **DELETE** /v1/resource/{id}/permission_check/ | 
-[**v1ResourcePermissionCheckPartialUpdate()**](V1Api.md#v1ResourcePermissionCheckPartialUpdate) | **PATCH** /v1/resource/{id}/permission_check/ | 
-[**v1ResourcePermissionCheckRetrieve()**](V1Api.md#v1ResourcePermissionCheckRetrieve) | **GET** /v1/resource/{id}/permission_check/ | 
-[**v1ResourcePermissionCheckUpdate()**](V1Api.md#v1ResourcePermissionCheckUpdate) | **PUT** /v1/resource/{id}/permission_check/ | 
+[**v1ResourcePermissionCheckCreate()**](V1Api.md#v1ResourcePermissionCheckCreate) | **POST** /v1/resource/{id}/permission_check/ | Check method permission for object
+[**v1ResourcePermissionCheckDestroy()**](V1Api.md#v1ResourcePermissionCheckDestroy) | **DELETE** /v1/resource/{id}/permission_check/ | Check method permission for object
+[**v1ResourcePermissionCheckPartialUpdate()**](V1Api.md#v1ResourcePermissionCheckPartialUpdate) | **PATCH** /v1/resource/{id}/permission_check/ | Check method permission for object
+[**v1ResourcePermissionCheckRetrieve()**](V1Api.md#v1ResourcePermissionCheckRetrieve) | **GET** /v1/resource/{id}/permission_check/ | Check method permission for object
+[**v1ResourcePermissionCheckUpdate()**](V1Api.md#v1ResourcePermissionCheckUpdate) | **PUT** /v1/resource/{id}/permission_check/ | Check method permission for object
 [**v1ResourceRetrieve()**](V1Api.md#v1ResourceRetrieve) | **GET** /v1/resource/{id}/ | Find Resource by ID
 [**v1ResourceUpdate()**](V1Api.md#v1ResourceUpdate) | **PUT** /v1/resource/{id}/ | Update existing Resource
 [**v1RuleCreate()**](V1Api.md#v1RuleCreate) | **POST** /v1/rule/ | Create a Rule
 [**v1RuleDestroy()**](V1Api.md#v1RuleDestroy) | **DELETE** /v1/rule/{id}/ | Delete existing Rule
 [**v1RuleList()**](V1Api.md#v1RuleList) | **GET** /v1/rule/ | List Rules
 [**v1RulePartialUpdate()**](V1Api.md#v1RulePartialUpdate) | **PATCH** /v1/rule/{id}/ | Update existing Rule partially
-[**v1RulePermissionCheckCreate()**](V1Api.md#v1RulePermissionCheckCreate) | **POST** /v1/rule/{id}/permission_check/ | 
-[**v1RulePermissionCheckDestroy()**](V1Api.md#v1RulePermissionCheckDestroy) | **DELETE** /v1/rule/{id}/permission_check/ | 
-[**v1RulePermissionCheckPartialUpdate()**](V1Api.md#v1RulePermissionCheckPartialUpdate) | **PATCH** /v1/rule/{id}/permission_check/ | 
-[**v1RulePermissionCheckRetrieve()**](V1Api.md#v1RulePermissionCheckRetrieve) | **GET** /v1/rule/{id}/permission_check/ | 
-[**v1RulePermissionCheckUpdate()**](V1Api.md#v1RulePermissionCheckUpdate) | **PUT** /v1/rule/{id}/permission_check/ | 
+[**v1RulePermissionCheckCreate()**](V1Api.md#v1RulePermissionCheckCreate) | **POST** /v1/rule/{id}/permission_check/ | Check method permission for object
+[**v1RulePermissionCheckDestroy()**](V1Api.md#v1RulePermissionCheckDestroy) | **DELETE** /v1/rule/{id}/permission_check/ | Check method permission for object
+[**v1RulePermissionCheckPartialUpdate()**](V1Api.md#v1RulePermissionCheckPartialUpdate) | **PATCH** /v1/rule/{id}/permission_check/ | Check method permission for object
+[**v1RulePermissionCheckRetrieve()**](V1Api.md#v1RulePermissionCheckRetrieve) | **GET** /v1/rule/{id}/permission_check/ | Check method permission for object
+[**v1RulePermissionCheckUpdate()**](V1Api.md#v1RulePermissionCheckUpdate) | **PUT** /v1/rule/{id}/permission_check/ | Check method permission for object
 [**v1RuleRetrieve()**](V1Api.md#v1RuleRetrieve) | **GET** /v1/rule/{id}/ | Find Rule by ID
 [**v1RuleUpdate()**](V1Api.md#v1RuleUpdate) | **PUT** /v1/rule/{id}/ | Update existing Rule
-[**v1TimeSpansCreate()**](V1Api.md#v1TimeSpansCreate) | **POST** /v1/time_spans/ | Create a Time Span
-[**v1TimeSpansDestroy()**](V1Api.md#v1TimeSpansDestroy) | **DELETE** /v1/time_spans/{id}/ | Delete existing Time Span
-[**v1TimeSpansList()**](V1Api.md#v1TimeSpansList) | **GET** /v1/time_spans/ | List Time Spans
-[**v1TimeSpansPartialUpdate()**](V1Api.md#v1TimeSpansPartialUpdate) | **PATCH** /v1/time_spans/{id}/ | Update existing Time Span partially
-[**v1TimeSpansPermissionCheckCreate()**](V1Api.md#v1TimeSpansPermissionCheckCreate) | **POST** /v1/time_spans/{id}/permission_check/ | 
-[**v1TimeSpansPermissionCheckDestroy()**](V1Api.md#v1TimeSpansPermissionCheckDestroy) | **DELETE** /v1/time_spans/{id}/permission_check/ | 
-[**v1TimeSpansPermissionCheckPartialUpdate()**](V1Api.md#v1TimeSpansPermissionCheckPartialUpdate) | **PATCH** /v1/time_spans/{id}/permission_check/ | 
-[**v1TimeSpansPermissionCheckRetrieve()**](V1Api.md#v1TimeSpansPermissionCheckRetrieve) | **GET** /v1/time_spans/{id}/permission_check/ | 
-[**v1TimeSpansPermissionCheckUpdate()**](V1Api.md#v1TimeSpansPermissionCheckUpdate) | **PUT** /v1/time_spans/{id}/permission_check/ | 
-[**v1TimeSpansRetrieve()**](V1Api.md#v1TimeSpansRetrieve) | **GET** /v1/time_spans/{id}/ | Find Time Span by ID
-[**v1TimeSpansUpdate()**](V1Api.md#v1TimeSpansUpdate) | **PUT** /v1/time_spans/{id}/ | Update existing Time Span
+[**v1TimeSpanCreate()**](V1Api.md#v1TimeSpanCreate) | **POST** /v1/time_span/ | Create a Time Span
+[**v1TimeSpanDestroy()**](V1Api.md#v1TimeSpanDestroy) | **DELETE** /v1/time_span/{id}/ | Delete existing Time Span
+[**v1TimeSpanList()**](V1Api.md#v1TimeSpanList) | **GET** /v1/time_span/ | List Time Spans
+[**v1TimeSpanPartialUpdate()**](V1Api.md#v1TimeSpanPartialUpdate) | **PATCH** /v1/time_span/{id}/ | Update existing Time Span partially
+[**v1TimeSpanPermissionCheckCreate()**](V1Api.md#v1TimeSpanPermissionCheckCreate) | **POST** /v1/time_span/{id}/permission_check/ | Check method permission for object
+[**v1TimeSpanPermissionCheckDestroy()**](V1Api.md#v1TimeSpanPermissionCheckDestroy) | **DELETE** /v1/time_span/{id}/permission_check/ | Check method permission for object
+[**v1TimeSpanPermissionCheckPartialUpdate()**](V1Api.md#v1TimeSpanPermissionCheckPartialUpdate) | **PATCH** /v1/time_span/{id}/permission_check/ | Check method permission for object
+[**v1TimeSpanPermissionCheckRetrieve()**](V1Api.md#v1TimeSpanPermissionCheckRetrieve) | **GET** /v1/time_span/{id}/permission_check/ | Check method permission for object
+[**v1TimeSpanPermissionCheckUpdate()**](V1Api.md#v1TimeSpanPermissionCheckUpdate) | **PUT** /v1/time_span/{id}/permission_check/ | Check method permission for object
+[**v1TimeSpanRetrieve()**](V1Api.md#v1TimeSpanRetrieve) | **GET** /v1/time_span/{id}/ | Find Time Span by ID
+[**v1TimeSpanUpdate()**](V1Api.md#v1TimeSpanUpdate) | **PUT** /v1/time_span/{id}/ | Update existing Time Span
 
 
-## `v1AuthRequiredTestRetrieve()`
+## `v1AuthRequiredTestList()`
 
 ```php
-v1AuthRequiredTestRetrieve($format)
+v1AuthRequiredTestList(): \Hauki\Model\AuthRequiredTest[]
 ```
 
 Authentication test
@@ -83,8 +83,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -93,24 +95,22 @@ $apiInstance = new Hauki\Api\V1Api(
     new GuzzleHttp\Client(),
     $config
 );
-$format = 'format_example'; // string
 
 try {
-    $apiInstance->v1AuthRequiredTestRetrieve($format);
+    $result = $apiInstance->v1AuthRequiredTestList();
+    print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling V1Api->v1AuthRequiredTestRetrieve: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling V1Api->v1AuthRequiredTestList: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **format** | **string**|  | [optional]
+This endpoint does not need any parameter.
 
 ### Return type
 
-void (empty response body)
+[**\Hauki\Model\AuthRequiredTest[]**](../Model/AuthRequiredTest.md)
 
 ### Authorization
 
@@ -119,7 +119,7 @@ void (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -128,7 +128,7 @@ void (empty response body)
 ## `v1DatePeriodCreate()`
 
 ```php
-v1DatePeriodCreate($date_period, $format): \Hauki\Model\DatePeriod
+v1DatePeriodCreate($date_period): \Hauki\Model\DatePeriod
 ```
 
 Create a Date Period
@@ -150,8 +150,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -161,10 +163,9 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $date_period = new \Hauki\Model\DatePeriod(); // \Hauki\Model\DatePeriod
-$format = 'format_example'; // string
 
 try {
-    $result = $apiInstance->v1DatePeriodCreate($date_period, $format);
+    $result = $apiInstance->v1DatePeriodCreate($date_period);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1DatePeriodCreate: ', $e->getMessage(), PHP_EOL;
@@ -176,7 +177,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **date_period** | [**\Hauki\Model\DatePeriod**](../Model/DatePeriod.md)|  |
- **format** | **string**|  | [optional]
 
 ### Return type
 
@@ -189,7 +189,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -198,7 +198,7 @@ Name | Type | Description  | Notes
 ## `v1DatePeriodDestroy()`
 
 ```php
-v1DatePeriodDestroy($id, $format)
+v1DatePeriodDestroy($id)
 ```
 
 Delete existing Date Period
@@ -220,8 +220,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -231,10 +233,9 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Jakso.
-$format = 'format_example'; // string
 
 try {
-    $apiInstance->v1DatePeriodDestroy($id, $format);
+    $apiInstance->v1DatePeriodDestroy($id);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1DatePeriodDestroy: ', $e->getMessage(), PHP_EOL;
 }
@@ -245,7 +246,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Jakso. |
- **format** | **string**|  | [optional]
 
 ### Return type
 
@@ -267,7 +267,7 @@ void (empty response body)
 ## `v1DatePeriodList()`
 
 ```php
-v1DatePeriodList($end_date, $end_date_gte, $end_date_lte, $format, $ordering, $resource, $start_date, $start_date_gte, $start_date_lte): \Hauki\Model\DatePeriod[]
+v1DatePeriodList($end_date, $end_date_gte, $end_date_lte, $ordering, $resource, $start_date, $start_date_gte, $start_date_lte): \Hauki\Model\DatePeriod[]
 ```
 
 List Date Periods
@@ -289,8 +289,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -299,18 +301,17 @@ $apiInstance = new Hauki\Api\V1Api(
     new GuzzleHttp\Client(),
     $config
 );
-$end_date = 'end_date_example'; // string | end_date
-$end_date_gte = 'end_date_gte_example'; // string | end_date_gte
-$end_date_lte = 'end_date_lte_example'; // string | end_date_lte
-$format = 'format_example'; // string
+$end_date = new \DateTime("2013-10-20T19:20:30+01:00"); // \DateTime | Filter by exact period end date
+$end_date_gte = new \DateTime("2013-10-20T19:20:30+01:00"); // \DateTime | Filter by end date greater than given date (or null)
+$end_date_lte = new \DateTime("2013-10-20T19:20:30+01:00"); // \DateTime | Filter by end date less than given date
 $ordering = 'ordering_example'; // string | Which field to use when ordering the results.
-$resource = 'resource_example'; // string | resource
-$start_date = 'start_date_example'; // string | start_date
-$start_date_gte = 'start_date_gte_example'; // string | start_date_gte
-$start_date_lte = 'start_date_lte_example'; // string | start_date_lte
+$resource = 'resource_example'; // string | Filter by resource id or multiple resource ids (comma-separated)
+$start_date = new \DateTime("2013-10-20T19:20:30+01:00"); // \DateTime | Filter by exact period start date
+$start_date_gte = new \DateTime("2013-10-20T19:20:30+01:00"); // \DateTime | Filter by start date greater than given date
+$start_date_lte = new \DateTime("2013-10-20T19:20:30+01:00"); // \DateTime | Filter by start date less than given date (or null
 
 try {
-    $result = $apiInstance->v1DatePeriodList($end_date, $end_date_gte, $end_date_lte, $format, $ordering, $resource, $start_date, $start_date_gte, $start_date_lte);
+    $result = $apiInstance->v1DatePeriodList($end_date, $end_date_gte, $end_date_lte, $ordering, $resource, $start_date, $start_date_gte, $start_date_lte);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1DatePeriodList: ', $e->getMessage(), PHP_EOL;
@@ -321,15 +322,14 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **end_date** | **string**| end_date | [optional]
- **end_date_gte** | **string**| end_date_gte | [optional]
- **end_date_lte** | **string**| end_date_lte | [optional]
- **format** | **string**|  | [optional]
+ **end_date** | **\DateTime**| Filter by exact period end date | [optional]
+ **end_date_gte** | **\DateTime**| Filter by end date greater than given date (or null) | [optional]
+ **end_date_lte** | **\DateTime**| Filter by end date less than given date | [optional]
  **ordering** | **string**| Which field to use when ordering the results. | [optional]
- **resource** | **string**| resource | [optional]
- **start_date** | **string**| start_date | [optional]
- **start_date_gte** | **string**| start_date_gte | [optional]
- **start_date_lte** | **string**| start_date_lte | [optional]
+ **resource** | [**string**](../Model/.md)| Filter by resource id or multiple resource ids (comma-separated) | [optional]
+ **start_date** | **\DateTime**| Filter by exact period start date | [optional]
+ **start_date_gte** | **\DateTime**| Filter by start date greater than given date | [optional]
+ **start_date_lte** | **\DateTime**| Filter by start date less than given date (or null | [optional]
 
 ### Return type
 
@@ -342,7 +342,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -351,7 +351,7 @@ Name | Type | Description  | Notes
 ## `v1DatePeriodPartialUpdate()`
 
 ```php
-v1DatePeriodPartialUpdate($id, $format, $patched_date_period): \Hauki\Model\DatePeriod
+v1DatePeriodPartialUpdate($id, $patched_date_period): \Hauki\Model\DatePeriod
 ```
 
 Update existing Date Period partially
@@ -373,8 +373,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -384,11 +386,10 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Jakso.
-$format = 'format_example'; // string
 $patched_date_period = new \Hauki\Model\PatchedDatePeriod(); // \Hauki\Model\PatchedDatePeriod
 
 try {
-    $result = $apiInstance->v1DatePeriodPartialUpdate($id, $format, $patched_date_period);
+    $result = $apiInstance->v1DatePeriodPartialUpdate($id, $patched_date_period);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1DatePeriodPartialUpdate: ', $e->getMessage(), PHP_EOL;
@@ -400,7 +401,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Jakso. |
- **format** | **string**|  | [optional]
  **patched_date_period** | [**\Hauki\Model\PatchedDatePeriod**](../Model/PatchedDatePeriod.md)|  | [optional]
 
 ### Return type
@@ -414,7 +414,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -423,12 +423,12 @@ Name | Type | Description  | Notes
 ## `v1DatePeriodPermissionCheckCreate()`
 
 ```php
-v1DatePeriodPermissionCheckCreate($id, $date_period, $format): \Hauki\Model\DatePeriod
+v1DatePeriodPermissionCheckCreate($id): \Hauki\Model\PermissionCheck
 ```
 
+Check method permission for object
 
-
-Runs check_object_permission for the object and returns the result
+Runs check_object_permission for the object with the used method and returns the result
 
 ### Example
 
@@ -447,8 +447,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -458,11 +460,9 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Jakso.
-$date_period = new \Hauki\Model\DatePeriod(); // \Hauki\Model\DatePeriod
-$format = 'format_example'; // string
 
 try {
-    $result = $apiInstance->v1DatePeriodPermissionCheckCreate($id, $date_period, $format);
+    $result = $apiInstance->v1DatePeriodPermissionCheckCreate($id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1DatePeriodPermissionCheckCreate: ', $e->getMessage(), PHP_EOL;
@@ -474,12 +474,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Jakso. |
- **date_period** | [**\Hauki\Model\DatePeriod**](../Model/DatePeriod.md)|  |
- **format** | **string**|  | [optional]
 
 ### Return type
 
-[**\Hauki\Model\DatePeriod**](../Model/DatePeriod.md)
+[**\Hauki\Model\PermissionCheck**](../Model/PermissionCheck.md)
 
 ### Authorization
 
@@ -487,8 +485,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
-- **Accept**: `application/json`, `text/html`
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -497,12 +495,12 @@ Name | Type | Description  | Notes
 ## `v1DatePeriodPermissionCheckDestroy()`
 
 ```php
-v1DatePeriodPermissionCheckDestroy($id, $format)
+v1DatePeriodPermissionCheckDestroy($id)
 ```
 
+Check method permission for object
 
-
-Runs check_object_permission for the object and returns the result
+Runs check_object_permission for the object with the used method and returns the result
 
 ### Example
 
@@ -521,8 +519,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -532,10 +532,9 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Jakso.
-$format = 'format_example'; // string
 
 try {
-    $apiInstance->v1DatePeriodPermissionCheckDestroy($id, $format);
+    $apiInstance->v1DatePeriodPermissionCheckDestroy($id);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1DatePeriodPermissionCheckDestroy: ', $e->getMessage(), PHP_EOL;
 }
@@ -546,7 +545,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Jakso. |
- **format** | **string**|  | [optional]
 
 ### Return type
 
@@ -568,12 +566,12 @@ void (empty response body)
 ## `v1DatePeriodPermissionCheckPartialUpdate()`
 
 ```php
-v1DatePeriodPermissionCheckPartialUpdate($id, $format, $patched_date_period): \Hauki\Model\DatePeriod
+v1DatePeriodPermissionCheckPartialUpdate($id): \Hauki\Model\PermissionCheck
 ```
 
+Check method permission for object
 
-
-Runs check_object_permission for the object and returns the result
+Runs check_object_permission for the object with the used method and returns the result
 
 ### Example
 
@@ -592,8 +590,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -603,11 +603,9 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Jakso.
-$format = 'format_example'; // string
-$patched_date_period = new \Hauki\Model\PatchedDatePeriod(); // \Hauki\Model\PatchedDatePeriod
 
 try {
-    $result = $apiInstance->v1DatePeriodPermissionCheckPartialUpdate($id, $format, $patched_date_period);
+    $result = $apiInstance->v1DatePeriodPermissionCheckPartialUpdate($id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1DatePeriodPermissionCheckPartialUpdate: ', $e->getMessage(), PHP_EOL;
@@ -619,12 +617,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Jakso. |
- **format** | **string**|  | [optional]
- **patched_date_period** | [**\Hauki\Model\PatchedDatePeriod**](../Model/PatchedDatePeriod.md)|  | [optional]
 
 ### Return type
 
-[**\Hauki\Model\DatePeriod**](../Model/DatePeriod.md)
+[**\Hauki\Model\PermissionCheck**](../Model/PermissionCheck.md)
 
 ### Authorization
 
@@ -632,8 +628,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
-- **Accept**: `application/json`, `text/html`
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -642,12 +638,12 @@ Name | Type | Description  | Notes
 ## `v1DatePeriodPermissionCheckRetrieve()`
 
 ```php
-v1DatePeriodPermissionCheckRetrieve($id, $format): \Hauki\Model\DatePeriod
+v1DatePeriodPermissionCheckRetrieve($id): \Hauki\Model\PermissionCheck
 ```
 
+Check method permission for object
 
-
-Runs check_object_permission for the object and returns the result
+Runs check_object_permission for the object with the used method and returns the result
 
 ### Example
 
@@ -666,8 +662,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -677,10 +675,9 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Jakso.
-$format = 'format_example'; // string
 
 try {
-    $result = $apiInstance->v1DatePeriodPermissionCheckRetrieve($id, $format);
+    $result = $apiInstance->v1DatePeriodPermissionCheckRetrieve($id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1DatePeriodPermissionCheckRetrieve: ', $e->getMessage(), PHP_EOL;
@@ -692,11 +689,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Jakso. |
- **format** | **string**|  | [optional]
 
 ### Return type
 
-[**\Hauki\Model\DatePeriod**](../Model/DatePeriod.md)
+[**\Hauki\Model\PermissionCheck**](../Model/PermissionCheck.md)
 
 ### Authorization
 
@@ -705,7 +701,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -714,12 +710,12 @@ Name | Type | Description  | Notes
 ## `v1DatePeriodPermissionCheckUpdate()`
 
 ```php
-v1DatePeriodPermissionCheckUpdate($id, $date_period, $format): \Hauki\Model\DatePeriod
+v1DatePeriodPermissionCheckUpdate($id): \Hauki\Model\PermissionCheck
 ```
 
+Check method permission for object
 
-
-Runs check_object_permission for the object and returns the result
+Runs check_object_permission for the object with the used method and returns the result
 
 ### Example
 
@@ -738,8 +734,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -749,11 +747,9 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Jakso.
-$date_period = new \Hauki\Model\DatePeriod(); // \Hauki\Model\DatePeriod
-$format = 'format_example'; // string
 
 try {
-    $result = $apiInstance->v1DatePeriodPermissionCheckUpdate($id, $date_period, $format);
+    $result = $apiInstance->v1DatePeriodPermissionCheckUpdate($id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1DatePeriodPermissionCheckUpdate: ', $e->getMessage(), PHP_EOL;
@@ -765,12 +761,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Jakso. |
- **date_period** | [**\Hauki\Model\DatePeriod**](../Model/DatePeriod.md)|  |
- **format** | **string**|  | [optional]
 
 ### Return type
 
-[**\Hauki\Model\DatePeriod**](../Model/DatePeriod.md)
+[**\Hauki\Model\PermissionCheck**](../Model/PermissionCheck.md)
 
 ### Authorization
 
@@ -778,8 +772,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
-- **Accept**: `application/json`, `text/html`
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -788,7 +782,7 @@ Name | Type | Description  | Notes
 ## `v1DatePeriodRetrieve()`
 
 ```php
-v1DatePeriodRetrieve($id, $format): \Hauki\Model\DatePeriod
+v1DatePeriodRetrieve($id): \Hauki\Model\DatePeriod
 ```
 
 Find Date Period by ID
@@ -810,8 +804,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -821,10 +817,9 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Jakso.
-$format = 'format_example'; // string
 
 try {
-    $result = $apiInstance->v1DatePeriodRetrieve($id, $format);
+    $result = $apiInstance->v1DatePeriodRetrieve($id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1DatePeriodRetrieve: ', $e->getMessage(), PHP_EOL;
@@ -836,7 +831,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Jakso. |
- **format** | **string**|  | [optional]
 
 ### Return type
 
@@ -849,7 +843,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -858,7 +852,7 @@ Name | Type | Description  | Notes
 ## `v1DatePeriodUpdate()`
 
 ```php
-v1DatePeriodUpdate($id, $date_period, $format): \Hauki\Model\DatePeriod
+v1DatePeriodUpdate($id, $date_period): \Hauki\Model\DatePeriod
 ```
 
 Update existing Date Period
@@ -880,8 +874,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -892,10 +888,9 @@ $apiInstance = new Hauki\Api\V1Api(
 );
 $id = 56; // int | A unique integer value identifying this Jakso.
 $date_period = new \Hauki\Model\DatePeriod(); // \Hauki\Model\DatePeriod
-$format = 'format_example'; // string
 
 try {
-    $result = $apiInstance->v1DatePeriodUpdate($id, $date_period, $format);
+    $result = $apiInstance->v1DatePeriodUpdate($id, $date_period);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1DatePeriodUpdate: ', $e->getMessage(), PHP_EOL;
@@ -908,7 +903,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Jakso. |
  **date_period** | [**\Hauki\Model\DatePeriod**](../Model/DatePeriod.md)|  |
- **format** | **string**|  | [optional]
 
 ### Return type
 
@@ -921,7 +915,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -930,10 +924,10 @@ Name | Type | Description  | Notes
 ## `v1OpeningHoursList()`
 
 ```php
-v1OpeningHoursList($format, $page, $page_size): \Hauki\Model\PaginatedResourceDailyOpeningHoursList
+v1OpeningHoursList($data_source, $end_date, $ordering, $page, $page_size, $resource, $start_date): \Hauki\Model\PaginatedResourceDailyOpeningHoursList
 ```
 
-
+List opening hours
 
 ### Example
 
@@ -952,8 +946,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -962,12 +958,16 @@ $apiInstance = new Hauki\Api\V1Api(
     new GuzzleHttp\Client(),
     $config
 );
-$format = 'format_example'; // string
+$data_source = 'data_source_example'; // string | Filter by resource data source
+$end_date = new \DateTime("2013-10-20T19:20:30+01:00"); // \DateTime | Last date to return hours for
+$ordering = 'ordering_example'; // string | Which field to use when ordering the results.
 $page = 56; // int | A page number within the paginated result set.
 $page_size = 56; // int | Number of results to return per page.
+$resource = 'resource_example'; // string | Filter by resource id or multiple resource ids (comma-separated)
+$start_date = new \DateTime("2013-10-20T19:20:30+01:00"); // \DateTime | First date to return hours for
 
 try {
-    $result = $apiInstance->v1OpeningHoursList($format, $page, $page_size);
+    $result = $apiInstance->v1OpeningHoursList($data_source, $end_date, $ordering, $page, $page_size, $resource, $start_date);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1OpeningHoursList: ', $e->getMessage(), PHP_EOL;
@@ -978,9 +978,13 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **format** | **string**|  | [optional]
+ **data_source** | [**string**](../Model/.md)| Filter by resource data source | [optional]
+ **end_date** | **\DateTime**| Last date to return hours for | [optional]
+ **ordering** | **string**| Which field to use when ordering the results. | [optional]
  **page** | **int**| A page number within the paginated result set. | [optional]
  **page_size** | **int**| Number of results to return per page. | [optional]
+ **resource** | [**string**](../Model/.md)| Filter by resource id or multiple resource ids (comma-separated) | [optional]
+ **start_date** | **\DateTime**| First date to return hours for | [optional]
 
 ### Return type
 
@@ -993,7 +997,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -1002,7 +1006,7 @@ Name | Type | Description  | Notes
 ## `v1OrganizationList()`
 
 ```php
-v1OrganizationList($format, $ordering, $parent): \Hauki\Model\Organization[]
+v1OrganizationList($ordering, $parent): \Hauki\Model\Organization[]
 ```
 
 List Organizations
@@ -1024,8 +1028,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -1034,12 +1040,11 @@ $apiInstance = new Hauki\Api\V1Api(
     new GuzzleHttp\Client(),
     $config
 );
-$format = 'format_example'; // string
 $ordering = 'ordering_example'; // string | Which field to use when ordering the results.
-$parent = 'parent_example'; // string | parent
+$parent = 'parent_example'; // string
 
 try {
-    $result = $apiInstance->v1OrganizationList($format, $ordering, $parent);
+    $result = $apiInstance->v1OrganizationList($ordering, $parent);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1OrganizationList: ', $e->getMessage(), PHP_EOL;
@@ -1050,9 +1055,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **format** | **string**|  | [optional]
  **ordering** | **string**| Which field to use when ordering the results. | [optional]
- **parent** | **string**| parent | [optional]
+ **parent** | **string**|  | [optional]
 
 ### Return type
 
@@ -1065,7 +1069,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -1074,7 +1078,7 @@ Name | Type | Description  | Notes
 ## `v1OrganizationRetrieve()`
 
 ```php
-v1OrganizationRetrieve($id, $format): \Hauki\Model\Organization
+v1OrganizationRetrieve($id): \Hauki\Model\Organization
 ```
 
 Find Organizations by ID
@@ -1096,8 +1100,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -1107,10 +1113,9 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 'id_example'; // string | A unique value identifying this organization.
-$format = 'format_example'; // string
 
 try {
-    $result = $apiInstance->v1OrganizationRetrieve($id, $format);
+    $result = $apiInstance->v1OrganizationRetrieve($id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1OrganizationRetrieve: ', $e->getMessage(), PHP_EOL;
@@ -1122,7 +1127,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **string**| A unique value identifying this organization. |
- **format** | **string**|  | [optional]
 
 ### Return type
 
@@ -1135,7 +1139,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -1144,7 +1148,7 @@ Name | Type | Description  | Notes
 ## `v1ResourceCreate()`
 
 ```php
-v1ResourceCreate($format, $resource): \Hauki\Model\Resource
+v1ResourceCreate($resource): \Hauki\Model\Resource
 ```
 
 Create a Resource
@@ -1166,8 +1170,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -1176,11 +1182,10 @@ $apiInstance = new Hauki\Api\V1Api(
     new GuzzleHttp\Client(),
     $config
 );
-$format = 'format_example'; // string
 $resource = new \Hauki\Model\Resource(); // \Hauki\Model\Resource
 
 try {
-    $result = $apiInstance->v1ResourceCreate($format, $resource);
+    $result = $apiInstance->v1ResourceCreate($resource);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1ResourceCreate: ', $e->getMessage(), PHP_EOL;
@@ -1191,7 +1196,6 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **format** | **string**|  | [optional]
  **resource** | [**\Hauki\Model\Resource**](../Model/Resource.md)|  | [optional]
 
 ### Return type
@@ -1205,7 +1209,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -1214,7 +1218,7 @@ Name | Type | Description  | Notes
 ## `v1ResourceDestroy()`
 
 ```php
-v1ResourceDestroy($id, $format)
+v1ResourceDestroy($id)
 ```
 
 Delete existing Resource
@@ -1236,8 +1240,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -1247,10 +1253,9 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Resurssi.
-$format = 'format_example'; // string
 
 try {
-    $apiInstance->v1ResourceDestroy($id, $format);
+    $apiInstance->v1ResourceDestroy($id);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1ResourceDestroy: ', $e->getMessage(), PHP_EOL;
 }
@@ -1261,7 +1266,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Resurssi. |
- **format** | **string**|  | [optional]
 
 ### Return type
 
@@ -1283,10 +1287,10 @@ void (empty response body)
 ## `v1ResourceIsOpenNowRetrieve()`
 
 ```php
-v1ResourceIsOpenNowRetrieve($id, $format): \Hauki\Model\Resource
+v1ResourceIsOpenNowRetrieve($id): \Hauki\Model\IsOpenNow
 ```
 
-
+Is Resource open now?
 
 ### Example
 
@@ -1305,8 +1309,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -1316,10 +1322,9 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Resurssi.
-$format = 'format_example'; // string
 
 try {
-    $result = $apiInstance->v1ResourceIsOpenNowRetrieve($id, $format);
+    $result = $apiInstance->v1ResourceIsOpenNowRetrieve($id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1ResourceIsOpenNowRetrieve: ', $e->getMessage(), PHP_EOL;
@@ -1331,11 +1336,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Resurssi. |
- **format** | **string**|  | [optional]
 
 ### Return type
 
-[**\Hauki\Model\Resource**](../Model/Resource.md)
+[**\Hauki\Model\IsOpenNow**](../Model/IsOpenNow.md)
 
 ### Authorization
 
@@ -1344,7 +1348,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -1353,7 +1357,7 @@ Name | Type | Description  | Notes
 ## `v1ResourceList()`
 
 ```php
-v1ResourceList($child, $data_source, $format, $origin_id_exists, $page, $page_size, $parent): \Hauki\Model\PaginatedResourceList
+v1ResourceList($child, $data_source, $ordering, $origin_id_exists, $page, $page_size, $parent): \Hauki\Model\PaginatedResourceList
 ```
 
 List Resources
@@ -1375,8 +1379,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -1387,14 +1393,14 @@ $apiInstance = new Hauki\Api\V1Api(
 );
 $child = 'child_example'; // string | Filter by child id
 $data_source = 'data_source_example'; // string | Filter by data source
-$format = 'format_example'; // string
+$ordering = 'ordering_example'; // string | Which field to use when ordering the results.
 $origin_id_exists = True; // bool | Filter by existing/missing origin_id
 $page = 56; // int | A page number within the paginated result set.
 $page_size = 56; // int | Number of results to return per page.
 $parent = 'parent_example'; // string | Filter by parent id
 
 try {
-    $result = $apiInstance->v1ResourceList($child, $data_source, $format, $origin_id_exists, $page, $page_size, $parent);
+    $result = $apiInstance->v1ResourceList($child, $data_source, $ordering, $origin_id_exists, $page, $page_size, $parent);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1ResourceList: ', $e->getMessage(), PHP_EOL;
@@ -1407,7 +1413,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **child** | [**string**](../Model/.md)| Filter by child id | [optional]
  **data_source** | [**string**](../Model/.md)| Filter by data source | [optional]
- **format** | **string**|  | [optional]
+ **ordering** | **string**| Which field to use when ordering the results. | [optional]
  **origin_id_exists** | **bool**| Filter by existing/missing origin_id | [optional]
  **page** | **int**| A page number within the paginated result set. | [optional]
  **page_size** | **int**| Number of results to return per page. | [optional]
@@ -1424,7 +1430,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -1433,10 +1439,10 @@ Name | Type | Description  | Notes
 ## `v1ResourceOpeningHoursRetrieve()`
 
 ```php
-v1ResourceOpeningHoursRetrieve($id, $format): \Hauki\Model\Resource
+v1ResourceOpeningHoursRetrieve($id, $end_date, $start_date): \Hauki\Model\DailyOpeningHours
 ```
 
-
+Get opening hours for Resource
 
 ### Example
 
@@ -1455,8 +1461,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -1466,10 +1474,11 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Resurssi.
-$format = 'format_example'; // string
+$end_date = new \DateTime("2013-10-20T19:20:30+01:00"); // \DateTime | Last date to return hours for
+$start_date = new \DateTime("2013-10-20T19:20:30+01:00"); // \DateTime | First date to return hours for
 
 try {
-    $result = $apiInstance->v1ResourceOpeningHoursRetrieve($id, $format);
+    $result = $apiInstance->v1ResourceOpeningHoursRetrieve($id, $end_date, $start_date);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1ResourceOpeningHoursRetrieve: ', $e->getMessage(), PHP_EOL;
@@ -1481,11 +1490,12 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Resurssi. |
- **format** | **string**|  | [optional]
+ **end_date** | **\DateTime**| Last date to return hours for | [optional]
+ **start_date** | **\DateTime**| First date to return hours for | [optional]
 
 ### Return type
 
-[**\Hauki\Model\Resource**](../Model/Resource.md)
+[**\Hauki\Model\DailyOpeningHours**](../Model/DailyOpeningHours.md)
 
 ### Authorization
 
@@ -1494,7 +1504,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -1503,7 +1513,7 @@ Name | Type | Description  | Notes
 ## `v1ResourcePartialUpdate()`
 
 ```php
-v1ResourcePartialUpdate($id, $format, $patched_resource): \Hauki\Model\Resource
+v1ResourcePartialUpdate($id, $patched_resource): \Hauki\Model\Resource
 ```
 
 Update existing Resource partially
@@ -1525,8 +1535,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -1536,11 +1548,10 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Resurssi.
-$format = 'format_example'; // string
 $patched_resource = new \Hauki\Model\PatchedResource(); // \Hauki\Model\PatchedResource
 
 try {
-    $result = $apiInstance->v1ResourcePartialUpdate($id, $format, $patched_resource);
+    $result = $apiInstance->v1ResourcePartialUpdate($id, $patched_resource);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1ResourcePartialUpdate: ', $e->getMessage(), PHP_EOL;
@@ -1552,7 +1563,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Resurssi. |
- **format** | **string**|  | [optional]
  **patched_resource** | [**\Hauki\Model\PatchedResource**](../Model/PatchedResource.md)|  | [optional]
 
 ### Return type
@@ -1566,7 +1576,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -1575,12 +1585,12 @@ Name | Type | Description  | Notes
 ## `v1ResourcePermissionCheckCreate()`
 
 ```php
-v1ResourcePermissionCheckCreate($id, $format, $resource): \Hauki\Model\Resource
+v1ResourcePermissionCheckCreate($id): \Hauki\Model\PermissionCheck
 ```
 
+Check method permission for object
 
-
-Runs check_object_permission for the object and returns the result
+Runs check_object_permission for the object with the used method and returns the result
 
 ### Example
 
@@ -1599,8 +1609,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -1610,11 +1622,9 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Resurssi.
-$format = 'format_example'; // string
-$resource = new \Hauki\Model\Resource(); // \Hauki\Model\Resource
 
 try {
-    $result = $apiInstance->v1ResourcePermissionCheckCreate($id, $format, $resource);
+    $result = $apiInstance->v1ResourcePermissionCheckCreate($id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1ResourcePermissionCheckCreate: ', $e->getMessage(), PHP_EOL;
@@ -1626,12 +1636,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Resurssi. |
- **format** | **string**|  | [optional]
- **resource** | [**\Hauki\Model\Resource**](../Model/Resource.md)|  | [optional]
 
 ### Return type
 
-[**\Hauki\Model\Resource**](../Model/Resource.md)
+[**\Hauki\Model\PermissionCheck**](../Model/PermissionCheck.md)
 
 ### Authorization
 
@@ -1639,8 +1647,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
-- **Accept**: `application/json`, `text/html`
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -1649,12 +1657,12 @@ Name | Type | Description  | Notes
 ## `v1ResourcePermissionCheckDestroy()`
 
 ```php
-v1ResourcePermissionCheckDestroy($id, $format)
+v1ResourcePermissionCheckDestroy($id)
 ```
 
+Check method permission for object
 
-
-Runs check_object_permission for the object and returns the result
+Runs check_object_permission for the object with the used method and returns the result
 
 ### Example
 
@@ -1673,8 +1681,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -1684,10 +1694,9 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Resurssi.
-$format = 'format_example'; // string
 
 try {
-    $apiInstance->v1ResourcePermissionCheckDestroy($id, $format);
+    $apiInstance->v1ResourcePermissionCheckDestroy($id);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1ResourcePermissionCheckDestroy: ', $e->getMessage(), PHP_EOL;
 }
@@ -1698,7 +1707,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Resurssi. |
- **format** | **string**|  | [optional]
 
 ### Return type
 
@@ -1720,12 +1728,12 @@ void (empty response body)
 ## `v1ResourcePermissionCheckPartialUpdate()`
 
 ```php
-v1ResourcePermissionCheckPartialUpdate($id, $format, $patched_resource): \Hauki\Model\Resource
+v1ResourcePermissionCheckPartialUpdate($id): \Hauki\Model\PermissionCheck
 ```
 
+Check method permission for object
 
-
-Runs check_object_permission for the object and returns the result
+Runs check_object_permission for the object with the used method and returns the result
 
 ### Example
 
@@ -1744,8 +1752,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -1755,11 +1765,9 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Resurssi.
-$format = 'format_example'; // string
-$patched_resource = new \Hauki\Model\PatchedResource(); // \Hauki\Model\PatchedResource
 
 try {
-    $result = $apiInstance->v1ResourcePermissionCheckPartialUpdate($id, $format, $patched_resource);
+    $result = $apiInstance->v1ResourcePermissionCheckPartialUpdate($id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1ResourcePermissionCheckPartialUpdate: ', $e->getMessage(), PHP_EOL;
@@ -1771,12 +1779,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Resurssi. |
- **format** | **string**|  | [optional]
- **patched_resource** | [**\Hauki\Model\PatchedResource**](../Model/PatchedResource.md)|  | [optional]
 
 ### Return type
 
-[**\Hauki\Model\Resource**](../Model/Resource.md)
+[**\Hauki\Model\PermissionCheck**](../Model/PermissionCheck.md)
 
 ### Authorization
 
@@ -1784,8 +1790,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
-- **Accept**: `application/json`, `text/html`
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -1794,12 +1800,12 @@ Name | Type | Description  | Notes
 ## `v1ResourcePermissionCheckRetrieve()`
 
 ```php
-v1ResourcePermissionCheckRetrieve($id, $format): \Hauki\Model\Resource
+v1ResourcePermissionCheckRetrieve($id): \Hauki\Model\PermissionCheck
 ```
 
+Check method permission for object
 
-
-Runs check_object_permission for the object and returns the result
+Runs check_object_permission for the object with the used method and returns the result
 
 ### Example
 
@@ -1818,8 +1824,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -1829,10 +1837,9 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Resurssi.
-$format = 'format_example'; // string
 
 try {
-    $result = $apiInstance->v1ResourcePermissionCheckRetrieve($id, $format);
+    $result = $apiInstance->v1ResourcePermissionCheckRetrieve($id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1ResourcePermissionCheckRetrieve: ', $e->getMessage(), PHP_EOL;
@@ -1844,11 +1851,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Resurssi. |
- **format** | **string**|  | [optional]
 
 ### Return type
 
-[**\Hauki\Model\Resource**](../Model/Resource.md)
+[**\Hauki\Model\PermissionCheck**](../Model/PermissionCheck.md)
 
 ### Authorization
 
@@ -1857,7 +1863,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -1866,12 +1872,12 @@ Name | Type | Description  | Notes
 ## `v1ResourcePermissionCheckUpdate()`
 
 ```php
-v1ResourcePermissionCheckUpdate($id, $format, $resource): \Hauki\Model\Resource
+v1ResourcePermissionCheckUpdate($id): \Hauki\Model\PermissionCheck
 ```
 
+Check method permission for object
 
-
-Runs check_object_permission for the object and returns the result
+Runs check_object_permission for the object with the used method and returns the result
 
 ### Example
 
@@ -1890,8 +1896,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -1901,11 +1909,9 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Resurssi.
-$format = 'format_example'; // string
-$resource = new \Hauki\Model\Resource(); // \Hauki\Model\Resource
 
 try {
-    $result = $apiInstance->v1ResourcePermissionCheckUpdate($id, $format, $resource);
+    $result = $apiInstance->v1ResourcePermissionCheckUpdate($id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1ResourcePermissionCheckUpdate: ', $e->getMessage(), PHP_EOL;
@@ -1917,12 +1923,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Resurssi. |
- **format** | **string**|  | [optional]
- **resource** | [**\Hauki\Model\Resource**](../Model/Resource.md)|  | [optional]
 
 ### Return type
 
-[**\Hauki\Model\Resource**](../Model/Resource.md)
+[**\Hauki\Model\PermissionCheck**](../Model/PermissionCheck.md)
 
 ### Authorization
 
@@ -1930,8 +1934,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
-- **Accept**: `application/json`, `text/html`
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -1940,7 +1944,7 @@ Name | Type | Description  | Notes
 ## `v1ResourceRetrieve()`
 
 ```php
-v1ResourceRetrieve($id, $format): \Hauki\Model\Resource
+v1ResourceRetrieve($id): \Hauki\Model\Resource
 ```
 
 Find Resource by ID
@@ -1962,8 +1966,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -1973,10 +1979,9 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Resurssi.
-$format = 'format_example'; // string
 
 try {
-    $result = $apiInstance->v1ResourceRetrieve($id, $format);
+    $result = $apiInstance->v1ResourceRetrieve($id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1ResourceRetrieve: ', $e->getMessage(), PHP_EOL;
@@ -1988,7 +1993,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Resurssi. |
- **format** | **string**|  | [optional]
 
 ### Return type
 
@@ -2001,7 +2005,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -2010,7 +2014,7 @@ Name | Type | Description  | Notes
 ## `v1ResourceUpdate()`
 
 ```php
-v1ResourceUpdate($id, $format, $resource): \Hauki\Model\Resource
+v1ResourceUpdate($id, $resource): \Hauki\Model\Resource
 ```
 
 Update existing Resource
@@ -2032,8 +2036,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -2043,11 +2049,10 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Resurssi.
-$format = 'format_example'; // string
 $resource = new \Hauki\Model\Resource(); // \Hauki\Model\Resource
 
 try {
-    $result = $apiInstance->v1ResourceUpdate($id, $format, $resource);
+    $result = $apiInstance->v1ResourceUpdate($id, $resource);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1ResourceUpdate: ', $e->getMessage(), PHP_EOL;
@@ -2059,7 +2064,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Resurssi. |
- **format** | **string**|  | [optional]
  **resource** | [**\Hauki\Model\Resource**](../Model/Resource.md)|  | [optional]
 
 ### Return type
@@ -2073,7 +2077,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -2082,7 +2086,7 @@ Name | Type | Description  | Notes
 ## `v1RuleCreate()`
 
 ```php
-v1RuleCreate($rule_create, $format): \Hauki\Model\RuleCreate
+v1RuleCreate($rule_create): \Hauki\Model\RuleCreate
 ```
 
 Create a Rule
@@ -2104,8 +2108,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -2115,10 +2121,9 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $rule_create = new \Hauki\Model\RuleCreate(); // \Hauki\Model\RuleCreate
-$format = 'format_example'; // string
 
 try {
-    $result = $apiInstance->v1RuleCreate($rule_create, $format);
+    $result = $apiInstance->v1RuleCreate($rule_create);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1RuleCreate: ', $e->getMessage(), PHP_EOL;
@@ -2130,7 +2135,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **rule_create** | [**\Hauki\Model\RuleCreate**](../Model/RuleCreate.md)|  |
- **format** | **string**|  | [optional]
 
 ### Return type
 
@@ -2143,7 +2147,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -2152,7 +2156,7 @@ Name | Type | Description  | Notes
 ## `v1RuleDestroy()`
 
 ```php
-v1RuleDestroy($id, $format)
+v1RuleDestroy($id)
 ```
 
 Delete existing Rule
@@ -2174,8 +2178,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -2185,10 +2191,9 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Sääntö.
-$format = 'format_example'; // string
 
 try {
-    $apiInstance->v1RuleDestroy($id, $format);
+    $apiInstance->v1RuleDestroy($id);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1RuleDestroy: ', $e->getMessage(), PHP_EOL;
 }
@@ -2199,7 +2204,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Sääntö. |
- **format** | **string**|  | [optional]
 
 ### Return type
 
@@ -2221,7 +2225,7 @@ void (empty response body)
 ## `v1RuleList()`
 
 ```php
-v1RuleList($format, $ordering): \Hauki\Model\Rule[]
+v1RuleList($ordering): \Hauki\Model\Rule[]
 ```
 
 List Rules
@@ -2243,8 +2247,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -2253,11 +2259,10 @@ $apiInstance = new Hauki\Api\V1Api(
     new GuzzleHttp\Client(),
     $config
 );
-$format = 'format_example'; // string
 $ordering = 'ordering_example'; // string | Which field to use when ordering the results.
 
 try {
-    $result = $apiInstance->v1RuleList($format, $ordering);
+    $result = $apiInstance->v1RuleList($ordering);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1RuleList: ', $e->getMessage(), PHP_EOL;
@@ -2268,7 +2273,6 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **format** | **string**|  | [optional]
  **ordering** | **string**| Which field to use when ordering the results. | [optional]
 
 ### Return type
@@ -2282,7 +2286,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -2291,7 +2295,7 @@ Name | Type | Description  | Notes
 ## `v1RulePartialUpdate()`
 
 ```php
-v1RulePartialUpdate($id, $format, $patched_rule): \Hauki\Model\Rule
+v1RulePartialUpdate($id, $patched_rule): \Hauki\Model\Rule
 ```
 
 Update existing Rule partially
@@ -2313,8 +2317,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -2324,11 +2330,10 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Sääntö.
-$format = 'format_example'; // string
 $patched_rule = new \Hauki\Model\PatchedRule(); // \Hauki\Model\PatchedRule
 
 try {
-    $result = $apiInstance->v1RulePartialUpdate($id, $format, $patched_rule);
+    $result = $apiInstance->v1RulePartialUpdate($id, $patched_rule);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1RulePartialUpdate: ', $e->getMessage(), PHP_EOL;
@@ -2340,7 +2345,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Sääntö. |
- **format** | **string**|  | [optional]
  **patched_rule** | [**\Hauki\Model\PatchedRule**](../Model/PatchedRule.md)|  | [optional]
 
 ### Return type
@@ -2354,7 +2358,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -2363,12 +2367,12 @@ Name | Type | Description  | Notes
 ## `v1RulePermissionCheckCreate()`
 
 ```php
-v1RulePermissionCheckCreate($id, $rule, $format): \Hauki\Model\Rule
+v1RulePermissionCheckCreate($id): \Hauki\Model\PermissionCheck
 ```
 
+Check method permission for object
 
-
-Runs check_object_permission for the object and returns the result
+Runs check_object_permission for the object with the used method and returns the result
 
 ### Example
 
@@ -2387,8 +2391,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -2398,11 +2404,9 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Sääntö.
-$rule = new \Hauki\Model\Rule(); // \Hauki\Model\Rule
-$format = 'format_example'; // string
 
 try {
-    $result = $apiInstance->v1RulePermissionCheckCreate($id, $rule, $format);
+    $result = $apiInstance->v1RulePermissionCheckCreate($id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1RulePermissionCheckCreate: ', $e->getMessage(), PHP_EOL;
@@ -2414,12 +2418,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Sääntö. |
- **rule** | [**\Hauki\Model\Rule**](../Model/Rule.md)|  |
- **format** | **string**|  | [optional]
 
 ### Return type
 
-[**\Hauki\Model\Rule**](../Model/Rule.md)
+[**\Hauki\Model\PermissionCheck**](../Model/PermissionCheck.md)
 
 ### Authorization
 
@@ -2427,8 +2429,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
-- **Accept**: `application/json`, `text/html`
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -2437,12 +2439,12 @@ Name | Type | Description  | Notes
 ## `v1RulePermissionCheckDestroy()`
 
 ```php
-v1RulePermissionCheckDestroy($id, $format)
+v1RulePermissionCheckDestroy($id)
 ```
 
+Check method permission for object
 
-
-Runs check_object_permission for the object and returns the result
+Runs check_object_permission for the object with the used method and returns the result
 
 ### Example
 
@@ -2461,8 +2463,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -2472,10 +2476,9 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Sääntö.
-$format = 'format_example'; // string
 
 try {
-    $apiInstance->v1RulePermissionCheckDestroy($id, $format);
+    $apiInstance->v1RulePermissionCheckDestroy($id);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1RulePermissionCheckDestroy: ', $e->getMessage(), PHP_EOL;
 }
@@ -2486,7 +2489,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Sääntö. |
- **format** | **string**|  | [optional]
 
 ### Return type
 
@@ -2508,12 +2510,12 @@ void (empty response body)
 ## `v1RulePermissionCheckPartialUpdate()`
 
 ```php
-v1RulePermissionCheckPartialUpdate($id, $format, $patched_rule): \Hauki\Model\Rule
+v1RulePermissionCheckPartialUpdate($id): \Hauki\Model\PermissionCheck
 ```
 
+Check method permission for object
 
-
-Runs check_object_permission for the object and returns the result
+Runs check_object_permission for the object with the used method and returns the result
 
 ### Example
 
@@ -2532,8 +2534,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -2543,11 +2547,9 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Sääntö.
-$format = 'format_example'; // string
-$patched_rule = new \Hauki\Model\PatchedRule(); // \Hauki\Model\PatchedRule
 
 try {
-    $result = $apiInstance->v1RulePermissionCheckPartialUpdate($id, $format, $patched_rule);
+    $result = $apiInstance->v1RulePermissionCheckPartialUpdate($id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1RulePermissionCheckPartialUpdate: ', $e->getMessage(), PHP_EOL;
@@ -2559,12 +2561,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Sääntö. |
- **format** | **string**|  | [optional]
- **patched_rule** | [**\Hauki\Model\PatchedRule**](../Model/PatchedRule.md)|  | [optional]
 
 ### Return type
 
-[**\Hauki\Model\Rule**](../Model/Rule.md)
+[**\Hauki\Model\PermissionCheck**](../Model/PermissionCheck.md)
 
 ### Authorization
 
@@ -2572,8 +2572,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
-- **Accept**: `application/json`, `text/html`
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -2582,12 +2582,12 @@ Name | Type | Description  | Notes
 ## `v1RulePermissionCheckRetrieve()`
 
 ```php
-v1RulePermissionCheckRetrieve($id, $format): \Hauki\Model\Rule
+v1RulePermissionCheckRetrieve($id): \Hauki\Model\PermissionCheck
 ```
 
+Check method permission for object
 
-
-Runs check_object_permission for the object and returns the result
+Runs check_object_permission for the object with the used method and returns the result
 
 ### Example
 
@@ -2606,8 +2606,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -2617,10 +2619,9 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Sääntö.
-$format = 'format_example'; // string
 
 try {
-    $result = $apiInstance->v1RulePermissionCheckRetrieve($id, $format);
+    $result = $apiInstance->v1RulePermissionCheckRetrieve($id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1RulePermissionCheckRetrieve: ', $e->getMessage(), PHP_EOL;
@@ -2632,11 +2633,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Sääntö. |
- **format** | **string**|  | [optional]
 
 ### Return type
 
-[**\Hauki\Model\Rule**](../Model/Rule.md)
+[**\Hauki\Model\PermissionCheck**](../Model/PermissionCheck.md)
 
 ### Authorization
 
@@ -2645,7 +2645,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -2654,12 +2654,12 @@ Name | Type | Description  | Notes
 ## `v1RulePermissionCheckUpdate()`
 
 ```php
-v1RulePermissionCheckUpdate($id, $rule, $format): \Hauki\Model\Rule
+v1RulePermissionCheckUpdate($id): \Hauki\Model\PermissionCheck
 ```
 
+Check method permission for object
 
-
-Runs check_object_permission for the object and returns the result
+Runs check_object_permission for the object with the used method and returns the result
 
 ### Example
 
@@ -2678,8 +2678,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -2689,11 +2691,9 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Sääntö.
-$rule = new \Hauki\Model\Rule(); // \Hauki\Model\Rule
-$format = 'format_example'; // string
 
 try {
-    $result = $apiInstance->v1RulePermissionCheckUpdate($id, $rule, $format);
+    $result = $apiInstance->v1RulePermissionCheckUpdate($id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1RulePermissionCheckUpdate: ', $e->getMessage(), PHP_EOL;
@@ -2705,12 +2705,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Sääntö. |
- **rule** | [**\Hauki\Model\Rule**](../Model/Rule.md)|  |
- **format** | **string**|  | [optional]
 
 ### Return type
 
-[**\Hauki\Model\Rule**](../Model/Rule.md)
+[**\Hauki\Model\PermissionCheck**](../Model/PermissionCheck.md)
 
 ### Authorization
 
@@ -2718,8 +2716,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
-- **Accept**: `application/json`, `text/html`
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -2728,7 +2726,7 @@ Name | Type | Description  | Notes
 ## `v1RuleRetrieve()`
 
 ```php
-v1RuleRetrieve($id, $format): \Hauki\Model\Rule
+v1RuleRetrieve($id): \Hauki\Model\Rule
 ```
 
 Find Rule by ID
@@ -2750,8 +2748,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -2761,10 +2761,9 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Sääntö.
-$format = 'format_example'; // string
 
 try {
-    $result = $apiInstance->v1RuleRetrieve($id, $format);
+    $result = $apiInstance->v1RuleRetrieve($id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1RuleRetrieve: ', $e->getMessage(), PHP_EOL;
@@ -2776,7 +2775,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Sääntö. |
- **format** | **string**|  | [optional]
 
 ### Return type
 
@@ -2789,7 +2787,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -2798,7 +2796,7 @@ Name | Type | Description  | Notes
 ## `v1RuleUpdate()`
 
 ```php
-v1RuleUpdate($id, $rule, $format): \Hauki\Model\Rule
+v1RuleUpdate($id, $rule): \Hauki\Model\Rule
 ```
 
 Update existing Rule
@@ -2820,8 +2818,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -2832,10 +2832,9 @@ $apiInstance = new Hauki\Api\V1Api(
 );
 $id = 56; // int | A unique integer value identifying this Sääntö.
 $rule = new \Hauki\Model\Rule(); // \Hauki\Model\Rule
-$format = 'format_example'; // string
 
 try {
-    $result = $apiInstance->v1RuleUpdate($id, $rule, $format);
+    $result = $apiInstance->v1RuleUpdate($id, $rule);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1Api->v1RuleUpdate: ', $e->getMessage(), PHP_EOL;
@@ -2848,7 +2847,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Sääntö. |
  **rule** | [**\Hauki\Model\Rule**](../Model/Rule.md)|  |
- **format** | **string**|  | [optional]
 
 ### Return type
 
@@ -2861,16 +2859,16 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `v1TimeSpansCreate()`
+## `v1TimeSpanCreate()`
 
 ```php
-v1TimeSpansCreate($time_span_create, $format): \Hauki\Model\TimeSpanCreate
+v1TimeSpanCreate($time_span_create): \Hauki\Model\TimeSpanCreate
 ```
 
 Create a Time Span
@@ -2892,8 +2890,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -2903,13 +2903,12 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $time_span_create = new \Hauki\Model\TimeSpanCreate(); // \Hauki\Model\TimeSpanCreate
-$format = 'format_example'; // string
 
 try {
-    $result = $apiInstance->v1TimeSpansCreate($time_span_create, $format);
+    $result = $apiInstance->v1TimeSpanCreate($time_span_create);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling V1Api->v1TimeSpansCreate: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling V1Api->v1TimeSpanCreate: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -2918,7 +2917,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **time_span_create** | [**\Hauki\Model\TimeSpanCreate**](../Model/TimeSpanCreate.md)|  |
- **format** | **string**|  | [optional]
 
 ### Return type
 
@@ -2931,16 +2929,16 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `v1TimeSpansDestroy()`
+## `v1TimeSpanDestroy()`
 
 ```php
-v1TimeSpansDestroy($id, $format)
+v1TimeSpanDestroy($id)
 ```
 
 Delete existing Time Span
@@ -2962,8 +2960,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -2973,12 +2973,11 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Aikaväli.
-$format = 'format_example'; // string
 
 try {
-    $apiInstance->v1TimeSpansDestroy($id, $format);
+    $apiInstance->v1TimeSpanDestroy($id);
 } catch (Exception $e) {
-    echo 'Exception when calling V1Api->v1TimeSpansDestroy: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling V1Api->v1TimeSpanDestroy: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -2987,7 +2986,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Aikaväli. |
- **format** | **string**|  | [optional]
 
 ### Return type
 
@@ -3006,10 +3004,10 @@ void (empty response body)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `v1TimeSpansList()`
+## `v1TimeSpanList()`
 
 ```php
-v1TimeSpansList($format, $ordering, $resource): \Hauki\Model\TimeSpan[]
+v1TimeSpanList($ordering, $resource): \Hauki\Model\TimeSpan[]
 ```
 
 List Time Spans
@@ -3031,8 +3029,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -3041,15 +3041,14 @@ $apiInstance = new Hauki\Api\V1Api(
     new GuzzleHttp\Client(),
     $config
 );
-$format = 'format_example'; // string
 $ordering = 'ordering_example'; // string | Which field to use when ordering the results.
-$resource = 'resource_example'; // string | resource
+$resource = 'resource_example'; // string
 
 try {
-    $result = $apiInstance->v1TimeSpansList($format, $ordering, $resource);
+    $result = $apiInstance->v1TimeSpanList($ordering, $resource);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling V1Api->v1TimeSpansList: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling V1Api->v1TimeSpanList: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -3057,9 +3056,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **format** | **string**|  | [optional]
  **ordering** | **string**| Which field to use when ordering the results. | [optional]
- **resource** | **string**| resource | [optional]
+ **resource** | **string**|  | [optional]
 
 ### Return type
 
@@ -3072,16 +3070,16 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `v1TimeSpansPartialUpdate()`
+## `v1TimeSpanPartialUpdate()`
 
 ```php
-v1TimeSpansPartialUpdate($id, $format, $patched_time_span): \Hauki\Model\TimeSpan
+v1TimeSpanPartialUpdate($id, $patched_time_span): \Hauki\Model\TimeSpan
 ```
 
 Update existing Time Span partially
@@ -3103,8 +3101,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -3114,14 +3114,13 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Aikaväli.
-$format = 'format_example'; // string
 $patched_time_span = new \Hauki\Model\PatchedTimeSpan(); // \Hauki\Model\PatchedTimeSpan
 
 try {
-    $result = $apiInstance->v1TimeSpansPartialUpdate($id, $format, $patched_time_span);
+    $result = $apiInstance->v1TimeSpanPartialUpdate($id, $patched_time_span);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling V1Api->v1TimeSpansPartialUpdate: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling V1Api->v1TimeSpanPartialUpdate: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -3130,7 +3129,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Aikaväli. |
- **format** | **string**|  | [optional]
  **patched_time_span** | [**\Hauki\Model\PatchedTimeSpan**](../Model/PatchedTimeSpan.md)|  | [optional]
 
 ### Return type
@@ -3144,21 +3142,21 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `v1TimeSpansPermissionCheckCreate()`
+## `v1TimeSpanPermissionCheckCreate()`
 
 ```php
-v1TimeSpansPermissionCheckCreate($id, $format, $time_span): \Hauki\Model\TimeSpan
+v1TimeSpanPermissionCheckCreate($id): \Hauki\Model\PermissionCheck
 ```
 
+Check method permission for object
 
-
-Runs check_object_permission for the object and returns the result
+Runs check_object_permission for the object with the used method and returns the result
 
 ### Example
 
@@ -3177,8 +3175,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -3188,14 +3188,12 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Aikaväli.
-$format = 'format_example'; // string
-$time_span = new \Hauki\Model\TimeSpan(); // \Hauki\Model\TimeSpan
 
 try {
-    $result = $apiInstance->v1TimeSpansPermissionCheckCreate($id, $format, $time_span);
+    $result = $apiInstance->v1TimeSpanPermissionCheckCreate($id);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling V1Api->v1TimeSpansPermissionCheckCreate: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling V1Api->v1TimeSpanPermissionCheckCreate: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -3204,12 +3202,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Aikaväli. |
- **format** | **string**|  | [optional]
- **time_span** | [**\Hauki\Model\TimeSpan**](../Model/TimeSpan.md)|  | [optional]
 
 ### Return type
 
-[**\Hauki\Model\TimeSpan**](../Model/TimeSpan.md)
+[**\Hauki\Model\PermissionCheck**](../Model/PermissionCheck.md)
 
 ### Authorization
 
@@ -3217,22 +3213,22 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
-- **Accept**: `application/json`, `text/html`
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `v1TimeSpansPermissionCheckDestroy()`
+## `v1TimeSpanPermissionCheckDestroy()`
 
 ```php
-v1TimeSpansPermissionCheckDestroy($id, $format)
+v1TimeSpanPermissionCheckDestroy($id)
 ```
 
+Check method permission for object
 
-
-Runs check_object_permission for the object and returns the result
+Runs check_object_permission for the object with the used method and returns the result
 
 ### Example
 
@@ -3251,8 +3247,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -3262,12 +3260,11 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Aikaväli.
-$format = 'format_example'; // string
 
 try {
-    $apiInstance->v1TimeSpansPermissionCheckDestroy($id, $format);
+    $apiInstance->v1TimeSpanPermissionCheckDestroy($id);
 } catch (Exception $e) {
-    echo 'Exception when calling V1Api->v1TimeSpansPermissionCheckDestroy: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling V1Api->v1TimeSpanPermissionCheckDestroy: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -3276,7 +3273,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Aikaväli. |
- **format** | **string**|  | [optional]
 
 ### Return type
 
@@ -3295,15 +3291,15 @@ void (empty response body)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `v1TimeSpansPermissionCheckPartialUpdate()`
+## `v1TimeSpanPermissionCheckPartialUpdate()`
 
 ```php
-v1TimeSpansPermissionCheckPartialUpdate($id, $format, $patched_time_span): \Hauki\Model\TimeSpan
+v1TimeSpanPermissionCheckPartialUpdate($id): \Hauki\Model\PermissionCheck
 ```
 
+Check method permission for object
 
-
-Runs check_object_permission for the object and returns the result
+Runs check_object_permission for the object with the used method and returns the result
 
 ### Example
 
@@ -3322,8 +3318,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -3333,14 +3331,12 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Aikaväli.
-$format = 'format_example'; // string
-$patched_time_span = new \Hauki\Model\PatchedTimeSpan(); // \Hauki\Model\PatchedTimeSpan
 
 try {
-    $result = $apiInstance->v1TimeSpansPermissionCheckPartialUpdate($id, $format, $patched_time_span);
+    $result = $apiInstance->v1TimeSpanPermissionCheckPartialUpdate($id);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling V1Api->v1TimeSpansPermissionCheckPartialUpdate: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling V1Api->v1TimeSpanPermissionCheckPartialUpdate: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -3349,84 +3345,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Aikaväli. |
- **format** | **string**|  | [optional]
- **patched_time_span** | [**\Hauki\Model\PatchedTimeSpan**](../Model/PatchedTimeSpan.md)|  | [optional]
 
 ### Return type
 
-[**\Hauki\Model\TimeSpan**](../Model/TimeSpan.md)
-
-### Authorization
-
-[HaukiSignedAuthentication](../../README.md#HaukiSignedAuthentication), [cookieAuth](../../README.md#cookieAuth), [tokenAuth](../../README.md#tokenAuth)
-
-### HTTP request headers
-
-- **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
-- **Accept**: `application/json`, `text/html`
-
-[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
-[[Back to Model list]](../../README.md#models)
-[[Back to README]](../../README.md)
-
-## `v1TimeSpansPermissionCheckRetrieve()`
-
-```php
-v1TimeSpansPermissionCheckRetrieve($id, $format): \Hauki\Model\TimeSpan
-```
-
-
-
-Runs check_object_permission for the object and returns the result
-
-### Example
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-
-// Configure API key authorization: HaukiSignedAuthentication
-$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('signature', 'YOUR_API_KEY');
-// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('signature', 'Bearer');
-
-// Configure API key authorization: cookieAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', 'YOUR_API_KEY');
-// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
-
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
-
-$apiInstance = new Hauki\Api\V1Api(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
-);
-$id = 56; // int | A unique integer value identifying this Aikaväli.
-$format = 'format_example'; // string
-
-try {
-    $result = $apiInstance->v1TimeSpansPermissionCheckRetrieve($id, $format);
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling V1Api->v1TimeSpansPermissionCheckRetrieve: ', $e->getMessage(), PHP_EOL;
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **int**| A unique integer value identifying this Aikaväli. |
- **format** | **string**|  | [optional]
-
-### Return type
-
-[**\Hauki\Model\TimeSpan**](../Model/TimeSpan.md)
+[**\Hauki\Model\PermissionCheck**](../Model/PermissionCheck.md)
 
 ### Authorization
 
@@ -3435,21 +3357,21 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `v1TimeSpansPermissionCheckUpdate()`
+## `v1TimeSpanPermissionCheckRetrieve()`
 
 ```php
-v1TimeSpansPermissionCheckUpdate($id, $format, $time_span): \Hauki\Model\TimeSpan
+v1TimeSpanPermissionCheckRetrieve($id): \Hauki\Model\PermissionCheck
 ```
 
+Check method permission for object
 
-
-Runs check_object_permission for the object and returns the result
+Runs check_object_permission for the object with the used method and returns the result
 
 ### Example
 
@@ -3468,8 +3390,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -3479,14 +3403,12 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Aikaväli.
-$format = 'format_example'; // string
-$time_span = new \Hauki\Model\TimeSpan(); // \Hauki\Model\TimeSpan
 
 try {
-    $result = $apiInstance->v1TimeSpansPermissionCheckUpdate($id, $format, $time_span);
+    $result = $apiInstance->v1TimeSpanPermissionCheckRetrieve($id);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling V1Api->v1TimeSpansPermissionCheckUpdate: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling V1Api->v1TimeSpanPermissionCheckRetrieve: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -3495,12 +3417,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Aikaväli. |
- **format** | **string**|  | [optional]
- **time_span** | [**\Hauki\Model\TimeSpan**](../Model/TimeSpan.md)|  | [optional]
 
 ### Return type
 
-[**\Hauki\Model\TimeSpan**](../Model/TimeSpan.md)
+[**\Hauki\Model\PermissionCheck**](../Model/PermissionCheck.md)
 
 ### Authorization
 
@@ -3508,17 +3428,89 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
-- **Accept**: `application/json`, `text/html`
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `v1TimeSpansRetrieve()`
+## `v1TimeSpanPermissionCheckUpdate()`
 
 ```php
-v1TimeSpansRetrieve($id, $format): \Hauki\Model\TimeSpan
+v1TimeSpanPermissionCheckUpdate($id): \Hauki\Model\PermissionCheck
+```
+
+Check method permission for object
+
+Runs check_object_permission for the object with the used method and returns the result
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: HaukiSignedAuthentication
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('signature', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('signature', 'Bearer');
+
+// Configure API key authorization: cookieAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
+
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
+
+
+$apiInstance = new Hauki\Api\V1Api(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$id = 56; // int | A unique integer value identifying this Aikaväli.
+
+try {
+    $result = $apiInstance->v1TimeSpanPermissionCheckUpdate($id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling V1Api->v1TimeSpanPermissionCheckUpdate: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer value identifying this Aikaväli. |
+
+### Return type
+
+[**\Hauki\Model\PermissionCheck**](../Model/PermissionCheck.md)
+
+### Authorization
+
+[HaukiSignedAuthentication](../../README.md#HaukiSignedAuthentication), [cookieAuth](../../README.md#cookieAuth), [tokenAuth](../../README.md#tokenAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
+## `v1TimeSpanRetrieve()`
+
+```php
+v1TimeSpanRetrieve($id): \Hauki\Model\TimeSpan
 ```
 
 Find Time Span by ID
@@ -3540,8 +3532,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -3551,13 +3545,12 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Aikaväli.
-$format = 'format_example'; // string
 
 try {
-    $result = $apiInstance->v1TimeSpansRetrieve($id, $format);
+    $result = $apiInstance->v1TimeSpanRetrieve($id);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling V1Api->v1TimeSpansRetrieve: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling V1Api->v1TimeSpanRetrieve: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -3566,7 +3559,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Aikaväli. |
- **format** | **string**|  | [optional]
 
 ### Return type
 
@@ -3579,16 +3571,16 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `v1TimeSpansUpdate()`
+## `v1TimeSpanUpdate()`
 
 ```php
-v1TimeSpansUpdate($id, $format, $time_span): \Hauki\Model\TimeSpan
+v1TimeSpanUpdate($id, $time_span): \Hauki\Model\TimeSpan
 ```
 
 Update existing Time Span
@@ -3610,8 +3602,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\V1Api(
@@ -3621,14 +3615,13 @@ $apiInstance = new Hauki\Api\V1Api(
     $config
 );
 $id = 56; // int | A unique integer value identifying this Aikaväli.
-$format = 'format_example'; // string
 $time_span = new \Hauki\Model\TimeSpan(); // \Hauki\Model\TimeSpan
 
 try {
-    $result = $apiInstance->v1TimeSpansUpdate($id, $format, $time_span);
+    $result = $apiInstance->v1TimeSpanUpdate($id, $time_span);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling V1Api->v1TimeSpansUpdate: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling V1Api->v1TimeSpanUpdate: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -3637,7 +3630,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer value identifying this Aikaväli. |
- **format** | **string**|  | [optional]
  **time_span** | [**\Hauki\Model\TimeSpan**](../Model/TimeSpan.md)|  | [optional]
 
 ### Return type
@@ -3651,7 +3643,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: `application/json`, `application/x-www-form-urlencoded`, `multipart/form-data`
-- **Accept**: `application/json`, `text/html`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)

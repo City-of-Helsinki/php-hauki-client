@@ -10,7 +10,7 @@ Method | HTTP request | Description
 ## `invalidateSignature()`
 
 ```php
-invalidateSignature($format)
+invalidateSignature()
 ```
 
 Invalidate the current Hauki Signed Auth signature
@@ -34,8 +34,10 @@ $config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Session', '
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Session', 'Bearer');
 
-// Configure Bearer (APIToken) authorization: tokenAuth
-$config = Hauki\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+// Configure API key authorization: tokenAuth
+$config = Hauki\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Hauki\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
 
 
 $apiInstance = new Hauki\Api\InvalidateSignatureApi(
@@ -44,10 +46,9 @@ $apiInstance = new Hauki\Api\InvalidateSignatureApi(
     new GuzzleHttp\Client(),
     $config
 );
-$format = 'format_example'; // string
 
 try {
-    $apiInstance->invalidateSignature($format);
+    $apiInstance->invalidateSignature();
 } catch (Exception $e) {
     echo 'Exception when calling InvalidateSignatureApi->invalidateSignature: ', $e->getMessage(), PHP_EOL;
 }
@@ -55,9 +56,7 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **format** | **string**|  | [optional]
+This endpoint does not need any parameter.
 
 ### Return type
 

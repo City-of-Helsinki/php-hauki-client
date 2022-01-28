@@ -1,7 +1,6 @@
 SHELL := /bin/bash
 PHONY :=
 COMMAND = openapi-generator-cli
-REPOSITORY = ghcr.io/city-of-helsinki/php-openapi-generator
 
 ifeq ($(TAG),)
 	TAG = 1.0
@@ -9,17 +8,9 @@ endif
 
 default: all
 
-PHONY += build-image
-build-image:
-	docker build -t $(REPOSITORY):$(TAG) ./
-
-PHONY += push-image
-push-image:
-	docker push $(REPOSITORY):$(TAG)
-
 PHONY += download-schema
 download-schema:
-	@curl https://hauki-test.oc.hel.ninja/openapi/ > hauki.json
+	@curl https://hauki.api.hel.fi/openapi/ > hauki.json
 
 PHONY += build-client
 build-client:

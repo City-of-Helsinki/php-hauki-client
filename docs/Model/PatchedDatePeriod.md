@@ -10,11 +10,11 @@ Name | Type | Description | Notes
 **description** | **string** |  | [optional]
 **start_date** | [**\DateTime**](\DateTime.md) |  | [optional]
 **end_date** | [**\DateTime**](\DateTime.md) |  | [optional]
-**resource_state** | [**\Hauki\Model\ResourceStateEnum**](ResourceStateEnum.md) |  | [optional]
+**resource_state** | [**ResourceStateEnum**](ResourceStateEnum.md) |  | [optional]
 **override** | **bool** |  | [optional]
-**origins** | [**\Hauki\Model\PatchedPeriodOrigin[]**](PatchedPeriodOrigin.md) |  | [optional]
+**origins** | [**\Hauki\Model\PeriodOrigin[]**](PeriodOrigin.md) |  | [optional]
 **created** | [**\DateTime**](\DateTime.md) |  | [optional] [readonly]
 **modified** | [**\DateTime**](\DateTime.md) |  | [optional] [readonly]
-**time_span_groups** | [**\Hauki\Model\PatchedTimeSpanGroup[]**](PatchedTimeSpanGroup.md) |  | [optional]
+**time_span_groups** | [**\Hauki\Model\TimeSpanGroup[]**](TimeSpanGroup.md) |  | [optional]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

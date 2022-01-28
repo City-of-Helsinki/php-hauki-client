@@ -8,8 +8,8 @@ Name | Type | Description | Notes
 **group** | **int** |  |
 **name** | **string** |  | [optional]
 **description** | **string** |  | [optional]
-**context** | [**\Hauki\Model\ContextEnum**](ContextEnum.md) |  |
-**subject** | [**\Hauki\Model\SubjectEnum**](SubjectEnum.md) |  |
+**context** | [**ContextEnum**](ContextEnum.md) |  |
+**subject** | [**SubjectEnum**](SubjectEnum.md) |  |
 **start** | **int** |  | [optional]
 **frequency_ordinal** | **int** |  | [optional]
 **frequency_modifier** | [**OneOfFrequencyModifierEnumBlankEnumNullEnum**](OneOfFrequencyModifierEnumBlankEnumNullEnum.md) |  | [optional]

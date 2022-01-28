@@ -116,35 +116,34 @@ class V1Api
     }
 
     /**
-     * Operation v1AuthRequiredTestRetrieve
+     * Operation v1AuthRequiredTestList
      *
      * Authentication test
      *
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return void
+     * @return \Hauki\Model\AuthRequiredTest[]
      */
-    public function v1AuthRequiredTestRetrieve($format = null)
+    public function v1AuthRequiredTestList()
     {
-        $this->v1AuthRequiredTestRetrieveWithHttpInfo($format);
+        list($response) = $this->v1AuthRequiredTestListWithHttpInfo();
+        return $response;
     }
 
     /**
-     * Operation v1AuthRequiredTestRetrieveWithHttpInfo
+     * Operation v1AuthRequiredTestListWithHttpInfo
      *
      * Authentication test
      *
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Hauki\Model\AuthRequiredTest[], HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1AuthRequiredTestRetrieveWithHttpInfo($format = null)
+    public function v1AuthRequiredTestListWithHttpInfo()
     {
-        $request = $this->v1AuthRequiredTestRetrieveRequest($format);
+        $request = $this->v1AuthRequiredTestListRequest();
 
         try {
             $options = $this->createHttpClientOption();
@@ -174,28 +173,63 @@ class V1Api
                 );
             }
 
-            return [null, $statusCode, $response->getHeaders()];
+            $responseBody = $response->getBody();
+            switch($statusCode) {
+                case 200:
+                    if ('\Hauki\Model\AuthRequiredTest[]' === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = (string) $responseBody;
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\Hauki\Model\AuthRequiredTest[]', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+            }
+
+            $returnType = '\Hauki\Model\AuthRequiredTest[]';
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = (string) $responseBody;
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
 
         } catch (ApiException $e) {
             switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Hauki\Model\AuthRequiredTest[]',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
             }
             throw $e;
         }
     }
 
     /**
-     * Operation v1AuthRequiredTestRetrieveAsync
+     * Operation v1AuthRequiredTestListAsync
      *
      * Authentication test
      *
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1AuthRequiredTestRetrieveAsync($format = null)
+    public function v1AuthRequiredTestListAsync()
     {
-        return $this->v1AuthRequiredTestRetrieveAsyncWithHttpInfo($format)
+        return $this->v1AuthRequiredTestListAsyncWithHttpInfo()
             ->then(
                 function ($response) {
                     return $response[0];
@@ -204,25 +238,35 @@ class V1Api
     }
 
     /**
-     * Operation v1AuthRequiredTestRetrieveAsyncWithHttpInfo
+     * Operation v1AuthRequiredTestListAsyncWithHttpInfo
      *
      * Authentication test
      *
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1AuthRequiredTestRetrieveAsyncWithHttpInfo($format = null)
+    public function v1AuthRequiredTestListAsyncWithHttpInfo()
     {
-        $returnType = '';
-        $request = $this->v1AuthRequiredTestRetrieveRequest($format);
+        $returnType = '\Hauki\Model\AuthRequiredTest[]';
+        $request = $this->v1AuthRequiredTestListRequest();
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = (string) $responseBody;
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
                 },
                 function ($exception) {
                     $response = $exception->getResponse();
@@ -242,14 +286,13 @@ class V1Api
     }
 
     /**
-     * Create request for operation 'v1AuthRequiredTestRetrieve'
+     * Create request for operation 'v1AuthRequiredTestList'
      *
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1AuthRequiredTestRetrieveRequest($format = null)
+    public function v1AuthRequiredTestListRequest()
     {
 
         $resourcePath = '/v1/auth_required_test/';
@@ -259,28 +302,17 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
 
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                []
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                [],
+                ['application/json'],
                 []
             );
         }
@@ -320,9 +352,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -351,15 +384,14 @@ class V1Api
      * Create a Date Period
      *
      * @param  \Hauki\Model\DatePeriod $date_period date_period (required)
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Hauki\Model\DatePeriod
      */
-    public function v1DatePeriodCreate($date_period, $format = null)
+    public function v1DatePeriodCreate($date_period)
     {
-        list($response) = $this->v1DatePeriodCreateWithHttpInfo($date_period, $format);
+        list($response) = $this->v1DatePeriodCreateWithHttpInfo($date_period);
         return $response;
     }
 
@@ -369,15 +401,14 @@ class V1Api
      * Create a Date Period
      *
      * @param  \Hauki\Model\DatePeriod $date_period (required)
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Hauki\Model\DatePeriod, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1DatePeriodCreateWithHttpInfo($date_period, $format = null)
+    public function v1DatePeriodCreateWithHttpInfo($date_period)
     {
-        $request = $this->v1DatePeriodCreateRequest($date_period, $format);
+        $request = $this->v1DatePeriodCreateRequest($date_period);
 
         try {
             $options = $this->createHttpClientOption();
@@ -458,14 +489,13 @@ class V1Api
      * Create a Date Period
      *
      * @param  \Hauki\Model\DatePeriod $date_period (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1DatePeriodCreateAsync($date_period, $format = null)
+    public function v1DatePeriodCreateAsync($date_period)
     {
-        return $this->v1DatePeriodCreateAsyncWithHttpInfo($date_period, $format)
+        return $this->v1DatePeriodCreateAsyncWithHttpInfo($date_period)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -479,15 +509,14 @@ class V1Api
      * Create a Date Period
      *
      * @param  \Hauki\Model\DatePeriod $date_period (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1DatePeriodCreateAsyncWithHttpInfo($date_period, $format = null)
+    public function v1DatePeriodCreateAsyncWithHttpInfo($date_period)
     {
         $returnType = '\Hauki\Model\DatePeriod';
-        $request = $this->v1DatePeriodCreateRequest($date_period, $format);
+        $request = $this->v1DatePeriodCreateRequest($date_period);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -527,12 +556,11 @@ class V1Api
      * Create request for operation 'v1DatePeriodCreate'
      *
      * @param  \Hauki\Model\DatePeriod $date_period (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1DatePeriodCreateRequest($date_period, $format = null)
+    public function v1DatePeriodCreateRequest($date_period)
     {
         // verify the required parameter 'date_period' is set
         if ($date_period === null || (is_array($date_period) && count($date_period) === 0)) {
@@ -548,28 +576,17 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
 
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data']
             );
         }
@@ -615,9 +632,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -646,15 +664,14 @@ class V1Api
      * Delete existing Date Period
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function v1DatePeriodDestroy($id, $format = null)
+    public function v1DatePeriodDestroy($id)
     {
-        $this->v1DatePeriodDestroyWithHttpInfo($id, $format);
+        $this->v1DatePeriodDestroyWithHttpInfo($id);
     }
 
     /**
@@ -663,15 +680,14 @@ class V1Api
      * Delete existing Date Period
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1DatePeriodDestroyWithHttpInfo($id, $format = null)
+    public function v1DatePeriodDestroyWithHttpInfo($id)
     {
-        $request = $this->v1DatePeriodDestroyRequest($id, $format);
+        $request = $this->v1DatePeriodDestroyRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -716,14 +732,13 @@ class V1Api
      * Delete existing Date Period
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1DatePeriodDestroyAsync($id, $format = null)
+    public function v1DatePeriodDestroyAsync($id)
     {
-        return $this->v1DatePeriodDestroyAsyncWithHttpInfo($id, $format)
+        return $this->v1DatePeriodDestroyAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -737,15 +752,14 @@ class V1Api
      * Delete existing Date Period
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1DatePeriodDestroyAsyncWithHttpInfo($id, $format = null)
+    public function v1DatePeriodDestroyAsyncWithHttpInfo($id)
     {
         $returnType = '';
-        $request = $this->v1DatePeriodDestroyRequest($id, $format);
+        $request = $this->v1DatePeriodDestroyRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -774,12 +788,11 @@ class V1Api
      * Create request for operation 'v1DatePeriodDestroy'
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1DatePeriodDestroyRequest($id, $format = null)
+    public function v1DatePeriodDestroyRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -795,17 +808,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -864,9 +866,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -894,23 +897,22 @@ class V1Api
      *
      * List Date Periods
      *
-     * @param  string $end_date end_date (optional)
-     * @param  string $end_date_gte end_date_gte (optional)
-     * @param  string $end_date_lte end_date_lte (optional)
-     * @param  string $format format (optional)
+     * @param  \DateTime $end_date Filter by exact period end date (optional)
+     * @param  \DateTime $end_date_gte Filter by end date greater than given date (or null) (optional)
+     * @param  \DateTime $end_date_lte Filter by end date less than given date (optional)
      * @param  string $ordering Which field to use when ordering the results. (optional)
-     * @param  string $resource resource (optional)
-     * @param  string $start_date start_date (optional)
-     * @param  string $start_date_gte start_date_gte (optional)
-     * @param  string $start_date_lte start_date_lte (optional)
+     * @param  string $resource Filter by resource id or multiple resource ids (comma-separated) (optional)
+     * @param  \DateTime $start_date Filter by exact period start date (optional)
+     * @param  \DateTime $start_date_gte Filter by start date greater than given date (optional)
+     * @param  \DateTime $start_date_lte Filter by start date less than given date (or null (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Hauki\Model\DatePeriod[]
      */
-    public function v1DatePeriodList($end_date = null, $end_date_gte = null, $end_date_lte = null, $format = null, $ordering = null, $resource = null, $start_date = null, $start_date_gte = null, $start_date_lte = null)
+    public function v1DatePeriodList($end_date = null, $end_date_gte = null, $end_date_lte = null, $ordering = null, $resource = null, $start_date = null, $start_date_gte = null, $start_date_lte = null)
     {
-        list($response) = $this->v1DatePeriodListWithHttpInfo($end_date, $end_date_gte, $end_date_lte, $format, $ordering, $resource, $start_date, $start_date_gte, $start_date_lte);
+        list($response) = $this->v1DatePeriodListWithHttpInfo($end_date, $end_date_gte, $end_date_lte, $ordering, $resource, $start_date, $start_date_gte, $start_date_lte);
         return $response;
     }
 
@@ -919,23 +921,22 @@ class V1Api
      *
      * List Date Periods
      *
-     * @param  string $end_date end_date (optional)
-     * @param  string $end_date_gte end_date_gte (optional)
-     * @param  string $end_date_lte end_date_lte (optional)
-     * @param  string $format (optional)
+     * @param  \DateTime $end_date Filter by exact period end date (optional)
+     * @param  \DateTime $end_date_gte Filter by end date greater than given date (or null) (optional)
+     * @param  \DateTime $end_date_lte Filter by end date less than given date (optional)
      * @param  string $ordering Which field to use when ordering the results. (optional)
-     * @param  string $resource resource (optional)
-     * @param  string $start_date start_date (optional)
-     * @param  string $start_date_gte start_date_gte (optional)
-     * @param  string $start_date_lte start_date_lte (optional)
+     * @param  string $resource Filter by resource id or multiple resource ids (comma-separated) (optional)
+     * @param  \DateTime $start_date Filter by exact period start date (optional)
+     * @param  \DateTime $start_date_gte Filter by start date greater than given date (optional)
+     * @param  \DateTime $start_date_lte Filter by start date less than given date (or null (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Hauki\Model\DatePeriod[], HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1DatePeriodListWithHttpInfo($end_date = null, $end_date_gte = null, $end_date_lte = null, $format = null, $ordering = null, $resource = null, $start_date = null, $start_date_gte = null, $start_date_lte = null)
+    public function v1DatePeriodListWithHttpInfo($end_date = null, $end_date_gte = null, $end_date_lte = null, $ordering = null, $resource = null, $start_date = null, $start_date_gte = null, $start_date_lte = null)
     {
-        $request = $this->v1DatePeriodListRequest($end_date, $end_date_gte, $end_date_lte, $format, $ordering, $resource, $start_date, $start_date_gte, $start_date_lte);
+        $request = $this->v1DatePeriodListRequest($end_date, $end_date_gte, $end_date_lte, $ordering, $resource, $start_date, $start_date_gte, $start_date_lte);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1015,22 +1016,21 @@ class V1Api
      *
      * List Date Periods
      *
-     * @param  string $end_date end_date (optional)
-     * @param  string $end_date_gte end_date_gte (optional)
-     * @param  string $end_date_lte end_date_lte (optional)
-     * @param  string $format (optional)
+     * @param  \DateTime $end_date Filter by exact period end date (optional)
+     * @param  \DateTime $end_date_gte Filter by end date greater than given date (or null) (optional)
+     * @param  \DateTime $end_date_lte Filter by end date less than given date (optional)
      * @param  string $ordering Which field to use when ordering the results. (optional)
-     * @param  string $resource resource (optional)
-     * @param  string $start_date start_date (optional)
-     * @param  string $start_date_gte start_date_gte (optional)
-     * @param  string $start_date_lte start_date_lte (optional)
+     * @param  string $resource Filter by resource id or multiple resource ids (comma-separated) (optional)
+     * @param  \DateTime $start_date Filter by exact period start date (optional)
+     * @param  \DateTime $start_date_gte Filter by start date greater than given date (optional)
+     * @param  \DateTime $start_date_lte Filter by start date less than given date (or null (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1DatePeriodListAsync($end_date = null, $end_date_gte = null, $end_date_lte = null, $format = null, $ordering = null, $resource = null, $start_date = null, $start_date_gte = null, $start_date_lte = null)
+    public function v1DatePeriodListAsync($end_date = null, $end_date_gte = null, $end_date_lte = null, $ordering = null, $resource = null, $start_date = null, $start_date_gte = null, $start_date_lte = null)
     {
-        return $this->v1DatePeriodListAsyncWithHttpInfo($end_date, $end_date_gte, $end_date_lte, $format, $ordering, $resource, $start_date, $start_date_gte, $start_date_lte)
+        return $this->v1DatePeriodListAsyncWithHttpInfo($end_date, $end_date_gte, $end_date_lte, $ordering, $resource, $start_date, $start_date_gte, $start_date_lte)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1043,23 +1043,22 @@ class V1Api
      *
      * List Date Periods
      *
-     * @param  string $end_date end_date (optional)
-     * @param  string $end_date_gte end_date_gte (optional)
-     * @param  string $end_date_lte end_date_lte (optional)
-     * @param  string $format (optional)
+     * @param  \DateTime $end_date Filter by exact period end date (optional)
+     * @param  \DateTime $end_date_gte Filter by end date greater than given date (or null) (optional)
+     * @param  \DateTime $end_date_lte Filter by end date less than given date (optional)
      * @param  string $ordering Which field to use when ordering the results. (optional)
-     * @param  string $resource resource (optional)
-     * @param  string $start_date start_date (optional)
-     * @param  string $start_date_gte start_date_gte (optional)
-     * @param  string $start_date_lte start_date_lte (optional)
+     * @param  string $resource Filter by resource id or multiple resource ids (comma-separated) (optional)
+     * @param  \DateTime $start_date Filter by exact period start date (optional)
+     * @param  \DateTime $start_date_gte Filter by start date greater than given date (optional)
+     * @param  \DateTime $start_date_lte Filter by start date less than given date (or null (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1DatePeriodListAsyncWithHttpInfo($end_date = null, $end_date_gte = null, $end_date_lte = null, $format = null, $ordering = null, $resource = null, $start_date = null, $start_date_gte = null, $start_date_lte = null)
+    public function v1DatePeriodListAsyncWithHttpInfo($end_date = null, $end_date_gte = null, $end_date_lte = null, $ordering = null, $resource = null, $start_date = null, $start_date_gte = null, $start_date_lte = null)
     {
         $returnType = '\Hauki\Model\DatePeriod[]';
-        $request = $this->v1DatePeriodListRequest($end_date, $end_date_gte, $end_date_lte, $format, $ordering, $resource, $start_date, $start_date_gte, $start_date_lte);
+        $request = $this->v1DatePeriodListRequest($end_date, $end_date_gte, $end_date_lte, $ordering, $resource, $start_date, $start_date_gte, $start_date_lte);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1098,20 +1097,19 @@ class V1Api
     /**
      * Create request for operation 'v1DatePeriodList'
      *
-     * @param  string $end_date end_date (optional)
-     * @param  string $end_date_gte end_date_gte (optional)
-     * @param  string $end_date_lte end_date_lte (optional)
-     * @param  string $format (optional)
+     * @param  \DateTime $end_date Filter by exact period end date (optional)
+     * @param  \DateTime $end_date_gte Filter by end date greater than given date (or null) (optional)
+     * @param  \DateTime $end_date_lte Filter by end date less than given date (optional)
      * @param  string $ordering Which field to use when ordering the results. (optional)
-     * @param  string $resource resource (optional)
-     * @param  string $start_date start_date (optional)
-     * @param  string $start_date_gte start_date_gte (optional)
-     * @param  string $start_date_lte start_date_lte (optional)
+     * @param  string $resource Filter by resource id or multiple resource ids (comma-separated) (optional)
+     * @param  \DateTime $start_date Filter by exact period start date (optional)
+     * @param  \DateTime $start_date_gte Filter by start date greater than given date (optional)
+     * @param  \DateTime $start_date_lte Filter by start date less than given date (or null (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1DatePeriodListRequest($end_date = null, $end_date_gte = null, $end_date_lte = null, $format = null, $ordering = null, $resource = null, $start_date = null, $start_date_gte = null, $start_date_lte = null)
+    public function v1DatePeriodListRequest($end_date = null, $end_date_gte = null, $end_date_lte = null, $ordering = null, $resource = null, $start_date = null, $start_date_gte = null, $start_date_lte = null)
     {
 
         $resourcePath = '/v1/date_period/';
@@ -1152,17 +1150,6 @@ class V1Api
             }
             else {
                 $queryParams['end_date_lte'] = $end_date_lte;
-            }
-        }
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
             }
         }
         // query params
@@ -1226,11 +1213,11 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 []
             );
         }
@@ -1270,9 +1257,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -1301,16 +1289,15 @@ class V1Api
      * Update existing Date Period partially
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format format (optional)
      * @param  \Hauki\Model\PatchedDatePeriod $patched_date_period patched_date_period (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Hauki\Model\DatePeriod
      */
-    public function v1DatePeriodPartialUpdate($id, $format = null, $patched_date_period = null)
+    public function v1DatePeriodPartialUpdate($id, $patched_date_period = null)
     {
-        list($response) = $this->v1DatePeriodPartialUpdateWithHttpInfo($id, $format, $patched_date_period);
+        list($response) = $this->v1DatePeriodPartialUpdateWithHttpInfo($id, $patched_date_period);
         return $response;
     }
 
@@ -1320,16 +1307,15 @@ class V1Api
      * Update existing Date Period partially
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format (optional)
      * @param  \Hauki\Model\PatchedDatePeriod $patched_date_period (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Hauki\Model\DatePeriod, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1DatePeriodPartialUpdateWithHttpInfo($id, $format = null, $patched_date_period = null)
+    public function v1DatePeriodPartialUpdateWithHttpInfo($id, $patched_date_period = null)
     {
-        $request = $this->v1DatePeriodPartialUpdateRequest($id, $format, $patched_date_period);
+        $request = $this->v1DatePeriodPartialUpdateRequest($id, $patched_date_period);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1410,15 +1396,14 @@ class V1Api
      * Update existing Date Period partially
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format (optional)
      * @param  \Hauki\Model\PatchedDatePeriod $patched_date_period (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1DatePeriodPartialUpdateAsync($id, $format = null, $patched_date_period = null)
+    public function v1DatePeriodPartialUpdateAsync($id, $patched_date_period = null)
     {
-        return $this->v1DatePeriodPartialUpdateAsyncWithHttpInfo($id, $format, $patched_date_period)
+        return $this->v1DatePeriodPartialUpdateAsyncWithHttpInfo($id, $patched_date_period)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1432,16 +1417,15 @@ class V1Api
      * Update existing Date Period partially
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format (optional)
      * @param  \Hauki\Model\PatchedDatePeriod $patched_date_period (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1DatePeriodPartialUpdateAsyncWithHttpInfo($id, $format = null, $patched_date_period = null)
+    public function v1DatePeriodPartialUpdateAsyncWithHttpInfo($id, $patched_date_period = null)
     {
         $returnType = '\Hauki\Model\DatePeriod';
-        $request = $this->v1DatePeriodPartialUpdateRequest($id, $format, $patched_date_period);
+        $request = $this->v1DatePeriodPartialUpdateRequest($id, $patched_date_period);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1481,13 +1465,12 @@ class V1Api
      * Create request for operation 'v1DatePeriodPartialUpdate'
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format (optional)
      * @param  \Hauki\Model\PatchedDatePeriod $patched_date_period (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1DatePeriodPartialUpdateRequest($id, $format = null, $patched_date_period = null)
+    public function v1DatePeriodPartialUpdateRequest($id, $patched_date_period = null)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -1503,17 +1486,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -1528,11 +1500,11 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data']
             );
         }
@@ -1578,9 +1550,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -1606,34 +1579,34 @@ class V1Api
     /**
      * Operation v1DatePeriodPermissionCheckCreate
      *
+     * Check method permission for object
+     *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  \Hauki\Model\DatePeriod $date_period date_period (required)
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Hauki\Model\DatePeriod
+     * @return \Hauki\Model\PermissionCheck
      */
-    public function v1DatePeriodPermissionCheckCreate($id, $date_period, $format = null)
+    public function v1DatePeriodPermissionCheckCreate($id)
     {
-        list($response) = $this->v1DatePeriodPermissionCheckCreateWithHttpInfo($id, $date_period, $format);
+        list($response) = $this->v1DatePeriodPermissionCheckCreateWithHttpInfo($id);
         return $response;
     }
 
     /**
      * Operation v1DatePeriodPermissionCheckCreateWithHttpInfo
      *
+     * Check method permission for object
+     *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  \Hauki\Model\DatePeriod $date_period (required)
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Hauki\Model\DatePeriod, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Hauki\Model\PermissionCheck, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1DatePeriodPermissionCheckCreateWithHttpInfo($id, $date_period, $format = null)
+    public function v1DatePeriodPermissionCheckCreateWithHttpInfo($id)
     {
-        $request = $this->v1DatePeriodPermissionCheckCreateRequest($id, $date_period, $format);
+        $request = $this->v1DatePeriodPermissionCheckCreateRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1666,20 +1639,20 @@ class V1Api
             $responseBody = $response->getBody();
             switch($statusCode) {
                 case 200:
-                    if ('\Hauki\Model\DatePeriod' === '\SplFileObject') {
+                    if ('\Hauki\Model\PermissionCheck' === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = (string) $responseBody;
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\Hauki\Model\DatePeriod', []),
+                        ObjectSerializer::deserialize($content, '\Hauki\Model\PermissionCheck', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\Hauki\Model\DatePeriod';
+            $returnType = '\Hauki\Model\PermissionCheck';
             $responseBody = $response->getBody();
             if ($returnType === '\SplFileObject') {
                 $content = $responseBody; //stream goes to serializer
@@ -1698,7 +1671,7 @@ class V1Api
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Hauki\Model\DatePeriod',
+                        '\Hauki\Model\PermissionCheck',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1711,18 +1684,16 @@ class V1Api
     /**
      * Operation v1DatePeriodPermissionCheckCreateAsync
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  \Hauki\Model\DatePeriod $date_period (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1DatePeriodPermissionCheckCreateAsync($id, $date_period, $format = null)
+    public function v1DatePeriodPermissionCheckCreateAsync($id)
     {
-        return $this->v1DatePeriodPermissionCheckCreateAsyncWithHttpInfo($id, $date_period, $format)
+        return $this->v1DatePeriodPermissionCheckCreateAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1733,19 +1704,17 @@ class V1Api
     /**
      * Operation v1DatePeriodPermissionCheckCreateAsyncWithHttpInfo
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  \Hauki\Model\DatePeriod $date_period (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1DatePeriodPermissionCheckCreateAsyncWithHttpInfo($id, $date_period, $format = null)
+    public function v1DatePeriodPermissionCheckCreateAsyncWithHttpInfo($id)
     {
-        $returnType = '\Hauki\Model\DatePeriod';
-        $request = $this->v1DatePeriodPermissionCheckCreateRequest($id, $date_period, $format);
+        $returnType = '\Hauki\Model\PermissionCheck';
+        $request = $this->v1DatePeriodPermissionCheckCreateRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1785,24 +1754,16 @@ class V1Api
      * Create request for operation 'v1DatePeriodPermissionCheckCreate'
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  \Hauki\Model\DatePeriod $date_period (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1DatePeriodPermissionCheckCreateRequest($id, $date_period, $format = null)
+    public function v1DatePeriodPermissionCheckCreateRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $id when calling v1DatePeriodPermissionCheckCreate'
-            );
-        }
-        // verify the required parameter 'date_period' is set
-        if ($date_period === null || (is_array($date_period) && count($date_period) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $date_period when calling v1DatePeriodPermissionCheckCreate'
             );
         }
 
@@ -1813,17 +1774,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -1838,23 +1788,17 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
-                ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data']
+                ['application/json'],
+                []
             );
         }
 
         // for model (json/xml)
-        if (isset($date_period)) {
-            if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($date_period));
-            } else {
-                $httpBody = $date_period;
-            }
-        } elseif (count($formParams) > 0) {
+        if (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -1888,9 +1832,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -1916,31 +1861,33 @@ class V1Api
     /**
      * Operation v1DatePeriodPermissionCheckDestroy
      *
+     * Check method permission for object
+     *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function v1DatePeriodPermissionCheckDestroy($id, $format = null)
+    public function v1DatePeriodPermissionCheckDestroy($id)
     {
-        $this->v1DatePeriodPermissionCheckDestroyWithHttpInfo($id, $format);
+        $this->v1DatePeriodPermissionCheckDestroyWithHttpInfo($id);
     }
 
     /**
      * Operation v1DatePeriodPermissionCheckDestroyWithHttpInfo
      *
+     * Check method permission for object
+     *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1DatePeriodPermissionCheckDestroyWithHttpInfo($id, $format = null)
+    public function v1DatePeriodPermissionCheckDestroyWithHttpInfo($id)
     {
-        $request = $this->v1DatePeriodPermissionCheckDestroyRequest($id, $format);
+        $request = $this->v1DatePeriodPermissionCheckDestroyRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1982,17 +1929,16 @@ class V1Api
     /**
      * Operation v1DatePeriodPermissionCheckDestroyAsync
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1DatePeriodPermissionCheckDestroyAsync($id, $format = null)
+    public function v1DatePeriodPermissionCheckDestroyAsync($id)
     {
-        return $this->v1DatePeriodPermissionCheckDestroyAsyncWithHttpInfo($id, $format)
+        return $this->v1DatePeriodPermissionCheckDestroyAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2003,18 +1949,17 @@ class V1Api
     /**
      * Operation v1DatePeriodPermissionCheckDestroyAsyncWithHttpInfo
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1DatePeriodPermissionCheckDestroyAsyncWithHttpInfo($id, $format = null)
+    public function v1DatePeriodPermissionCheckDestroyAsyncWithHttpInfo($id)
     {
         $returnType = '';
-        $request = $this->v1DatePeriodPermissionCheckDestroyRequest($id, $format);
+        $request = $this->v1DatePeriodPermissionCheckDestroyRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2043,12 +1988,11 @@ class V1Api
      * Create request for operation 'v1DatePeriodPermissionCheckDestroy'
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1DatePeriodPermissionCheckDestroyRequest($id, $format = null)
+    public function v1DatePeriodPermissionCheckDestroyRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -2064,17 +2008,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -2133,9 +2066,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -2161,34 +2095,34 @@ class V1Api
     /**
      * Operation v1DatePeriodPermissionCheckPartialUpdate
      *
+     * Check method permission for object
+     *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format format (optional)
-     * @param  \Hauki\Model\PatchedDatePeriod $patched_date_period patched_date_period (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Hauki\Model\DatePeriod
+     * @return \Hauki\Model\PermissionCheck
      */
-    public function v1DatePeriodPermissionCheckPartialUpdate($id, $format = null, $patched_date_period = null)
+    public function v1DatePeriodPermissionCheckPartialUpdate($id)
     {
-        list($response) = $this->v1DatePeriodPermissionCheckPartialUpdateWithHttpInfo($id, $format, $patched_date_period);
+        list($response) = $this->v1DatePeriodPermissionCheckPartialUpdateWithHttpInfo($id);
         return $response;
     }
 
     /**
      * Operation v1DatePeriodPermissionCheckPartialUpdateWithHttpInfo
      *
+     * Check method permission for object
+     *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\PatchedDatePeriod $patched_date_period (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Hauki\Model\DatePeriod, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Hauki\Model\PermissionCheck, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1DatePeriodPermissionCheckPartialUpdateWithHttpInfo($id, $format = null, $patched_date_period = null)
+    public function v1DatePeriodPermissionCheckPartialUpdateWithHttpInfo($id)
     {
-        $request = $this->v1DatePeriodPermissionCheckPartialUpdateRequest($id, $format, $patched_date_period);
+        $request = $this->v1DatePeriodPermissionCheckPartialUpdateRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2221,20 +2155,20 @@ class V1Api
             $responseBody = $response->getBody();
             switch($statusCode) {
                 case 200:
-                    if ('\Hauki\Model\DatePeriod' === '\SplFileObject') {
+                    if ('\Hauki\Model\PermissionCheck' === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = (string) $responseBody;
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\Hauki\Model\DatePeriod', []),
+                        ObjectSerializer::deserialize($content, '\Hauki\Model\PermissionCheck', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\Hauki\Model\DatePeriod';
+            $returnType = '\Hauki\Model\PermissionCheck';
             $responseBody = $response->getBody();
             if ($returnType === '\SplFileObject') {
                 $content = $responseBody; //stream goes to serializer
@@ -2253,7 +2187,7 @@ class V1Api
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Hauki\Model\DatePeriod',
+                        '\Hauki\Model\PermissionCheck',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2266,18 +2200,16 @@ class V1Api
     /**
      * Operation v1DatePeriodPermissionCheckPartialUpdateAsync
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\PatchedDatePeriod $patched_date_period (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1DatePeriodPermissionCheckPartialUpdateAsync($id, $format = null, $patched_date_period = null)
+    public function v1DatePeriodPermissionCheckPartialUpdateAsync($id)
     {
-        return $this->v1DatePeriodPermissionCheckPartialUpdateAsyncWithHttpInfo($id, $format, $patched_date_period)
+        return $this->v1DatePeriodPermissionCheckPartialUpdateAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2288,19 +2220,17 @@ class V1Api
     /**
      * Operation v1DatePeriodPermissionCheckPartialUpdateAsyncWithHttpInfo
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\PatchedDatePeriod $patched_date_period (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1DatePeriodPermissionCheckPartialUpdateAsyncWithHttpInfo($id, $format = null, $patched_date_period = null)
+    public function v1DatePeriodPermissionCheckPartialUpdateAsyncWithHttpInfo($id)
     {
-        $returnType = '\Hauki\Model\DatePeriod';
-        $request = $this->v1DatePeriodPermissionCheckPartialUpdateRequest($id, $format, $patched_date_period);
+        $returnType = '\Hauki\Model\PermissionCheck';
+        $request = $this->v1DatePeriodPermissionCheckPartialUpdateRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2340,13 +2270,11 @@ class V1Api
      * Create request for operation 'v1DatePeriodPermissionCheckPartialUpdate'
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\PatchedDatePeriod $patched_date_period (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1DatePeriodPermissionCheckPartialUpdateRequest($id, $format = null, $patched_date_period = null)
+    public function v1DatePeriodPermissionCheckPartialUpdateRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -2362,17 +2290,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -2387,310 +2304,11 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
-                ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($patched_date_period)) {
-            if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($patched_date_period));
-            } else {
-                $httpBody = $patched_date_period;
-            }
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
-            }
-        }
-
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('signature');
-        if ($apiKey !== null) {
-            $queryParams['signature'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('Session');
-        if ($apiKey !== null) {
-            
-        }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
-        }
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        return new Request(
-            'PATCH',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation v1DatePeriodPermissionCheckRetrieve
-     *
-     * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format format (optional)
-     *
-     * @throws \Hauki\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Hauki\Model\DatePeriod
-     */
-    public function v1DatePeriodPermissionCheckRetrieve($id, $format = null)
-    {
-        list($response) = $this->v1DatePeriodPermissionCheckRetrieveWithHttpInfo($id, $format);
-        return $response;
-    }
-
-    /**
-     * Operation v1DatePeriodPermissionCheckRetrieveWithHttpInfo
-     *
-     * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format (optional)
-     *
-     * @throws \Hauki\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Hauki\Model\DatePeriod, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function v1DatePeriodPermissionCheckRetrieveWithHttpInfo($id, $format = null)
-    {
-        $request = $this->v1DatePeriodPermissionCheckRetrieveRequest($id, $format);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            switch($statusCode) {
-                case 200:
-                    if ('\Hauki\Model\DatePeriod' === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = (string) $responseBody;
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\Hauki\Model\DatePeriod', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\Hauki\Model\DatePeriod';
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = (string) $responseBody;
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Hauki\Model\DatePeriod',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation v1DatePeriodPermissionCheckRetrieveAsync
-     *
-     * 
-     *
-     * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function v1DatePeriodPermissionCheckRetrieveAsync($id, $format = null)
-    {
-        return $this->v1DatePeriodPermissionCheckRetrieveAsyncWithHttpInfo($id, $format)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation v1DatePeriodPermissionCheckRetrieveAsyncWithHttpInfo
-     *
-     * 
-     *
-     * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function v1DatePeriodPermissionCheckRetrieveAsyncWithHttpInfo($id, $format = null)
-    {
-        $returnType = '\Hauki\Model\DatePeriod';
-        $request = $this->v1DatePeriodPermissionCheckRetrieveRequest($id, $format);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = (string) $responseBody;
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'v1DatePeriodPermissionCheckRetrieve'
-     *
-     * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function v1DatePeriodPermissionCheckRetrieveRequest($id, $format = null)
-    {
-        // verify the required parameter 'id' is set
-        if ($id === null || (is_array($id) && count($id) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling v1DatePeriodPermissionCheckRetrieve'
-            );
-        }
-
-        $resourcePath = '/v1/date_period/{id}/permission_check/';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
-
-
-        // path params
-        if ($id !== null) {
-            $resourcePath = str_replace(
-                '{' . 'id' . '}',
-                ObjectSerializer::toPathValue($id),
-                $resourcePath
-            );
-        }
-
-
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 []
             );
         }
@@ -2730,9 +2348,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -2748,7 +2367,7 @@ class V1Api
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
-            'GET',
+            'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
@@ -2756,36 +2375,36 @@ class V1Api
     }
 
     /**
-     * Operation v1DatePeriodPermissionCheckUpdate
+     * Operation v1DatePeriodPermissionCheckRetrieve
+     *
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  \Hauki\Model\DatePeriod $date_period date_period (required)
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Hauki\Model\DatePeriod
+     * @return \Hauki\Model\PermissionCheck
      */
-    public function v1DatePeriodPermissionCheckUpdate($id, $date_period, $format = null)
+    public function v1DatePeriodPermissionCheckRetrieve($id)
     {
-        list($response) = $this->v1DatePeriodPermissionCheckUpdateWithHttpInfo($id, $date_period, $format);
+        list($response) = $this->v1DatePeriodPermissionCheckRetrieveWithHttpInfo($id);
         return $response;
     }
 
     /**
-     * Operation v1DatePeriodPermissionCheckUpdateWithHttpInfo
+     * Operation v1DatePeriodPermissionCheckRetrieveWithHttpInfo
+     *
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  \Hauki\Model\DatePeriod $date_period (required)
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Hauki\Model\DatePeriod, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Hauki\Model\PermissionCheck, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1DatePeriodPermissionCheckUpdateWithHttpInfo($id, $date_period, $format = null)
+    public function v1DatePeriodPermissionCheckRetrieveWithHttpInfo($id)
     {
-        $request = $this->v1DatePeriodPermissionCheckUpdateRequest($id, $date_period, $format);
+        $request = $this->v1DatePeriodPermissionCheckRetrieveRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2818,20 +2437,20 @@ class V1Api
             $responseBody = $response->getBody();
             switch($statusCode) {
                 case 200:
-                    if ('\Hauki\Model\DatePeriod' === '\SplFileObject') {
+                    if ('\Hauki\Model\PermissionCheck' === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = (string) $responseBody;
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\Hauki\Model\DatePeriod', []),
+                        ObjectSerializer::deserialize($content, '\Hauki\Model\PermissionCheck', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\Hauki\Model\DatePeriod';
+            $returnType = '\Hauki\Model\PermissionCheck';
             $responseBody = $response->getBody();
             if ($returnType === '\SplFileObject') {
                 $content = $responseBody; //stream goes to serializer
@@ -2850,7 +2469,289 @@ class V1Api
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Hauki\Model\DatePeriod',
+                        '\Hauki\Model\PermissionCheck',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation v1DatePeriodPermissionCheckRetrieveAsync
+     *
+     * Check method permission for object
+     *
+     * @param  int $id A unique integer value identifying this Jakso. (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function v1DatePeriodPermissionCheckRetrieveAsync($id)
+    {
+        return $this->v1DatePeriodPermissionCheckRetrieveAsyncWithHttpInfo($id)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation v1DatePeriodPermissionCheckRetrieveAsyncWithHttpInfo
+     *
+     * Check method permission for object
+     *
+     * @param  int $id A unique integer value identifying this Jakso. (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function v1DatePeriodPermissionCheckRetrieveAsyncWithHttpInfo($id)
+    {
+        $returnType = '\Hauki\Model\PermissionCheck';
+        $request = $this->v1DatePeriodPermissionCheckRetrieveRequest($id);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = (string) $responseBody;
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'v1DatePeriodPermissionCheckRetrieve'
+     *
+     * @param  int $id A unique integer value identifying this Jakso. (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function v1DatePeriodPermissionCheckRetrieveRequest($id)
+    {
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling v1DatePeriodPermissionCheckRetrieve'
+            );
+        }
+
+        $resourcePath = '/v1/date_period/{id}/permission_check/';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'id' . '}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('signature');
+        if ($apiKey !== null) {
+            $queryParams['signature'] = $apiKey;
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Session');
+        if ($apiKey !== null) {
+            
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation v1DatePeriodPermissionCheckUpdate
+     *
+     * Check method permission for object
+     *
+     * @param  int $id A unique integer value identifying this Jakso. (required)
+     *
+     * @throws \Hauki\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Hauki\Model\PermissionCheck
+     */
+    public function v1DatePeriodPermissionCheckUpdate($id)
+    {
+        list($response) = $this->v1DatePeriodPermissionCheckUpdateWithHttpInfo($id);
+        return $response;
+    }
+
+    /**
+     * Operation v1DatePeriodPermissionCheckUpdateWithHttpInfo
+     *
+     * Check method permission for object
+     *
+     * @param  int $id A unique integer value identifying this Jakso. (required)
+     *
+     * @throws \Hauki\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Hauki\Model\PermissionCheck, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function v1DatePeriodPermissionCheckUpdateWithHttpInfo($id)
+    {
+        $request = $this->v1DatePeriodPermissionCheckUpdateRequest($id);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            switch($statusCode) {
+                case 200:
+                    if ('\Hauki\Model\PermissionCheck' === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = (string) $responseBody;
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\Hauki\Model\PermissionCheck', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+            }
+
+            $returnType = '\Hauki\Model\PermissionCheck';
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = (string) $responseBody;
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Hauki\Model\PermissionCheck',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2863,18 +2764,16 @@ class V1Api
     /**
      * Operation v1DatePeriodPermissionCheckUpdateAsync
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  \Hauki\Model\DatePeriod $date_period (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1DatePeriodPermissionCheckUpdateAsync($id, $date_period, $format = null)
+    public function v1DatePeriodPermissionCheckUpdateAsync($id)
     {
-        return $this->v1DatePeriodPermissionCheckUpdateAsyncWithHttpInfo($id, $date_period, $format)
+        return $this->v1DatePeriodPermissionCheckUpdateAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2885,19 +2784,17 @@ class V1Api
     /**
      * Operation v1DatePeriodPermissionCheckUpdateAsyncWithHttpInfo
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  \Hauki\Model\DatePeriod $date_period (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1DatePeriodPermissionCheckUpdateAsyncWithHttpInfo($id, $date_period, $format = null)
+    public function v1DatePeriodPermissionCheckUpdateAsyncWithHttpInfo($id)
     {
-        $returnType = '\Hauki\Model\DatePeriod';
-        $request = $this->v1DatePeriodPermissionCheckUpdateRequest($id, $date_period, $format);
+        $returnType = '\Hauki\Model\PermissionCheck';
+        $request = $this->v1DatePeriodPermissionCheckUpdateRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2937,24 +2834,16 @@ class V1Api
      * Create request for operation 'v1DatePeriodPermissionCheckUpdate'
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  \Hauki\Model\DatePeriod $date_period (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1DatePeriodPermissionCheckUpdateRequest($id, $date_period, $format = null)
+    public function v1DatePeriodPermissionCheckUpdateRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $id when calling v1DatePeriodPermissionCheckUpdate'
-            );
-        }
-        // verify the required parameter 'date_period' is set
-        if ($date_period === null || (is_array($date_period) && count($date_period) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $date_period when calling v1DatePeriodPermissionCheckUpdate'
             );
         }
 
@@ -2965,17 +2854,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -2990,23 +2868,17 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
-                ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data']
+                ['application/json'],
+                []
             );
         }
 
         // for model (json/xml)
-        if (isset($date_period)) {
-            if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($date_period));
-            } else {
-                $httpBody = $date_period;
-            }
-        } elseif (count($formParams) > 0) {
+        if (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -3040,9 +2912,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -3071,15 +2944,14 @@ class V1Api
      * Find Date Period by ID
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Hauki\Model\DatePeriod
      */
-    public function v1DatePeriodRetrieve($id, $format = null)
+    public function v1DatePeriodRetrieve($id)
     {
-        list($response) = $this->v1DatePeriodRetrieveWithHttpInfo($id, $format);
+        list($response) = $this->v1DatePeriodRetrieveWithHttpInfo($id);
         return $response;
     }
 
@@ -3089,15 +2961,14 @@ class V1Api
      * Find Date Period by ID
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Hauki\Model\DatePeriod, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1DatePeriodRetrieveWithHttpInfo($id, $format = null)
+    public function v1DatePeriodRetrieveWithHttpInfo($id)
     {
-        $request = $this->v1DatePeriodRetrieveRequest($id, $format);
+        $request = $this->v1DatePeriodRetrieveRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -3178,14 +3049,13 @@ class V1Api
      * Find Date Period by ID
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1DatePeriodRetrieveAsync($id, $format = null)
+    public function v1DatePeriodRetrieveAsync($id)
     {
-        return $this->v1DatePeriodRetrieveAsyncWithHttpInfo($id, $format)
+        return $this->v1DatePeriodRetrieveAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -3199,15 +3069,14 @@ class V1Api
      * Find Date Period by ID
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1DatePeriodRetrieveAsyncWithHttpInfo($id, $format = null)
+    public function v1DatePeriodRetrieveAsyncWithHttpInfo($id)
     {
         $returnType = '\Hauki\Model\DatePeriod';
-        $request = $this->v1DatePeriodRetrieveRequest($id, $format);
+        $request = $this->v1DatePeriodRetrieveRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -3247,12 +3116,11 @@ class V1Api
      * Create request for operation 'v1DatePeriodRetrieve'
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1DatePeriodRetrieveRequest($id, $format = null)
+    public function v1DatePeriodRetrieveRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -3268,17 +3136,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -3293,11 +3150,11 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 []
             );
         }
@@ -3337,9 +3194,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -3369,15 +3227,14 @@ class V1Api
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
      * @param  \Hauki\Model\DatePeriod $date_period date_period (required)
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Hauki\Model\DatePeriod
      */
-    public function v1DatePeriodUpdate($id, $date_period, $format = null)
+    public function v1DatePeriodUpdate($id, $date_period)
     {
-        list($response) = $this->v1DatePeriodUpdateWithHttpInfo($id, $date_period, $format);
+        list($response) = $this->v1DatePeriodUpdateWithHttpInfo($id, $date_period);
         return $response;
     }
 
@@ -3388,15 +3245,14 @@ class V1Api
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
      * @param  \Hauki\Model\DatePeriod $date_period (required)
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Hauki\Model\DatePeriod, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1DatePeriodUpdateWithHttpInfo($id, $date_period, $format = null)
+    public function v1DatePeriodUpdateWithHttpInfo($id, $date_period)
     {
-        $request = $this->v1DatePeriodUpdateRequest($id, $date_period, $format);
+        $request = $this->v1DatePeriodUpdateRequest($id, $date_period);
 
         try {
             $options = $this->createHttpClientOption();
@@ -3478,14 +3334,13 @@ class V1Api
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
      * @param  \Hauki\Model\DatePeriod $date_period (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1DatePeriodUpdateAsync($id, $date_period, $format = null)
+    public function v1DatePeriodUpdateAsync($id, $date_period)
     {
-        return $this->v1DatePeriodUpdateAsyncWithHttpInfo($id, $date_period, $format)
+        return $this->v1DatePeriodUpdateAsyncWithHttpInfo($id, $date_period)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -3500,15 +3355,14 @@ class V1Api
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
      * @param  \Hauki\Model\DatePeriod $date_period (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1DatePeriodUpdateAsyncWithHttpInfo($id, $date_period, $format = null)
+    public function v1DatePeriodUpdateAsyncWithHttpInfo($id, $date_period)
     {
         $returnType = '\Hauki\Model\DatePeriod';
-        $request = $this->v1DatePeriodUpdateRequest($id, $date_period, $format);
+        $request = $this->v1DatePeriodUpdateRequest($id, $date_period);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -3549,12 +3403,11 @@ class V1Api
      *
      * @param  int $id A unique integer value identifying this Jakso. (required)
      * @param  \Hauki\Model\DatePeriod $date_period (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1DatePeriodUpdateRequest($id, $date_period, $format = null)
+    public function v1DatePeriodUpdateRequest($id, $date_period)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -3576,17 +3429,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -3601,11 +3443,11 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data']
             );
         }
@@ -3651,9 +3493,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -3679,34 +3522,46 @@ class V1Api
     /**
      * Operation v1OpeningHoursList
      *
-     * @param  string $format format (optional)
+     * List opening hours
+     *
+     * @param  string $data_source Filter by resource data source (optional)
+     * @param  \DateTime $end_date Last date to return hours for (optional)
+     * @param  string $ordering Which field to use when ordering the results. (optional)
      * @param  int $page A page number within the paginated result set. (optional)
      * @param  int $page_size Number of results to return per page. (optional)
+     * @param  string $resource Filter by resource id or multiple resource ids (comma-separated) (optional)
+     * @param  \DateTime $start_date First date to return hours for (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Hauki\Model\PaginatedResourceDailyOpeningHoursList
      */
-    public function v1OpeningHoursList($format = null, $page = null, $page_size = null)
+    public function v1OpeningHoursList($data_source = null, $end_date = null, $ordering = null, $page = null, $page_size = null, $resource = null, $start_date = null)
     {
-        list($response) = $this->v1OpeningHoursListWithHttpInfo($format, $page, $page_size);
+        list($response) = $this->v1OpeningHoursListWithHttpInfo($data_source, $end_date, $ordering, $page, $page_size, $resource, $start_date);
         return $response;
     }
 
     /**
      * Operation v1OpeningHoursListWithHttpInfo
      *
-     * @param  string $format (optional)
+     * List opening hours
+     *
+     * @param  string $data_source Filter by resource data source (optional)
+     * @param  \DateTime $end_date Last date to return hours for (optional)
+     * @param  string $ordering Which field to use when ordering the results. (optional)
      * @param  int $page A page number within the paginated result set. (optional)
      * @param  int $page_size Number of results to return per page. (optional)
+     * @param  string $resource Filter by resource id or multiple resource ids (comma-separated) (optional)
+     * @param  \DateTime $start_date First date to return hours for (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Hauki\Model\PaginatedResourceDailyOpeningHoursList, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1OpeningHoursListWithHttpInfo($format = null, $page = null, $page_size = null)
+    public function v1OpeningHoursListWithHttpInfo($data_source = null, $end_date = null, $ordering = null, $page = null, $page_size = null, $resource = null, $start_date = null)
     {
-        $request = $this->v1OpeningHoursListRequest($format, $page, $page_size);
+        $request = $this->v1OpeningHoursListRequest($data_source, $end_date, $ordering, $page, $page_size, $resource, $start_date);
 
         try {
             $options = $this->createHttpClientOption();
@@ -3784,18 +3639,22 @@ class V1Api
     /**
      * Operation v1OpeningHoursListAsync
      *
-     * 
+     * List opening hours
      *
-     * @param  string $format (optional)
+     * @param  string $data_source Filter by resource data source (optional)
+     * @param  \DateTime $end_date Last date to return hours for (optional)
+     * @param  string $ordering Which field to use when ordering the results. (optional)
      * @param  int $page A page number within the paginated result set. (optional)
      * @param  int $page_size Number of results to return per page. (optional)
+     * @param  string $resource Filter by resource id or multiple resource ids (comma-separated) (optional)
+     * @param  \DateTime $start_date First date to return hours for (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1OpeningHoursListAsync($format = null, $page = null, $page_size = null)
+    public function v1OpeningHoursListAsync($data_source = null, $end_date = null, $ordering = null, $page = null, $page_size = null, $resource = null, $start_date = null)
     {
-        return $this->v1OpeningHoursListAsyncWithHttpInfo($format, $page, $page_size)
+        return $this->v1OpeningHoursListAsyncWithHttpInfo($data_source, $end_date, $ordering, $page, $page_size, $resource, $start_date)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -3806,19 +3665,23 @@ class V1Api
     /**
      * Operation v1OpeningHoursListAsyncWithHttpInfo
      *
-     * 
+     * List opening hours
      *
-     * @param  string $format (optional)
+     * @param  string $data_source Filter by resource data source (optional)
+     * @param  \DateTime $end_date Last date to return hours for (optional)
+     * @param  string $ordering Which field to use when ordering the results. (optional)
      * @param  int $page A page number within the paginated result set. (optional)
      * @param  int $page_size Number of results to return per page. (optional)
+     * @param  string $resource Filter by resource id or multiple resource ids (comma-separated) (optional)
+     * @param  \DateTime $start_date First date to return hours for (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1OpeningHoursListAsyncWithHttpInfo($format = null, $page = null, $page_size = null)
+    public function v1OpeningHoursListAsyncWithHttpInfo($data_source = null, $end_date = null, $ordering = null, $page = null, $page_size = null, $resource = null, $start_date = null)
     {
         $returnType = '\Hauki\Model\PaginatedResourceDailyOpeningHoursList';
-        $request = $this->v1OpeningHoursListRequest($format, $page, $page_size);
+        $request = $this->v1OpeningHoursListRequest($data_source, $end_date, $ordering, $page, $page_size, $resource, $start_date);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -3857,14 +3720,18 @@ class V1Api
     /**
      * Create request for operation 'v1OpeningHoursList'
      *
-     * @param  string $format (optional)
+     * @param  string $data_source Filter by resource data source (optional)
+     * @param  \DateTime $end_date Last date to return hours for (optional)
+     * @param  string $ordering Which field to use when ordering the results. (optional)
      * @param  int $page A page number within the paginated result set. (optional)
      * @param  int $page_size Number of results to return per page. (optional)
+     * @param  string $resource Filter by resource id or multiple resource ids (comma-separated) (optional)
+     * @param  \DateTime $start_date First date to return hours for (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1OpeningHoursListRequest($format = null, $page = null, $page_size = null)
+    public function v1OpeningHoursListRequest($data_source = null, $end_date = null, $ordering = null, $page = null, $page_size = null, $resource = null, $start_date = null)
     {
 
         $resourcePath = '/v1/opening_hours/';
@@ -3875,14 +3742,36 @@ class V1Api
         $multipart = false;
 
         // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
+        if ($data_source !== null) {
+            if('form' === 'form' && is_array($data_source)) {
+                foreach($data_source as $key => $value) {
                     $queryParams[$key] = $value;
                 }
             }
             else {
-                $queryParams['format'] = $format;
+                $queryParams['data_source'] = $data_source;
+            }
+        }
+        // query params
+        if ($end_date !== null) {
+            if('form' === 'form' && is_array($end_date)) {
+                foreach($end_date as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            }
+            else {
+                $queryParams['end_date'] = $end_date;
+            }
+        }
+        // query params
+        if ($ordering !== null) {
+            if('form' === 'form' && is_array($ordering)) {
+                foreach($ordering as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            }
+            else {
+                $queryParams['ordering'] = $ordering;
             }
         }
         // query params
@@ -3907,17 +3796,39 @@ class V1Api
                 $queryParams['page_size'] = $page_size;
             }
         }
+        // query params
+        if ($resource !== null) {
+            if('form' === 'form' && is_array($resource)) {
+                foreach($resource as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            }
+            else {
+                $queryParams['resource'] = $resource;
+            }
+        }
+        // query params
+        if ($start_date !== null) {
+            if('form' === 'form' && is_array($start_date)) {
+                foreach($start_date as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            }
+            else {
+                $queryParams['start_date'] = $start_date;
+            }
+        }
 
 
 
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 []
             );
         }
@@ -3957,9 +3868,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -3987,7 +3899,6 @@ class V1Api
      *
      * List Organizations
      *
-     * @param  string $format format (optional)
      * @param  string $ordering Which field to use when ordering the results. (optional)
      * @param  string $parent parent (optional)
      *
@@ -3995,9 +3906,9 @@ class V1Api
      * @throws \InvalidArgumentException
      * @return \Hauki\Model\Organization[]
      */
-    public function v1OrganizationList($format = null, $ordering = null, $parent = null)
+    public function v1OrganizationList($ordering = null, $parent = null)
     {
-        list($response) = $this->v1OrganizationListWithHttpInfo($format, $ordering, $parent);
+        list($response) = $this->v1OrganizationListWithHttpInfo($ordering, $parent);
         return $response;
     }
 
@@ -4006,17 +3917,16 @@ class V1Api
      *
      * List Organizations
      *
-     * @param  string $format (optional)
      * @param  string $ordering Which field to use when ordering the results. (optional)
-     * @param  string $parent parent (optional)
+     * @param  string $parent (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Hauki\Model\Organization[], HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1OrganizationListWithHttpInfo($format = null, $ordering = null, $parent = null)
+    public function v1OrganizationListWithHttpInfo($ordering = null, $parent = null)
     {
-        $request = $this->v1OrganizationListRequest($format, $ordering, $parent);
+        $request = $this->v1OrganizationListRequest($ordering, $parent);
 
         try {
             $options = $this->createHttpClientOption();
@@ -4096,16 +4006,15 @@ class V1Api
      *
      * List Organizations
      *
-     * @param  string $format (optional)
      * @param  string $ordering Which field to use when ordering the results. (optional)
-     * @param  string $parent parent (optional)
+     * @param  string $parent (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1OrganizationListAsync($format = null, $ordering = null, $parent = null)
+    public function v1OrganizationListAsync($ordering = null, $parent = null)
     {
-        return $this->v1OrganizationListAsyncWithHttpInfo($format, $ordering, $parent)
+        return $this->v1OrganizationListAsyncWithHttpInfo($ordering, $parent)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -4118,17 +4027,16 @@ class V1Api
      *
      * List Organizations
      *
-     * @param  string $format (optional)
      * @param  string $ordering Which field to use when ordering the results. (optional)
-     * @param  string $parent parent (optional)
+     * @param  string $parent (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1OrganizationListAsyncWithHttpInfo($format = null, $ordering = null, $parent = null)
+    public function v1OrganizationListAsyncWithHttpInfo($ordering = null, $parent = null)
     {
         $returnType = '\Hauki\Model\Organization[]';
-        $request = $this->v1OrganizationListRequest($format, $ordering, $parent);
+        $request = $this->v1OrganizationListRequest($ordering, $parent);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -4167,14 +4075,13 @@ class V1Api
     /**
      * Create request for operation 'v1OrganizationList'
      *
-     * @param  string $format (optional)
      * @param  string $ordering Which field to use when ordering the results. (optional)
-     * @param  string $parent parent (optional)
+     * @param  string $parent (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1OrganizationListRequest($format = null, $ordering = null, $parent = null)
+    public function v1OrganizationListRequest($ordering = null, $parent = null)
     {
 
         $resourcePath = '/v1/organization/';
@@ -4184,17 +4091,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
         // query params
         if ($ordering !== null) {
             if('form' === 'form' && is_array($ordering)) {
@@ -4223,11 +4119,11 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 []
             );
         }
@@ -4267,9 +4163,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -4298,15 +4195,14 @@ class V1Api
      * Find Organizations by ID
      *
      * @param  string $id A unique value identifying this organization. (required)
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Hauki\Model\Organization
      */
-    public function v1OrganizationRetrieve($id, $format = null)
+    public function v1OrganizationRetrieve($id)
     {
-        list($response) = $this->v1OrganizationRetrieveWithHttpInfo($id, $format);
+        list($response) = $this->v1OrganizationRetrieveWithHttpInfo($id);
         return $response;
     }
 
@@ -4316,15 +4212,14 @@ class V1Api
      * Find Organizations by ID
      *
      * @param  string $id A unique value identifying this organization. (required)
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Hauki\Model\Organization, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1OrganizationRetrieveWithHttpInfo($id, $format = null)
+    public function v1OrganizationRetrieveWithHttpInfo($id)
     {
-        $request = $this->v1OrganizationRetrieveRequest($id, $format);
+        $request = $this->v1OrganizationRetrieveRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -4405,14 +4300,13 @@ class V1Api
      * Find Organizations by ID
      *
      * @param  string $id A unique value identifying this organization. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1OrganizationRetrieveAsync($id, $format = null)
+    public function v1OrganizationRetrieveAsync($id)
     {
-        return $this->v1OrganizationRetrieveAsyncWithHttpInfo($id, $format)
+        return $this->v1OrganizationRetrieveAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -4426,15 +4320,14 @@ class V1Api
      * Find Organizations by ID
      *
      * @param  string $id A unique value identifying this organization. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1OrganizationRetrieveAsyncWithHttpInfo($id, $format = null)
+    public function v1OrganizationRetrieveAsyncWithHttpInfo($id)
     {
         $returnType = '\Hauki\Model\Organization';
-        $request = $this->v1OrganizationRetrieveRequest($id, $format);
+        $request = $this->v1OrganizationRetrieveRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -4474,12 +4367,11 @@ class V1Api
      * Create request for operation 'v1OrganizationRetrieve'
      *
      * @param  string $id A unique value identifying this organization. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1OrganizationRetrieveRequest($id, $format = null)
+    public function v1OrganizationRetrieveRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -4495,17 +4387,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -4520,11 +4401,11 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 []
             );
         }
@@ -4564,9 +4445,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -4594,16 +4476,15 @@ class V1Api
      *
      * Create a Resource
      *
-     * @param  string $format format (optional)
      * @param  \Hauki\Model\Resource $resource resource (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Hauki\Model\Resource
      */
-    public function v1ResourceCreate($format = null, $resource = null)
+    public function v1ResourceCreate($resource = null)
     {
-        list($response) = $this->v1ResourceCreateWithHttpInfo($format, $resource);
+        list($response) = $this->v1ResourceCreateWithHttpInfo($resource);
         return $response;
     }
 
@@ -4612,16 +4493,15 @@ class V1Api
      *
      * Create a Resource
      *
-     * @param  string $format (optional)
      * @param  \Hauki\Model\Resource $resource (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Hauki\Model\Resource, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1ResourceCreateWithHttpInfo($format = null, $resource = null)
+    public function v1ResourceCreateWithHttpInfo($resource = null)
     {
-        $request = $this->v1ResourceCreateRequest($format, $resource);
+        $request = $this->v1ResourceCreateRequest($resource);
 
         try {
             $options = $this->createHttpClientOption();
@@ -4701,15 +4581,14 @@ class V1Api
      *
      * Create a Resource
      *
-     * @param  string $format (optional)
      * @param  \Hauki\Model\Resource $resource (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1ResourceCreateAsync($format = null, $resource = null)
+    public function v1ResourceCreateAsync($resource = null)
     {
-        return $this->v1ResourceCreateAsyncWithHttpInfo($format, $resource)
+        return $this->v1ResourceCreateAsyncWithHttpInfo($resource)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -4722,16 +4601,15 @@ class V1Api
      *
      * Create a Resource
      *
-     * @param  string $format (optional)
      * @param  \Hauki\Model\Resource $resource (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1ResourceCreateAsyncWithHttpInfo($format = null, $resource = null)
+    public function v1ResourceCreateAsyncWithHttpInfo($resource = null)
     {
         $returnType = '\Hauki\Model\Resource';
-        $request = $this->v1ResourceCreateRequest($format, $resource);
+        $request = $this->v1ResourceCreateRequest($resource);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -4770,13 +4648,12 @@ class V1Api
     /**
      * Create request for operation 'v1ResourceCreate'
      *
-     * @param  string $format (optional)
      * @param  \Hauki\Model\Resource $resource (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1ResourceCreateRequest($format = null, $resource = null)
+    public function v1ResourceCreateRequest($resource = null)
     {
 
         $resourcePath = '/v1/resource/';
@@ -4786,28 +4663,17 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
 
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data']
             );
         }
@@ -4853,9 +4719,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -4884,15 +4751,14 @@ class V1Api
      * Delete existing Resource
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function v1ResourceDestroy($id, $format = null)
+    public function v1ResourceDestroy($id)
     {
-        $this->v1ResourceDestroyWithHttpInfo($id, $format);
+        $this->v1ResourceDestroyWithHttpInfo($id);
     }
 
     /**
@@ -4901,15 +4767,14 @@ class V1Api
      * Delete existing Resource
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1ResourceDestroyWithHttpInfo($id, $format = null)
+    public function v1ResourceDestroyWithHttpInfo($id)
     {
-        $request = $this->v1ResourceDestroyRequest($id, $format);
+        $request = $this->v1ResourceDestroyRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -4954,14 +4819,13 @@ class V1Api
      * Delete existing Resource
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1ResourceDestroyAsync($id, $format = null)
+    public function v1ResourceDestroyAsync($id)
     {
-        return $this->v1ResourceDestroyAsyncWithHttpInfo($id, $format)
+        return $this->v1ResourceDestroyAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -4975,15 +4839,14 @@ class V1Api
      * Delete existing Resource
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1ResourceDestroyAsyncWithHttpInfo($id, $format = null)
+    public function v1ResourceDestroyAsyncWithHttpInfo($id)
     {
         $returnType = '';
-        $request = $this->v1ResourceDestroyRequest($id, $format);
+        $request = $this->v1ResourceDestroyRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -5012,12 +4875,11 @@ class V1Api
      * Create request for operation 'v1ResourceDestroy'
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1ResourceDestroyRequest($id, $format = null)
+    public function v1ResourceDestroyRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -5033,17 +4895,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -5102,9 +4953,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -5130,32 +4982,34 @@ class V1Api
     /**
      * Operation v1ResourceIsOpenNowRetrieve
      *
+     * Is Resource open now?
+     *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Hauki\Model\Resource
+     * @return \Hauki\Model\IsOpenNow
      */
-    public function v1ResourceIsOpenNowRetrieve($id, $format = null)
+    public function v1ResourceIsOpenNowRetrieve($id)
     {
-        list($response) = $this->v1ResourceIsOpenNowRetrieveWithHttpInfo($id, $format);
+        list($response) = $this->v1ResourceIsOpenNowRetrieveWithHttpInfo($id);
         return $response;
     }
 
     /**
      * Operation v1ResourceIsOpenNowRetrieveWithHttpInfo
      *
+     * Is Resource open now?
+     *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Hauki\Model\Resource, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Hauki\Model\IsOpenNow, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1ResourceIsOpenNowRetrieveWithHttpInfo($id, $format = null)
+    public function v1ResourceIsOpenNowRetrieveWithHttpInfo($id)
     {
-        $request = $this->v1ResourceIsOpenNowRetrieveRequest($id, $format);
+        $request = $this->v1ResourceIsOpenNowRetrieveRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -5188,20 +5042,20 @@ class V1Api
             $responseBody = $response->getBody();
             switch($statusCode) {
                 case 200:
-                    if ('\Hauki\Model\Resource' === '\SplFileObject') {
+                    if ('\Hauki\Model\IsOpenNow' === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = (string) $responseBody;
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\Hauki\Model\Resource', []),
+                        ObjectSerializer::deserialize($content, '\Hauki\Model\IsOpenNow', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\Hauki\Model\Resource';
+            $returnType = '\Hauki\Model\IsOpenNow';
             $responseBody = $response->getBody();
             if ($returnType === '\SplFileObject') {
                 $content = $responseBody; //stream goes to serializer
@@ -5220,7 +5074,7 @@ class V1Api
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Hauki\Model\Resource',
+                        '\Hauki\Model\IsOpenNow',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5233,17 +5087,16 @@ class V1Api
     /**
      * Operation v1ResourceIsOpenNowRetrieveAsync
      *
-     * 
+     * Is Resource open now?
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1ResourceIsOpenNowRetrieveAsync($id, $format = null)
+    public function v1ResourceIsOpenNowRetrieveAsync($id)
     {
-        return $this->v1ResourceIsOpenNowRetrieveAsyncWithHttpInfo($id, $format)
+        return $this->v1ResourceIsOpenNowRetrieveAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -5254,18 +5107,17 @@ class V1Api
     /**
      * Operation v1ResourceIsOpenNowRetrieveAsyncWithHttpInfo
      *
-     * 
+     * Is Resource open now?
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1ResourceIsOpenNowRetrieveAsyncWithHttpInfo($id, $format = null)
+    public function v1ResourceIsOpenNowRetrieveAsyncWithHttpInfo($id)
     {
-        $returnType = '\Hauki\Model\Resource';
-        $request = $this->v1ResourceIsOpenNowRetrieveRequest($id, $format);
+        $returnType = '\Hauki\Model\IsOpenNow';
+        $request = $this->v1ResourceIsOpenNowRetrieveRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -5305,12 +5157,11 @@ class V1Api
      * Create request for operation 'v1ResourceIsOpenNowRetrieve'
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1ResourceIsOpenNowRetrieveRequest($id, $format = null)
+    public function v1ResourceIsOpenNowRetrieveRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -5326,17 +5177,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -5351,11 +5191,11 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 []
             );
         }
@@ -5395,9 +5235,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -5427,7 +5268,7 @@ class V1Api
      *
      * @param  string $child Filter by child id (optional)
      * @param  string $data_source Filter by data source (optional)
-     * @param  string $format format (optional)
+     * @param  string $ordering Which field to use when ordering the results. (optional)
      * @param  bool $origin_id_exists Filter by existing/missing origin_id (optional)
      * @param  int $page A page number within the paginated result set. (optional)
      * @param  int $page_size Number of results to return per page. (optional)
@@ -5437,9 +5278,9 @@ class V1Api
      * @throws \InvalidArgumentException
      * @return \Hauki\Model\PaginatedResourceList
      */
-    public function v1ResourceList($child = null, $data_source = null, $format = null, $origin_id_exists = null, $page = null, $page_size = null, $parent = null)
+    public function v1ResourceList($child = null, $data_source = null, $ordering = null, $origin_id_exists = null, $page = null, $page_size = null, $parent = null)
     {
-        list($response) = $this->v1ResourceListWithHttpInfo($child, $data_source, $format, $origin_id_exists, $page, $page_size, $parent);
+        list($response) = $this->v1ResourceListWithHttpInfo($child, $data_source, $ordering, $origin_id_exists, $page, $page_size, $parent);
         return $response;
     }
 
@@ -5450,7 +5291,7 @@ class V1Api
      *
      * @param  string $child Filter by child id (optional)
      * @param  string $data_source Filter by data source (optional)
-     * @param  string $format (optional)
+     * @param  string $ordering Which field to use when ordering the results. (optional)
      * @param  bool $origin_id_exists Filter by existing/missing origin_id (optional)
      * @param  int $page A page number within the paginated result set. (optional)
      * @param  int $page_size Number of results to return per page. (optional)
@@ -5460,9 +5301,9 @@ class V1Api
      * @throws \InvalidArgumentException
      * @return array of \Hauki\Model\PaginatedResourceList, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1ResourceListWithHttpInfo($child = null, $data_source = null, $format = null, $origin_id_exists = null, $page = null, $page_size = null, $parent = null)
+    public function v1ResourceListWithHttpInfo($child = null, $data_source = null, $ordering = null, $origin_id_exists = null, $page = null, $page_size = null, $parent = null)
     {
-        $request = $this->v1ResourceListRequest($child, $data_source, $format, $origin_id_exists, $page, $page_size, $parent);
+        $request = $this->v1ResourceListRequest($child, $data_source, $ordering, $origin_id_exists, $page, $page_size, $parent);
 
         try {
             $options = $this->createHttpClientOption();
@@ -5544,7 +5385,7 @@ class V1Api
      *
      * @param  string $child Filter by child id (optional)
      * @param  string $data_source Filter by data source (optional)
-     * @param  string $format (optional)
+     * @param  string $ordering Which field to use when ordering the results. (optional)
      * @param  bool $origin_id_exists Filter by existing/missing origin_id (optional)
      * @param  int $page A page number within the paginated result set. (optional)
      * @param  int $page_size Number of results to return per page. (optional)
@@ -5553,9 +5394,9 @@ class V1Api
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1ResourceListAsync($child = null, $data_source = null, $format = null, $origin_id_exists = null, $page = null, $page_size = null, $parent = null)
+    public function v1ResourceListAsync($child = null, $data_source = null, $ordering = null, $origin_id_exists = null, $page = null, $page_size = null, $parent = null)
     {
-        return $this->v1ResourceListAsyncWithHttpInfo($child, $data_source, $format, $origin_id_exists, $page, $page_size, $parent)
+        return $this->v1ResourceListAsyncWithHttpInfo($child, $data_source, $ordering, $origin_id_exists, $page, $page_size, $parent)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -5570,7 +5411,7 @@ class V1Api
      *
      * @param  string $child Filter by child id (optional)
      * @param  string $data_source Filter by data source (optional)
-     * @param  string $format (optional)
+     * @param  string $ordering Which field to use when ordering the results. (optional)
      * @param  bool $origin_id_exists Filter by existing/missing origin_id (optional)
      * @param  int $page A page number within the paginated result set. (optional)
      * @param  int $page_size Number of results to return per page. (optional)
@@ -5579,10 +5420,10 @@ class V1Api
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1ResourceListAsyncWithHttpInfo($child = null, $data_source = null, $format = null, $origin_id_exists = null, $page = null, $page_size = null, $parent = null)
+    public function v1ResourceListAsyncWithHttpInfo($child = null, $data_source = null, $ordering = null, $origin_id_exists = null, $page = null, $page_size = null, $parent = null)
     {
         $returnType = '\Hauki\Model\PaginatedResourceList';
-        $request = $this->v1ResourceListRequest($child, $data_source, $format, $origin_id_exists, $page, $page_size, $parent);
+        $request = $this->v1ResourceListRequest($child, $data_source, $ordering, $origin_id_exists, $page, $page_size, $parent);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -5623,7 +5464,7 @@ class V1Api
      *
      * @param  string $child Filter by child id (optional)
      * @param  string $data_source Filter by data source (optional)
-     * @param  string $format (optional)
+     * @param  string $ordering Which field to use when ordering the results. (optional)
      * @param  bool $origin_id_exists Filter by existing/missing origin_id (optional)
      * @param  int $page A page number within the paginated result set. (optional)
      * @param  int $page_size Number of results to return per page. (optional)
@@ -5632,7 +5473,7 @@ class V1Api
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1ResourceListRequest($child = null, $data_source = null, $format = null, $origin_id_exists = null, $page = null, $page_size = null, $parent = null)
+    public function v1ResourceListRequest($child = null, $data_source = null, $ordering = null, $origin_id_exists = null, $page = null, $page_size = null, $parent = null)
     {
 
         $resourcePath = '/v1/resource/';
@@ -5665,14 +5506,14 @@ class V1Api
             }
         }
         // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
+        if ($ordering !== null) {
+            if('form' === 'form' && is_array($ordering)) {
+                foreach($ordering as $key => $value) {
                     $queryParams[$key] = $value;
                 }
             }
             else {
-                $queryParams['format'] = $format;
+                $queryParams['ordering'] = $ordering;
             }
         }
         // query params
@@ -5725,11 +5566,11 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 []
             );
         }
@@ -5769,9 +5610,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -5797,32 +5639,38 @@ class V1Api
     /**
      * Operation v1ResourceOpeningHoursRetrieve
      *
+     * Get opening hours for Resource
+     *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format format (optional)
+     * @param  \DateTime $end_date Last date to return hours for (optional)
+     * @param  \DateTime $start_date First date to return hours for (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Hauki\Model\Resource
+     * @return \Hauki\Model\DailyOpeningHours
      */
-    public function v1ResourceOpeningHoursRetrieve($id, $format = null)
+    public function v1ResourceOpeningHoursRetrieve($id, $end_date = null, $start_date = null)
     {
-        list($response) = $this->v1ResourceOpeningHoursRetrieveWithHttpInfo($id, $format);
+        list($response) = $this->v1ResourceOpeningHoursRetrieveWithHttpInfo($id, $end_date, $start_date);
         return $response;
     }
 
     /**
      * Operation v1ResourceOpeningHoursRetrieveWithHttpInfo
      *
+     * Get opening hours for Resource
+     *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
+     * @param  \DateTime $end_date Last date to return hours for (optional)
+     * @param  \DateTime $start_date First date to return hours for (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Hauki\Model\Resource, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Hauki\Model\DailyOpeningHours, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1ResourceOpeningHoursRetrieveWithHttpInfo($id, $format = null)
+    public function v1ResourceOpeningHoursRetrieveWithHttpInfo($id, $end_date = null, $start_date = null)
     {
-        $request = $this->v1ResourceOpeningHoursRetrieveRequest($id, $format);
+        $request = $this->v1ResourceOpeningHoursRetrieveRequest($id, $end_date, $start_date);
 
         try {
             $options = $this->createHttpClientOption();
@@ -5855,20 +5703,20 @@ class V1Api
             $responseBody = $response->getBody();
             switch($statusCode) {
                 case 200:
-                    if ('\Hauki\Model\Resource' === '\SplFileObject') {
+                    if ('\Hauki\Model\DailyOpeningHours' === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = (string) $responseBody;
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\Hauki\Model\Resource', []),
+                        ObjectSerializer::deserialize($content, '\Hauki\Model\DailyOpeningHours', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\Hauki\Model\Resource';
+            $returnType = '\Hauki\Model\DailyOpeningHours';
             $responseBody = $response->getBody();
             if ($returnType === '\SplFileObject') {
                 $content = $responseBody; //stream goes to serializer
@@ -5887,7 +5735,7 @@ class V1Api
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Hauki\Model\Resource',
+                        '\Hauki\Model\DailyOpeningHours',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5900,17 +5748,18 @@ class V1Api
     /**
      * Operation v1ResourceOpeningHoursRetrieveAsync
      *
-     * 
+     * Get opening hours for Resource
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
+     * @param  \DateTime $end_date Last date to return hours for (optional)
+     * @param  \DateTime $start_date First date to return hours for (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1ResourceOpeningHoursRetrieveAsync($id, $format = null)
+    public function v1ResourceOpeningHoursRetrieveAsync($id, $end_date = null, $start_date = null)
     {
-        return $this->v1ResourceOpeningHoursRetrieveAsyncWithHttpInfo($id, $format)
+        return $this->v1ResourceOpeningHoursRetrieveAsyncWithHttpInfo($id, $end_date, $start_date)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -5921,18 +5770,19 @@ class V1Api
     /**
      * Operation v1ResourceOpeningHoursRetrieveAsyncWithHttpInfo
      *
-     * 
+     * Get opening hours for Resource
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
+     * @param  \DateTime $end_date Last date to return hours for (optional)
+     * @param  \DateTime $start_date First date to return hours for (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1ResourceOpeningHoursRetrieveAsyncWithHttpInfo($id, $format = null)
+    public function v1ResourceOpeningHoursRetrieveAsyncWithHttpInfo($id, $end_date = null, $start_date = null)
     {
-        $returnType = '\Hauki\Model\Resource';
-        $request = $this->v1ResourceOpeningHoursRetrieveRequest($id, $format);
+        $returnType = '\Hauki\Model\DailyOpeningHours';
+        $request = $this->v1ResourceOpeningHoursRetrieveRequest($id, $end_date, $start_date);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -5972,12 +5822,13 @@ class V1Api
      * Create request for operation 'v1ResourceOpeningHoursRetrieve'
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
+     * @param  \DateTime $end_date Last date to return hours for (optional)
+     * @param  \DateTime $start_date First date to return hours for (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1ResourceOpeningHoursRetrieveRequest($id, $format = null)
+    public function v1ResourceOpeningHoursRetrieveRequest($id, $end_date = null, $start_date = null)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -5994,14 +5845,25 @@ class V1Api
         $multipart = false;
 
         // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
+        if ($end_date !== null) {
+            if('form' === 'form' && is_array($end_date)) {
+                foreach($end_date as $key => $value) {
                     $queryParams[$key] = $value;
                 }
             }
             else {
-                $queryParams['format'] = $format;
+                $queryParams['end_date'] = $end_date;
+            }
+        }
+        // query params
+        if ($start_date !== null) {
+            if('form' === 'form' && is_array($start_date)) {
+                foreach($start_date as $key => $value) {
+                    $queryParams[$key] = $value;
+                }
+            }
+            else {
+                $queryParams['start_date'] = $start_date;
             }
         }
 
@@ -6018,11 +5880,11 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 []
             );
         }
@@ -6062,9 +5924,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -6093,16 +5956,15 @@ class V1Api
      * Update existing Resource partially
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format format (optional)
      * @param  \Hauki\Model\PatchedResource $patched_resource patched_resource (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Hauki\Model\Resource
      */
-    public function v1ResourcePartialUpdate($id, $format = null, $patched_resource = null)
+    public function v1ResourcePartialUpdate($id, $patched_resource = null)
     {
-        list($response) = $this->v1ResourcePartialUpdateWithHttpInfo($id, $format, $patched_resource);
+        list($response) = $this->v1ResourcePartialUpdateWithHttpInfo($id, $patched_resource);
         return $response;
     }
 
@@ -6112,16 +5974,15 @@ class V1Api
      * Update existing Resource partially
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
      * @param  \Hauki\Model\PatchedResource $patched_resource (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Hauki\Model\Resource, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1ResourcePartialUpdateWithHttpInfo($id, $format = null, $patched_resource = null)
+    public function v1ResourcePartialUpdateWithHttpInfo($id, $patched_resource = null)
     {
-        $request = $this->v1ResourcePartialUpdateRequest($id, $format, $patched_resource);
+        $request = $this->v1ResourcePartialUpdateRequest($id, $patched_resource);
 
         try {
             $options = $this->createHttpClientOption();
@@ -6202,15 +6063,14 @@ class V1Api
      * Update existing Resource partially
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
      * @param  \Hauki\Model\PatchedResource $patched_resource (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1ResourcePartialUpdateAsync($id, $format = null, $patched_resource = null)
+    public function v1ResourcePartialUpdateAsync($id, $patched_resource = null)
     {
-        return $this->v1ResourcePartialUpdateAsyncWithHttpInfo($id, $format, $patched_resource)
+        return $this->v1ResourcePartialUpdateAsyncWithHttpInfo($id, $patched_resource)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -6224,16 +6084,15 @@ class V1Api
      * Update existing Resource partially
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
      * @param  \Hauki\Model\PatchedResource $patched_resource (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1ResourcePartialUpdateAsyncWithHttpInfo($id, $format = null, $patched_resource = null)
+    public function v1ResourcePartialUpdateAsyncWithHttpInfo($id, $patched_resource = null)
     {
         $returnType = '\Hauki\Model\Resource';
-        $request = $this->v1ResourcePartialUpdateRequest($id, $format, $patched_resource);
+        $request = $this->v1ResourcePartialUpdateRequest($id, $patched_resource);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -6273,13 +6132,12 @@ class V1Api
      * Create request for operation 'v1ResourcePartialUpdate'
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
      * @param  \Hauki\Model\PatchedResource $patched_resource (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1ResourcePartialUpdateRequest($id, $format = null, $patched_resource = null)
+    public function v1ResourcePartialUpdateRequest($id, $patched_resource = null)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -6295,17 +6153,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -6320,11 +6167,11 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data']
             );
         }
@@ -6370,9 +6217,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -6398,34 +6246,34 @@ class V1Api
     /**
      * Operation v1ResourcePermissionCheckCreate
      *
+     * Check method permission for object
+     *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format format (optional)
-     * @param  \Hauki\Model\Resource $resource resource (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Hauki\Model\Resource
+     * @return \Hauki\Model\PermissionCheck
      */
-    public function v1ResourcePermissionCheckCreate($id, $format = null, $resource = null)
+    public function v1ResourcePermissionCheckCreate($id)
     {
-        list($response) = $this->v1ResourcePermissionCheckCreateWithHttpInfo($id, $format, $resource);
+        list($response) = $this->v1ResourcePermissionCheckCreateWithHttpInfo($id);
         return $response;
     }
 
     /**
      * Operation v1ResourcePermissionCheckCreateWithHttpInfo
      *
+     * Check method permission for object
+     *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\Resource $resource (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Hauki\Model\Resource, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Hauki\Model\PermissionCheck, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1ResourcePermissionCheckCreateWithHttpInfo($id, $format = null, $resource = null)
+    public function v1ResourcePermissionCheckCreateWithHttpInfo($id)
     {
-        $request = $this->v1ResourcePermissionCheckCreateRequest($id, $format, $resource);
+        $request = $this->v1ResourcePermissionCheckCreateRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -6458,20 +6306,20 @@ class V1Api
             $responseBody = $response->getBody();
             switch($statusCode) {
                 case 200:
-                    if ('\Hauki\Model\Resource' === '\SplFileObject') {
+                    if ('\Hauki\Model\PermissionCheck' === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = (string) $responseBody;
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\Hauki\Model\Resource', []),
+                        ObjectSerializer::deserialize($content, '\Hauki\Model\PermissionCheck', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\Hauki\Model\Resource';
+            $returnType = '\Hauki\Model\PermissionCheck';
             $responseBody = $response->getBody();
             if ($returnType === '\SplFileObject') {
                 $content = $responseBody; //stream goes to serializer
@@ -6490,7 +6338,7 @@ class V1Api
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Hauki\Model\Resource',
+                        '\Hauki\Model\PermissionCheck',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -6503,18 +6351,16 @@ class V1Api
     /**
      * Operation v1ResourcePermissionCheckCreateAsync
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\Resource $resource (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1ResourcePermissionCheckCreateAsync($id, $format = null, $resource = null)
+    public function v1ResourcePermissionCheckCreateAsync($id)
     {
-        return $this->v1ResourcePermissionCheckCreateAsyncWithHttpInfo($id, $format, $resource)
+        return $this->v1ResourcePermissionCheckCreateAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -6525,19 +6371,17 @@ class V1Api
     /**
      * Operation v1ResourcePermissionCheckCreateAsyncWithHttpInfo
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\Resource $resource (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1ResourcePermissionCheckCreateAsyncWithHttpInfo($id, $format = null, $resource = null)
+    public function v1ResourcePermissionCheckCreateAsyncWithHttpInfo($id)
     {
-        $returnType = '\Hauki\Model\Resource';
-        $request = $this->v1ResourcePermissionCheckCreateRequest($id, $format, $resource);
+        $returnType = '\Hauki\Model\PermissionCheck';
+        $request = $this->v1ResourcePermissionCheckCreateRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -6577,13 +6421,11 @@ class V1Api
      * Create request for operation 'v1ResourcePermissionCheckCreate'
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\Resource $resource (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1ResourcePermissionCheckCreateRequest($id, $format = null, $resource = null)
+    public function v1ResourcePermissionCheckCreateRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -6599,17 +6441,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -6624,23 +6455,17 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
-                ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data']
+                ['application/json'],
+                []
             );
         }
 
         // for model (json/xml)
-        if (isset($resource)) {
-            if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($resource));
-            } else {
-                $httpBody = $resource;
-            }
-        } elseif (count($formParams) > 0) {
+        if (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -6674,9 +6499,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -6702,31 +6528,33 @@ class V1Api
     /**
      * Operation v1ResourcePermissionCheckDestroy
      *
+     * Check method permission for object
+     *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function v1ResourcePermissionCheckDestroy($id, $format = null)
+    public function v1ResourcePermissionCheckDestroy($id)
     {
-        $this->v1ResourcePermissionCheckDestroyWithHttpInfo($id, $format);
+        $this->v1ResourcePermissionCheckDestroyWithHttpInfo($id);
     }
 
     /**
      * Operation v1ResourcePermissionCheckDestroyWithHttpInfo
      *
+     * Check method permission for object
+     *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1ResourcePermissionCheckDestroyWithHttpInfo($id, $format = null)
+    public function v1ResourcePermissionCheckDestroyWithHttpInfo($id)
     {
-        $request = $this->v1ResourcePermissionCheckDestroyRequest($id, $format);
+        $request = $this->v1ResourcePermissionCheckDestroyRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -6768,17 +6596,16 @@ class V1Api
     /**
      * Operation v1ResourcePermissionCheckDestroyAsync
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1ResourcePermissionCheckDestroyAsync($id, $format = null)
+    public function v1ResourcePermissionCheckDestroyAsync($id)
     {
-        return $this->v1ResourcePermissionCheckDestroyAsyncWithHttpInfo($id, $format)
+        return $this->v1ResourcePermissionCheckDestroyAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -6789,18 +6616,17 @@ class V1Api
     /**
      * Operation v1ResourcePermissionCheckDestroyAsyncWithHttpInfo
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1ResourcePermissionCheckDestroyAsyncWithHttpInfo($id, $format = null)
+    public function v1ResourcePermissionCheckDestroyAsyncWithHttpInfo($id)
     {
         $returnType = '';
-        $request = $this->v1ResourcePermissionCheckDestroyRequest($id, $format);
+        $request = $this->v1ResourcePermissionCheckDestroyRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -6829,12 +6655,11 @@ class V1Api
      * Create request for operation 'v1ResourcePermissionCheckDestroy'
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1ResourcePermissionCheckDestroyRequest($id, $format = null)
+    public function v1ResourcePermissionCheckDestroyRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -6850,17 +6675,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -6919,9 +6733,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -6947,34 +6762,34 @@ class V1Api
     /**
      * Operation v1ResourcePermissionCheckPartialUpdate
      *
+     * Check method permission for object
+     *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format format (optional)
-     * @param  \Hauki\Model\PatchedResource $patched_resource patched_resource (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Hauki\Model\Resource
+     * @return \Hauki\Model\PermissionCheck
      */
-    public function v1ResourcePermissionCheckPartialUpdate($id, $format = null, $patched_resource = null)
+    public function v1ResourcePermissionCheckPartialUpdate($id)
     {
-        list($response) = $this->v1ResourcePermissionCheckPartialUpdateWithHttpInfo($id, $format, $patched_resource);
+        list($response) = $this->v1ResourcePermissionCheckPartialUpdateWithHttpInfo($id);
         return $response;
     }
 
     /**
      * Operation v1ResourcePermissionCheckPartialUpdateWithHttpInfo
      *
+     * Check method permission for object
+     *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\PatchedResource $patched_resource (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Hauki\Model\Resource, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Hauki\Model\PermissionCheck, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1ResourcePermissionCheckPartialUpdateWithHttpInfo($id, $format = null, $patched_resource = null)
+    public function v1ResourcePermissionCheckPartialUpdateWithHttpInfo($id)
     {
-        $request = $this->v1ResourcePermissionCheckPartialUpdateRequest($id, $format, $patched_resource);
+        $request = $this->v1ResourcePermissionCheckPartialUpdateRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -7007,20 +6822,20 @@ class V1Api
             $responseBody = $response->getBody();
             switch($statusCode) {
                 case 200:
-                    if ('\Hauki\Model\Resource' === '\SplFileObject') {
+                    if ('\Hauki\Model\PermissionCheck' === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = (string) $responseBody;
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\Hauki\Model\Resource', []),
+                        ObjectSerializer::deserialize($content, '\Hauki\Model\PermissionCheck', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\Hauki\Model\Resource';
+            $returnType = '\Hauki\Model\PermissionCheck';
             $responseBody = $response->getBody();
             if ($returnType === '\SplFileObject') {
                 $content = $responseBody; //stream goes to serializer
@@ -7039,7 +6854,7 @@ class V1Api
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Hauki\Model\Resource',
+                        '\Hauki\Model\PermissionCheck',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -7052,18 +6867,16 @@ class V1Api
     /**
      * Operation v1ResourcePermissionCheckPartialUpdateAsync
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\PatchedResource $patched_resource (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1ResourcePermissionCheckPartialUpdateAsync($id, $format = null, $patched_resource = null)
+    public function v1ResourcePermissionCheckPartialUpdateAsync($id)
     {
-        return $this->v1ResourcePermissionCheckPartialUpdateAsyncWithHttpInfo($id, $format, $patched_resource)
+        return $this->v1ResourcePermissionCheckPartialUpdateAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -7074,19 +6887,17 @@ class V1Api
     /**
      * Operation v1ResourcePermissionCheckPartialUpdateAsyncWithHttpInfo
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\PatchedResource $patched_resource (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1ResourcePermissionCheckPartialUpdateAsyncWithHttpInfo($id, $format = null, $patched_resource = null)
+    public function v1ResourcePermissionCheckPartialUpdateAsyncWithHttpInfo($id)
     {
-        $returnType = '\Hauki\Model\Resource';
-        $request = $this->v1ResourcePermissionCheckPartialUpdateRequest($id, $format, $patched_resource);
+        $returnType = '\Hauki\Model\PermissionCheck';
+        $request = $this->v1ResourcePermissionCheckPartialUpdateRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -7126,13 +6937,11 @@ class V1Api
      * Create request for operation 'v1ResourcePermissionCheckPartialUpdate'
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\PatchedResource $patched_resource (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1ResourcePermissionCheckPartialUpdateRequest($id, $format = null, $patched_resource = null)
+    public function v1ResourcePermissionCheckPartialUpdateRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -7148,17 +6957,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -7173,310 +6971,11 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
-                ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($patched_resource)) {
-            if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($patched_resource));
-            } else {
-                $httpBody = $patched_resource;
-            }
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
-            }
-        }
-
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('signature');
-        if ($apiKey !== null) {
-            $queryParams['signature'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('Session');
-        if ($apiKey !== null) {
-            
-        }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
-        }
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        return new Request(
-            'PATCH',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation v1ResourcePermissionCheckRetrieve
-     *
-     * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format format (optional)
-     *
-     * @throws \Hauki\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Hauki\Model\Resource
-     */
-    public function v1ResourcePermissionCheckRetrieve($id, $format = null)
-    {
-        list($response) = $this->v1ResourcePermissionCheckRetrieveWithHttpInfo($id, $format);
-        return $response;
-    }
-
-    /**
-     * Operation v1ResourcePermissionCheckRetrieveWithHttpInfo
-     *
-     * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
-     *
-     * @throws \Hauki\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Hauki\Model\Resource, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function v1ResourcePermissionCheckRetrieveWithHttpInfo($id, $format = null)
-    {
-        $request = $this->v1ResourcePermissionCheckRetrieveRequest($id, $format);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            switch($statusCode) {
-                case 200:
-                    if ('\Hauki\Model\Resource' === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = (string) $responseBody;
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\Hauki\Model\Resource', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\Hauki\Model\Resource';
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = (string) $responseBody;
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Hauki\Model\Resource',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation v1ResourcePermissionCheckRetrieveAsync
-     *
-     * 
-     *
-     * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function v1ResourcePermissionCheckRetrieveAsync($id, $format = null)
-    {
-        return $this->v1ResourcePermissionCheckRetrieveAsyncWithHttpInfo($id, $format)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation v1ResourcePermissionCheckRetrieveAsyncWithHttpInfo
-     *
-     * 
-     *
-     * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function v1ResourcePermissionCheckRetrieveAsyncWithHttpInfo($id, $format = null)
-    {
-        $returnType = '\Hauki\Model\Resource';
-        $request = $this->v1ResourcePermissionCheckRetrieveRequest($id, $format);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = (string) $responseBody;
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'v1ResourcePermissionCheckRetrieve'
-     *
-     * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function v1ResourcePermissionCheckRetrieveRequest($id, $format = null)
-    {
-        // verify the required parameter 'id' is set
-        if ($id === null || (is_array($id) && count($id) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling v1ResourcePermissionCheckRetrieve'
-            );
-        }
-
-        $resourcePath = '/v1/resource/{id}/permission_check/';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
-
-
-        // path params
-        if ($id !== null) {
-            $resourcePath = str_replace(
-                '{' . 'id' . '}',
-                ObjectSerializer::toPathValue($id),
-                $resourcePath
-            );
-        }
-
-
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 []
             );
         }
@@ -7516,9 +7015,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -7534,7 +7034,7 @@ class V1Api
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
-            'GET',
+            'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
@@ -7542,36 +7042,36 @@ class V1Api
     }
 
     /**
-     * Operation v1ResourcePermissionCheckUpdate
+     * Operation v1ResourcePermissionCheckRetrieve
+     *
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format format (optional)
-     * @param  \Hauki\Model\Resource $resource resource (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Hauki\Model\Resource
+     * @return \Hauki\Model\PermissionCheck
      */
-    public function v1ResourcePermissionCheckUpdate($id, $format = null, $resource = null)
+    public function v1ResourcePermissionCheckRetrieve($id)
     {
-        list($response) = $this->v1ResourcePermissionCheckUpdateWithHttpInfo($id, $format, $resource);
+        list($response) = $this->v1ResourcePermissionCheckRetrieveWithHttpInfo($id);
         return $response;
     }
 
     /**
-     * Operation v1ResourcePermissionCheckUpdateWithHttpInfo
+     * Operation v1ResourcePermissionCheckRetrieveWithHttpInfo
+     *
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\Resource $resource (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Hauki\Model\Resource, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Hauki\Model\PermissionCheck, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1ResourcePermissionCheckUpdateWithHttpInfo($id, $format = null, $resource = null)
+    public function v1ResourcePermissionCheckRetrieveWithHttpInfo($id)
     {
-        $request = $this->v1ResourcePermissionCheckUpdateRequest($id, $format, $resource);
+        $request = $this->v1ResourcePermissionCheckRetrieveRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -7604,20 +7104,20 @@ class V1Api
             $responseBody = $response->getBody();
             switch($statusCode) {
                 case 200:
-                    if ('\Hauki\Model\Resource' === '\SplFileObject') {
+                    if ('\Hauki\Model\PermissionCheck' === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = (string) $responseBody;
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\Hauki\Model\Resource', []),
+                        ObjectSerializer::deserialize($content, '\Hauki\Model\PermissionCheck', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\Hauki\Model\Resource';
+            $returnType = '\Hauki\Model\PermissionCheck';
             $responseBody = $response->getBody();
             if ($returnType === '\SplFileObject') {
                 $content = $responseBody; //stream goes to serializer
@@ -7636,7 +7136,289 @@ class V1Api
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Hauki\Model\Resource',
+                        '\Hauki\Model\PermissionCheck',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation v1ResourcePermissionCheckRetrieveAsync
+     *
+     * Check method permission for object
+     *
+     * @param  int $id A unique integer value identifying this Resurssi. (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function v1ResourcePermissionCheckRetrieveAsync($id)
+    {
+        return $this->v1ResourcePermissionCheckRetrieveAsyncWithHttpInfo($id)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation v1ResourcePermissionCheckRetrieveAsyncWithHttpInfo
+     *
+     * Check method permission for object
+     *
+     * @param  int $id A unique integer value identifying this Resurssi. (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function v1ResourcePermissionCheckRetrieveAsyncWithHttpInfo($id)
+    {
+        $returnType = '\Hauki\Model\PermissionCheck';
+        $request = $this->v1ResourcePermissionCheckRetrieveRequest($id);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = (string) $responseBody;
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'v1ResourcePermissionCheckRetrieve'
+     *
+     * @param  int $id A unique integer value identifying this Resurssi. (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function v1ResourcePermissionCheckRetrieveRequest($id)
+    {
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling v1ResourcePermissionCheckRetrieve'
+            );
+        }
+
+        $resourcePath = '/v1/resource/{id}/permission_check/';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'id' . '}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('signature');
+        if ($apiKey !== null) {
+            $queryParams['signature'] = $apiKey;
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Session');
+        if ($apiKey !== null) {
+            
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation v1ResourcePermissionCheckUpdate
+     *
+     * Check method permission for object
+     *
+     * @param  int $id A unique integer value identifying this Resurssi. (required)
+     *
+     * @throws \Hauki\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Hauki\Model\PermissionCheck
+     */
+    public function v1ResourcePermissionCheckUpdate($id)
+    {
+        list($response) = $this->v1ResourcePermissionCheckUpdateWithHttpInfo($id);
+        return $response;
+    }
+
+    /**
+     * Operation v1ResourcePermissionCheckUpdateWithHttpInfo
+     *
+     * Check method permission for object
+     *
+     * @param  int $id A unique integer value identifying this Resurssi. (required)
+     *
+     * @throws \Hauki\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Hauki\Model\PermissionCheck, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function v1ResourcePermissionCheckUpdateWithHttpInfo($id)
+    {
+        $request = $this->v1ResourcePermissionCheckUpdateRequest($id);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            switch($statusCode) {
+                case 200:
+                    if ('\Hauki\Model\PermissionCheck' === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = (string) $responseBody;
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\Hauki\Model\PermissionCheck', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+            }
+
+            $returnType = '\Hauki\Model\PermissionCheck';
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = (string) $responseBody;
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Hauki\Model\PermissionCheck',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -7649,18 +7431,16 @@ class V1Api
     /**
      * Operation v1ResourcePermissionCheckUpdateAsync
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\Resource $resource (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1ResourcePermissionCheckUpdateAsync($id, $format = null, $resource = null)
+    public function v1ResourcePermissionCheckUpdateAsync($id)
     {
-        return $this->v1ResourcePermissionCheckUpdateAsyncWithHttpInfo($id, $format, $resource)
+        return $this->v1ResourcePermissionCheckUpdateAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -7671,19 +7451,17 @@ class V1Api
     /**
      * Operation v1ResourcePermissionCheckUpdateAsyncWithHttpInfo
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\Resource $resource (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1ResourcePermissionCheckUpdateAsyncWithHttpInfo($id, $format = null, $resource = null)
+    public function v1ResourcePermissionCheckUpdateAsyncWithHttpInfo($id)
     {
-        $returnType = '\Hauki\Model\Resource';
-        $request = $this->v1ResourcePermissionCheckUpdateRequest($id, $format, $resource);
+        $returnType = '\Hauki\Model\PermissionCheck';
+        $request = $this->v1ResourcePermissionCheckUpdateRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -7723,13 +7501,11 @@ class V1Api
      * Create request for operation 'v1ResourcePermissionCheckUpdate'
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\Resource $resource (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1ResourcePermissionCheckUpdateRequest($id, $format = null, $resource = null)
+    public function v1ResourcePermissionCheckUpdateRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -7745,17 +7521,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -7770,23 +7535,17 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
-                ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data']
+                ['application/json'],
+                []
             );
         }
 
         // for model (json/xml)
-        if (isset($resource)) {
-            if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($resource));
-            } else {
-                $httpBody = $resource;
-            }
-        } elseif (count($formParams) > 0) {
+        if (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -7820,9 +7579,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -7851,15 +7611,14 @@ class V1Api
      * Find Resource by ID
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Hauki\Model\Resource
      */
-    public function v1ResourceRetrieve($id, $format = null)
+    public function v1ResourceRetrieve($id)
     {
-        list($response) = $this->v1ResourceRetrieveWithHttpInfo($id, $format);
+        list($response) = $this->v1ResourceRetrieveWithHttpInfo($id);
         return $response;
     }
 
@@ -7869,15 +7628,14 @@ class V1Api
      * Find Resource by ID
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Hauki\Model\Resource, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1ResourceRetrieveWithHttpInfo($id, $format = null)
+    public function v1ResourceRetrieveWithHttpInfo($id)
     {
-        $request = $this->v1ResourceRetrieveRequest($id, $format);
+        $request = $this->v1ResourceRetrieveRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -7958,14 +7716,13 @@ class V1Api
      * Find Resource by ID
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1ResourceRetrieveAsync($id, $format = null)
+    public function v1ResourceRetrieveAsync($id)
     {
-        return $this->v1ResourceRetrieveAsyncWithHttpInfo($id, $format)
+        return $this->v1ResourceRetrieveAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -7979,15 +7736,14 @@ class V1Api
      * Find Resource by ID
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1ResourceRetrieveAsyncWithHttpInfo($id, $format = null)
+    public function v1ResourceRetrieveAsyncWithHttpInfo($id)
     {
         $returnType = '\Hauki\Model\Resource';
-        $request = $this->v1ResourceRetrieveRequest($id, $format);
+        $request = $this->v1ResourceRetrieveRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -8027,12 +7783,11 @@ class V1Api
      * Create request for operation 'v1ResourceRetrieve'
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1ResourceRetrieveRequest($id, $format = null)
+    public function v1ResourceRetrieveRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -8048,17 +7803,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -8073,11 +7817,11 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 []
             );
         }
@@ -8117,9 +7861,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -8148,16 +7893,15 @@ class V1Api
      * Update existing Resource
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format format (optional)
      * @param  \Hauki\Model\Resource $resource resource (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Hauki\Model\Resource
      */
-    public function v1ResourceUpdate($id, $format = null, $resource = null)
+    public function v1ResourceUpdate($id, $resource = null)
     {
-        list($response) = $this->v1ResourceUpdateWithHttpInfo($id, $format, $resource);
+        list($response) = $this->v1ResourceUpdateWithHttpInfo($id, $resource);
         return $response;
     }
 
@@ -8167,16 +7911,15 @@ class V1Api
      * Update existing Resource
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
      * @param  \Hauki\Model\Resource $resource (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Hauki\Model\Resource, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1ResourceUpdateWithHttpInfo($id, $format = null, $resource = null)
+    public function v1ResourceUpdateWithHttpInfo($id, $resource = null)
     {
-        $request = $this->v1ResourceUpdateRequest($id, $format, $resource);
+        $request = $this->v1ResourceUpdateRequest($id, $resource);
 
         try {
             $options = $this->createHttpClientOption();
@@ -8257,15 +8000,14 @@ class V1Api
      * Update existing Resource
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
      * @param  \Hauki\Model\Resource $resource (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1ResourceUpdateAsync($id, $format = null, $resource = null)
+    public function v1ResourceUpdateAsync($id, $resource = null)
     {
-        return $this->v1ResourceUpdateAsyncWithHttpInfo($id, $format, $resource)
+        return $this->v1ResourceUpdateAsyncWithHttpInfo($id, $resource)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -8279,16 +8021,15 @@ class V1Api
      * Update existing Resource
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
      * @param  \Hauki\Model\Resource $resource (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1ResourceUpdateAsyncWithHttpInfo($id, $format = null, $resource = null)
+    public function v1ResourceUpdateAsyncWithHttpInfo($id, $resource = null)
     {
         $returnType = '\Hauki\Model\Resource';
-        $request = $this->v1ResourceUpdateRequest($id, $format, $resource);
+        $request = $this->v1ResourceUpdateRequest($id, $resource);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -8328,13 +8069,12 @@ class V1Api
      * Create request for operation 'v1ResourceUpdate'
      *
      * @param  int $id A unique integer value identifying this Resurssi. (required)
-     * @param  string $format (optional)
      * @param  \Hauki\Model\Resource $resource (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1ResourceUpdateRequest($id, $format = null, $resource = null)
+    public function v1ResourceUpdateRequest($id, $resource = null)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -8350,17 +8090,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -8375,11 +8104,11 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data']
             );
         }
@@ -8425,9 +8154,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -8456,15 +8186,14 @@ class V1Api
      * Create a Rule
      *
      * @param  \Hauki\Model\RuleCreate $rule_create rule_create (required)
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Hauki\Model\RuleCreate
      */
-    public function v1RuleCreate($rule_create, $format = null)
+    public function v1RuleCreate($rule_create)
     {
-        list($response) = $this->v1RuleCreateWithHttpInfo($rule_create, $format);
+        list($response) = $this->v1RuleCreateWithHttpInfo($rule_create);
         return $response;
     }
 
@@ -8474,15 +8203,14 @@ class V1Api
      * Create a Rule
      *
      * @param  \Hauki\Model\RuleCreate $rule_create (required)
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Hauki\Model\RuleCreate, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1RuleCreateWithHttpInfo($rule_create, $format = null)
+    public function v1RuleCreateWithHttpInfo($rule_create)
     {
-        $request = $this->v1RuleCreateRequest($rule_create, $format);
+        $request = $this->v1RuleCreateRequest($rule_create);
 
         try {
             $options = $this->createHttpClientOption();
@@ -8563,14 +8291,13 @@ class V1Api
      * Create a Rule
      *
      * @param  \Hauki\Model\RuleCreate $rule_create (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1RuleCreateAsync($rule_create, $format = null)
+    public function v1RuleCreateAsync($rule_create)
     {
-        return $this->v1RuleCreateAsyncWithHttpInfo($rule_create, $format)
+        return $this->v1RuleCreateAsyncWithHttpInfo($rule_create)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -8584,15 +8311,14 @@ class V1Api
      * Create a Rule
      *
      * @param  \Hauki\Model\RuleCreate $rule_create (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1RuleCreateAsyncWithHttpInfo($rule_create, $format = null)
+    public function v1RuleCreateAsyncWithHttpInfo($rule_create)
     {
         $returnType = '\Hauki\Model\RuleCreate';
-        $request = $this->v1RuleCreateRequest($rule_create, $format);
+        $request = $this->v1RuleCreateRequest($rule_create);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -8632,12 +8358,11 @@ class V1Api
      * Create request for operation 'v1RuleCreate'
      *
      * @param  \Hauki\Model\RuleCreate $rule_create (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1RuleCreateRequest($rule_create, $format = null)
+    public function v1RuleCreateRequest($rule_create)
     {
         // verify the required parameter 'rule_create' is set
         if ($rule_create === null || (is_array($rule_create) && count($rule_create) === 0)) {
@@ -8653,28 +8378,17 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
 
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data']
             );
         }
@@ -8720,9 +8434,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -8751,15 +8466,14 @@ class V1Api
      * Delete existing Rule
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function v1RuleDestroy($id, $format = null)
+    public function v1RuleDestroy($id)
     {
-        $this->v1RuleDestroyWithHttpInfo($id, $format);
+        $this->v1RuleDestroyWithHttpInfo($id);
     }
 
     /**
@@ -8768,15 +8482,14 @@ class V1Api
      * Delete existing Rule
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1RuleDestroyWithHttpInfo($id, $format = null)
+    public function v1RuleDestroyWithHttpInfo($id)
     {
-        $request = $this->v1RuleDestroyRequest($id, $format);
+        $request = $this->v1RuleDestroyRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -8821,14 +8534,13 @@ class V1Api
      * Delete existing Rule
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1RuleDestroyAsync($id, $format = null)
+    public function v1RuleDestroyAsync($id)
     {
-        return $this->v1RuleDestroyAsyncWithHttpInfo($id, $format)
+        return $this->v1RuleDestroyAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -8842,15 +8554,14 @@ class V1Api
      * Delete existing Rule
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1RuleDestroyAsyncWithHttpInfo($id, $format = null)
+    public function v1RuleDestroyAsyncWithHttpInfo($id)
     {
         $returnType = '';
-        $request = $this->v1RuleDestroyRequest($id, $format);
+        $request = $this->v1RuleDestroyRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -8879,12 +8590,11 @@ class V1Api
      * Create request for operation 'v1RuleDestroy'
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1RuleDestroyRequest($id, $format = null)
+    public function v1RuleDestroyRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -8900,17 +8610,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -8969,9 +8668,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -8999,16 +8699,15 @@ class V1Api
      *
      * List Rules
      *
-     * @param  string $format format (optional)
      * @param  string $ordering Which field to use when ordering the results. (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Hauki\Model\Rule[]
      */
-    public function v1RuleList($format = null, $ordering = null)
+    public function v1RuleList($ordering = null)
     {
-        list($response) = $this->v1RuleListWithHttpInfo($format, $ordering);
+        list($response) = $this->v1RuleListWithHttpInfo($ordering);
         return $response;
     }
 
@@ -9017,16 +8716,15 @@ class V1Api
      *
      * List Rules
      *
-     * @param  string $format (optional)
      * @param  string $ordering Which field to use when ordering the results. (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Hauki\Model\Rule[], HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1RuleListWithHttpInfo($format = null, $ordering = null)
+    public function v1RuleListWithHttpInfo($ordering = null)
     {
-        $request = $this->v1RuleListRequest($format, $ordering);
+        $request = $this->v1RuleListRequest($ordering);
 
         try {
             $options = $this->createHttpClientOption();
@@ -9106,15 +8804,14 @@ class V1Api
      *
      * List Rules
      *
-     * @param  string $format (optional)
      * @param  string $ordering Which field to use when ordering the results. (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1RuleListAsync($format = null, $ordering = null)
+    public function v1RuleListAsync($ordering = null)
     {
-        return $this->v1RuleListAsyncWithHttpInfo($format, $ordering)
+        return $this->v1RuleListAsyncWithHttpInfo($ordering)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -9127,16 +8824,15 @@ class V1Api
      *
      * List Rules
      *
-     * @param  string $format (optional)
      * @param  string $ordering Which field to use when ordering the results. (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1RuleListAsyncWithHttpInfo($format = null, $ordering = null)
+    public function v1RuleListAsyncWithHttpInfo($ordering = null)
     {
         $returnType = '\Hauki\Model\Rule[]';
-        $request = $this->v1RuleListRequest($format, $ordering);
+        $request = $this->v1RuleListRequest($ordering);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -9175,13 +8871,12 @@ class V1Api
     /**
      * Create request for operation 'v1RuleList'
      *
-     * @param  string $format (optional)
      * @param  string $ordering Which field to use when ordering the results. (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1RuleListRequest($format = null, $ordering = null)
+    public function v1RuleListRequest($ordering = null)
     {
 
         $resourcePath = '/v1/rule/';
@@ -9191,17 +8886,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
         // query params
         if ($ordering !== null) {
             if('form' === 'form' && is_array($ordering)) {
@@ -9219,11 +8903,11 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 []
             );
         }
@@ -9263,9 +8947,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -9294,16 +8979,15 @@ class V1Api
      * Update existing Rule partially
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format format (optional)
      * @param  \Hauki\Model\PatchedRule $patched_rule patched_rule (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Hauki\Model\Rule
      */
-    public function v1RulePartialUpdate($id, $format = null, $patched_rule = null)
+    public function v1RulePartialUpdate($id, $patched_rule = null)
     {
-        list($response) = $this->v1RulePartialUpdateWithHttpInfo($id, $format, $patched_rule);
+        list($response) = $this->v1RulePartialUpdateWithHttpInfo($id, $patched_rule);
         return $response;
     }
 
@@ -9313,16 +8997,15 @@ class V1Api
      * Update existing Rule partially
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format (optional)
      * @param  \Hauki\Model\PatchedRule $patched_rule (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Hauki\Model\Rule, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1RulePartialUpdateWithHttpInfo($id, $format = null, $patched_rule = null)
+    public function v1RulePartialUpdateWithHttpInfo($id, $patched_rule = null)
     {
-        $request = $this->v1RulePartialUpdateRequest($id, $format, $patched_rule);
+        $request = $this->v1RulePartialUpdateRequest($id, $patched_rule);
 
         try {
             $options = $this->createHttpClientOption();
@@ -9403,15 +9086,14 @@ class V1Api
      * Update existing Rule partially
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format (optional)
      * @param  \Hauki\Model\PatchedRule $patched_rule (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1RulePartialUpdateAsync($id, $format = null, $patched_rule = null)
+    public function v1RulePartialUpdateAsync($id, $patched_rule = null)
     {
-        return $this->v1RulePartialUpdateAsyncWithHttpInfo($id, $format, $patched_rule)
+        return $this->v1RulePartialUpdateAsyncWithHttpInfo($id, $patched_rule)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -9425,16 +9107,15 @@ class V1Api
      * Update existing Rule partially
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format (optional)
      * @param  \Hauki\Model\PatchedRule $patched_rule (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1RulePartialUpdateAsyncWithHttpInfo($id, $format = null, $patched_rule = null)
+    public function v1RulePartialUpdateAsyncWithHttpInfo($id, $patched_rule = null)
     {
         $returnType = '\Hauki\Model\Rule';
-        $request = $this->v1RulePartialUpdateRequest($id, $format, $patched_rule);
+        $request = $this->v1RulePartialUpdateRequest($id, $patched_rule);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -9474,13 +9155,12 @@ class V1Api
      * Create request for operation 'v1RulePartialUpdate'
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format (optional)
      * @param  \Hauki\Model\PatchedRule $patched_rule (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1RulePartialUpdateRequest($id, $format = null, $patched_rule = null)
+    public function v1RulePartialUpdateRequest($id, $patched_rule = null)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -9496,17 +9176,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -9521,11 +9190,11 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data']
             );
         }
@@ -9571,9 +9240,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -9599,34 +9269,34 @@ class V1Api
     /**
      * Operation v1RulePermissionCheckCreate
      *
+     * Check method permission for object
+     *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  \Hauki\Model\Rule $rule rule (required)
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Hauki\Model\Rule
+     * @return \Hauki\Model\PermissionCheck
      */
-    public function v1RulePermissionCheckCreate($id, $rule, $format = null)
+    public function v1RulePermissionCheckCreate($id)
     {
-        list($response) = $this->v1RulePermissionCheckCreateWithHttpInfo($id, $rule, $format);
+        list($response) = $this->v1RulePermissionCheckCreateWithHttpInfo($id);
         return $response;
     }
 
     /**
      * Operation v1RulePermissionCheckCreateWithHttpInfo
      *
+     * Check method permission for object
+     *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  \Hauki\Model\Rule $rule (required)
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Hauki\Model\Rule, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Hauki\Model\PermissionCheck, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1RulePermissionCheckCreateWithHttpInfo($id, $rule, $format = null)
+    public function v1RulePermissionCheckCreateWithHttpInfo($id)
     {
-        $request = $this->v1RulePermissionCheckCreateRequest($id, $rule, $format);
+        $request = $this->v1RulePermissionCheckCreateRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -9659,20 +9329,20 @@ class V1Api
             $responseBody = $response->getBody();
             switch($statusCode) {
                 case 200:
-                    if ('\Hauki\Model\Rule' === '\SplFileObject') {
+                    if ('\Hauki\Model\PermissionCheck' === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = (string) $responseBody;
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\Hauki\Model\Rule', []),
+                        ObjectSerializer::deserialize($content, '\Hauki\Model\PermissionCheck', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\Hauki\Model\Rule';
+            $returnType = '\Hauki\Model\PermissionCheck';
             $responseBody = $response->getBody();
             if ($returnType === '\SplFileObject') {
                 $content = $responseBody; //stream goes to serializer
@@ -9691,7 +9361,7 @@ class V1Api
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Hauki\Model\Rule',
+                        '\Hauki\Model\PermissionCheck',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -9704,18 +9374,16 @@ class V1Api
     /**
      * Operation v1RulePermissionCheckCreateAsync
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  \Hauki\Model\Rule $rule (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1RulePermissionCheckCreateAsync($id, $rule, $format = null)
+    public function v1RulePermissionCheckCreateAsync($id)
     {
-        return $this->v1RulePermissionCheckCreateAsyncWithHttpInfo($id, $rule, $format)
+        return $this->v1RulePermissionCheckCreateAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -9726,19 +9394,17 @@ class V1Api
     /**
      * Operation v1RulePermissionCheckCreateAsyncWithHttpInfo
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  \Hauki\Model\Rule $rule (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1RulePermissionCheckCreateAsyncWithHttpInfo($id, $rule, $format = null)
+    public function v1RulePermissionCheckCreateAsyncWithHttpInfo($id)
     {
-        $returnType = '\Hauki\Model\Rule';
-        $request = $this->v1RulePermissionCheckCreateRequest($id, $rule, $format);
+        $returnType = '\Hauki\Model\PermissionCheck';
+        $request = $this->v1RulePermissionCheckCreateRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -9778,24 +9444,16 @@ class V1Api
      * Create request for operation 'v1RulePermissionCheckCreate'
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  \Hauki\Model\Rule $rule (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1RulePermissionCheckCreateRequest($id, $rule, $format = null)
+    public function v1RulePermissionCheckCreateRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $id when calling v1RulePermissionCheckCreate'
-            );
-        }
-        // verify the required parameter 'rule' is set
-        if ($rule === null || (is_array($rule) && count($rule) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $rule when calling v1RulePermissionCheckCreate'
             );
         }
 
@@ -9806,17 +9464,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -9831,23 +9478,17 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
-                ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data']
+                ['application/json'],
+                []
             );
         }
 
         // for model (json/xml)
-        if (isset($rule)) {
-            if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($rule));
-            } else {
-                $httpBody = $rule;
-            }
-        } elseif (count($formParams) > 0) {
+        if (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -9881,9 +9522,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -9909,31 +9551,33 @@ class V1Api
     /**
      * Operation v1RulePermissionCheckDestroy
      *
+     * Check method permission for object
+     *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function v1RulePermissionCheckDestroy($id, $format = null)
+    public function v1RulePermissionCheckDestroy($id)
     {
-        $this->v1RulePermissionCheckDestroyWithHttpInfo($id, $format);
+        $this->v1RulePermissionCheckDestroyWithHttpInfo($id);
     }
 
     /**
      * Operation v1RulePermissionCheckDestroyWithHttpInfo
      *
+     * Check method permission for object
+     *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1RulePermissionCheckDestroyWithHttpInfo($id, $format = null)
+    public function v1RulePermissionCheckDestroyWithHttpInfo($id)
     {
-        $request = $this->v1RulePermissionCheckDestroyRequest($id, $format);
+        $request = $this->v1RulePermissionCheckDestroyRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -9975,17 +9619,16 @@ class V1Api
     /**
      * Operation v1RulePermissionCheckDestroyAsync
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1RulePermissionCheckDestroyAsync($id, $format = null)
+    public function v1RulePermissionCheckDestroyAsync($id)
     {
-        return $this->v1RulePermissionCheckDestroyAsyncWithHttpInfo($id, $format)
+        return $this->v1RulePermissionCheckDestroyAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -9996,18 +9639,17 @@ class V1Api
     /**
      * Operation v1RulePermissionCheckDestroyAsyncWithHttpInfo
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1RulePermissionCheckDestroyAsyncWithHttpInfo($id, $format = null)
+    public function v1RulePermissionCheckDestroyAsyncWithHttpInfo($id)
     {
         $returnType = '';
-        $request = $this->v1RulePermissionCheckDestroyRequest($id, $format);
+        $request = $this->v1RulePermissionCheckDestroyRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -10036,12 +9678,11 @@ class V1Api
      * Create request for operation 'v1RulePermissionCheckDestroy'
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1RulePermissionCheckDestroyRequest($id, $format = null)
+    public function v1RulePermissionCheckDestroyRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -10057,17 +9698,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -10126,9 +9756,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -10154,34 +9785,34 @@ class V1Api
     /**
      * Operation v1RulePermissionCheckPartialUpdate
      *
+     * Check method permission for object
+     *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format format (optional)
-     * @param  \Hauki\Model\PatchedRule $patched_rule patched_rule (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Hauki\Model\Rule
+     * @return \Hauki\Model\PermissionCheck
      */
-    public function v1RulePermissionCheckPartialUpdate($id, $format = null, $patched_rule = null)
+    public function v1RulePermissionCheckPartialUpdate($id)
     {
-        list($response) = $this->v1RulePermissionCheckPartialUpdateWithHttpInfo($id, $format, $patched_rule);
+        list($response) = $this->v1RulePermissionCheckPartialUpdateWithHttpInfo($id);
         return $response;
     }
 
     /**
      * Operation v1RulePermissionCheckPartialUpdateWithHttpInfo
      *
+     * Check method permission for object
+     *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\PatchedRule $patched_rule (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Hauki\Model\Rule, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Hauki\Model\PermissionCheck, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1RulePermissionCheckPartialUpdateWithHttpInfo($id, $format = null, $patched_rule = null)
+    public function v1RulePermissionCheckPartialUpdateWithHttpInfo($id)
     {
-        $request = $this->v1RulePermissionCheckPartialUpdateRequest($id, $format, $patched_rule);
+        $request = $this->v1RulePermissionCheckPartialUpdateRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -10214,20 +9845,20 @@ class V1Api
             $responseBody = $response->getBody();
             switch($statusCode) {
                 case 200:
-                    if ('\Hauki\Model\Rule' === '\SplFileObject') {
+                    if ('\Hauki\Model\PermissionCheck' === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = (string) $responseBody;
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\Hauki\Model\Rule', []),
+                        ObjectSerializer::deserialize($content, '\Hauki\Model\PermissionCheck', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\Hauki\Model\Rule';
+            $returnType = '\Hauki\Model\PermissionCheck';
             $responseBody = $response->getBody();
             if ($returnType === '\SplFileObject') {
                 $content = $responseBody; //stream goes to serializer
@@ -10246,7 +9877,7 @@ class V1Api
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Hauki\Model\Rule',
+                        '\Hauki\Model\PermissionCheck',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -10259,18 +9890,16 @@ class V1Api
     /**
      * Operation v1RulePermissionCheckPartialUpdateAsync
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\PatchedRule $patched_rule (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1RulePermissionCheckPartialUpdateAsync($id, $format = null, $patched_rule = null)
+    public function v1RulePermissionCheckPartialUpdateAsync($id)
     {
-        return $this->v1RulePermissionCheckPartialUpdateAsyncWithHttpInfo($id, $format, $patched_rule)
+        return $this->v1RulePermissionCheckPartialUpdateAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -10281,19 +9910,17 @@ class V1Api
     /**
      * Operation v1RulePermissionCheckPartialUpdateAsyncWithHttpInfo
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\PatchedRule $patched_rule (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1RulePermissionCheckPartialUpdateAsyncWithHttpInfo($id, $format = null, $patched_rule = null)
+    public function v1RulePermissionCheckPartialUpdateAsyncWithHttpInfo($id)
     {
-        $returnType = '\Hauki\Model\Rule';
-        $request = $this->v1RulePermissionCheckPartialUpdateRequest($id, $format, $patched_rule);
+        $returnType = '\Hauki\Model\PermissionCheck';
+        $request = $this->v1RulePermissionCheckPartialUpdateRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -10333,13 +9960,11 @@ class V1Api
      * Create request for operation 'v1RulePermissionCheckPartialUpdate'
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\PatchedRule $patched_rule (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1RulePermissionCheckPartialUpdateRequest($id, $format = null, $patched_rule = null)
+    public function v1RulePermissionCheckPartialUpdateRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -10355,17 +9980,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -10380,310 +9994,11 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
-                ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($patched_rule)) {
-            if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($patched_rule));
-            } else {
-                $httpBody = $patched_rule;
-            }
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
-            }
-        }
-
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('signature');
-        if ($apiKey !== null) {
-            $queryParams['signature'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('Session');
-        if ($apiKey !== null) {
-            
-        }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
-        }
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        return new Request(
-            'PATCH',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation v1RulePermissionCheckRetrieve
-     *
-     * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format format (optional)
-     *
-     * @throws \Hauki\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Hauki\Model\Rule
-     */
-    public function v1RulePermissionCheckRetrieve($id, $format = null)
-    {
-        list($response) = $this->v1RulePermissionCheckRetrieveWithHttpInfo($id, $format);
-        return $response;
-    }
-
-    /**
-     * Operation v1RulePermissionCheckRetrieveWithHttpInfo
-     *
-     * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format (optional)
-     *
-     * @throws \Hauki\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Hauki\Model\Rule, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function v1RulePermissionCheckRetrieveWithHttpInfo($id, $format = null)
-    {
-        $request = $this->v1RulePermissionCheckRetrieveRequest($id, $format);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            switch($statusCode) {
-                case 200:
-                    if ('\Hauki\Model\Rule' === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = (string) $responseBody;
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\Hauki\Model\Rule', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\Hauki\Model\Rule';
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = (string) $responseBody;
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Hauki\Model\Rule',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation v1RulePermissionCheckRetrieveAsync
-     *
-     * 
-     *
-     * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function v1RulePermissionCheckRetrieveAsync($id, $format = null)
-    {
-        return $this->v1RulePermissionCheckRetrieveAsyncWithHttpInfo($id, $format)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation v1RulePermissionCheckRetrieveAsyncWithHttpInfo
-     *
-     * 
-     *
-     * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function v1RulePermissionCheckRetrieveAsyncWithHttpInfo($id, $format = null)
-    {
-        $returnType = '\Hauki\Model\Rule';
-        $request = $this->v1RulePermissionCheckRetrieveRequest($id, $format);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = (string) $responseBody;
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'v1RulePermissionCheckRetrieve'
-     *
-     * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function v1RulePermissionCheckRetrieveRequest($id, $format = null)
-    {
-        // verify the required parameter 'id' is set
-        if ($id === null || (is_array($id) && count($id) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling v1RulePermissionCheckRetrieve'
-            );
-        }
-
-        $resourcePath = '/v1/rule/{id}/permission_check/';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
-
-
-        // path params
-        if ($id !== null) {
-            $resourcePath = str_replace(
-                '{' . 'id' . '}',
-                ObjectSerializer::toPathValue($id),
-                $resourcePath
-            );
-        }
-
-
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 []
             );
         }
@@ -10723,9 +10038,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -10741,7 +10057,7 @@ class V1Api
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
-            'GET',
+            'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
@@ -10749,36 +10065,36 @@ class V1Api
     }
 
     /**
-     * Operation v1RulePermissionCheckUpdate
+     * Operation v1RulePermissionCheckRetrieve
+     *
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  \Hauki\Model\Rule $rule rule (required)
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Hauki\Model\Rule
+     * @return \Hauki\Model\PermissionCheck
      */
-    public function v1RulePermissionCheckUpdate($id, $rule, $format = null)
+    public function v1RulePermissionCheckRetrieve($id)
     {
-        list($response) = $this->v1RulePermissionCheckUpdateWithHttpInfo($id, $rule, $format);
+        list($response) = $this->v1RulePermissionCheckRetrieveWithHttpInfo($id);
         return $response;
     }
 
     /**
-     * Operation v1RulePermissionCheckUpdateWithHttpInfo
+     * Operation v1RulePermissionCheckRetrieveWithHttpInfo
+     *
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  \Hauki\Model\Rule $rule (required)
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Hauki\Model\Rule, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Hauki\Model\PermissionCheck, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1RulePermissionCheckUpdateWithHttpInfo($id, $rule, $format = null)
+    public function v1RulePermissionCheckRetrieveWithHttpInfo($id)
     {
-        $request = $this->v1RulePermissionCheckUpdateRequest($id, $rule, $format);
+        $request = $this->v1RulePermissionCheckRetrieveRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -10811,20 +10127,20 @@ class V1Api
             $responseBody = $response->getBody();
             switch($statusCode) {
                 case 200:
-                    if ('\Hauki\Model\Rule' === '\SplFileObject') {
+                    if ('\Hauki\Model\PermissionCheck' === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = (string) $responseBody;
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\Hauki\Model\Rule', []),
+                        ObjectSerializer::deserialize($content, '\Hauki\Model\PermissionCheck', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\Hauki\Model\Rule';
+            $returnType = '\Hauki\Model\PermissionCheck';
             $responseBody = $response->getBody();
             if ($returnType === '\SplFileObject') {
                 $content = $responseBody; //stream goes to serializer
@@ -10843,7 +10159,289 @@ class V1Api
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Hauki\Model\Rule',
+                        '\Hauki\Model\PermissionCheck',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation v1RulePermissionCheckRetrieveAsync
+     *
+     * Check method permission for object
+     *
+     * @param  int $id A unique integer value identifying this Sääntö. (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function v1RulePermissionCheckRetrieveAsync($id)
+    {
+        return $this->v1RulePermissionCheckRetrieveAsyncWithHttpInfo($id)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation v1RulePermissionCheckRetrieveAsyncWithHttpInfo
+     *
+     * Check method permission for object
+     *
+     * @param  int $id A unique integer value identifying this Sääntö. (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function v1RulePermissionCheckRetrieveAsyncWithHttpInfo($id)
+    {
+        $returnType = '\Hauki\Model\PermissionCheck';
+        $request = $this->v1RulePermissionCheckRetrieveRequest($id);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = (string) $responseBody;
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'v1RulePermissionCheckRetrieve'
+     *
+     * @param  int $id A unique integer value identifying this Sääntö. (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function v1RulePermissionCheckRetrieveRequest($id)
+    {
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling v1RulePermissionCheckRetrieve'
+            );
+        }
+
+        $resourcePath = '/v1/rule/{id}/permission_check/';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'id' . '}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('signature');
+        if ($apiKey !== null) {
+            $queryParams['signature'] = $apiKey;
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Session');
+        if ($apiKey !== null) {
+            
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation v1RulePermissionCheckUpdate
+     *
+     * Check method permission for object
+     *
+     * @param  int $id A unique integer value identifying this Sääntö. (required)
+     *
+     * @throws \Hauki\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Hauki\Model\PermissionCheck
+     */
+    public function v1RulePermissionCheckUpdate($id)
+    {
+        list($response) = $this->v1RulePermissionCheckUpdateWithHttpInfo($id);
+        return $response;
+    }
+
+    /**
+     * Operation v1RulePermissionCheckUpdateWithHttpInfo
+     *
+     * Check method permission for object
+     *
+     * @param  int $id A unique integer value identifying this Sääntö. (required)
+     *
+     * @throws \Hauki\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Hauki\Model\PermissionCheck, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function v1RulePermissionCheckUpdateWithHttpInfo($id)
+    {
+        $request = $this->v1RulePermissionCheckUpdateRequest($id);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            switch($statusCode) {
+                case 200:
+                    if ('\Hauki\Model\PermissionCheck' === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = (string) $responseBody;
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\Hauki\Model\PermissionCheck', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+            }
+
+            $returnType = '\Hauki\Model\PermissionCheck';
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = (string) $responseBody;
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Hauki\Model\PermissionCheck',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -10856,18 +10454,16 @@ class V1Api
     /**
      * Operation v1RulePermissionCheckUpdateAsync
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  \Hauki\Model\Rule $rule (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1RulePermissionCheckUpdateAsync($id, $rule, $format = null)
+    public function v1RulePermissionCheckUpdateAsync($id)
     {
-        return $this->v1RulePermissionCheckUpdateAsyncWithHttpInfo($id, $rule, $format)
+        return $this->v1RulePermissionCheckUpdateAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -10878,19 +10474,17 @@ class V1Api
     /**
      * Operation v1RulePermissionCheckUpdateAsyncWithHttpInfo
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  \Hauki\Model\Rule $rule (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1RulePermissionCheckUpdateAsyncWithHttpInfo($id, $rule, $format = null)
+    public function v1RulePermissionCheckUpdateAsyncWithHttpInfo($id)
     {
-        $returnType = '\Hauki\Model\Rule';
-        $request = $this->v1RulePermissionCheckUpdateRequest($id, $rule, $format);
+        $returnType = '\Hauki\Model\PermissionCheck';
+        $request = $this->v1RulePermissionCheckUpdateRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -10930,24 +10524,16 @@ class V1Api
      * Create request for operation 'v1RulePermissionCheckUpdate'
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  \Hauki\Model\Rule $rule (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1RulePermissionCheckUpdateRequest($id, $rule, $format = null)
+    public function v1RulePermissionCheckUpdateRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $id when calling v1RulePermissionCheckUpdate'
-            );
-        }
-        // verify the required parameter 'rule' is set
-        if ($rule === null || (is_array($rule) && count($rule) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $rule when calling v1RulePermissionCheckUpdate'
             );
         }
 
@@ -10958,17 +10544,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -10983,23 +10558,17 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
-                ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data']
+                ['application/json'],
+                []
             );
         }
 
         // for model (json/xml)
-        if (isset($rule)) {
-            if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($rule));
-            } else {
-                $httpBody = $rule;
-            }
-        } elseif (count($formParams) > 0) {
+        if (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -11033,9 +10602,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -11064,15 +10634,14 @@ class V1Api
      * Find Rule by ID
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Hauki\Model\Rule
      */
-    public function v1RuleRetrieve($id, $format = null)
+    public function v1RuleRetrieve($id)
     {
-        list($response) = $this->v1RuleRetrieveWithHttpInfo($id, $format);
+        list($response) = $this->v1RuleRetrieveWithHttpInfo($id);
         return $response;
     }
 
@@ -11082,15 +10651,14 @@ class V1Api
      * Find Rule by ID
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Hauki\Model\Rule, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1RuleRetrieveWithHttpInfo($id, $format = null)
+    public function v1RuleRetrieveWithHttpInfo($id)
     {
-        $request = $this->v1RuleRetrieveRequest($id, $format);
+        $request = $this->v1RuleRetrieveRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -11171,14 +10739,13 @@ class V1Api
      * Find Rule by ID
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1RuleRetrieveAsync($id, $format = null)
+    public function v1RuleRetrieveAsync($id)
     {
-        return $this->v1RuleRetrieveAsyncWithHttpInfo($id, $format)
+        return $this->v1RuleRetrieveAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -11192,15 +10759,14 @@ class V1Api
      * Find Rule by ID
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1RuleRetrieveAsyncWithHttpInfo($id, $format = null)
+    public function v1RuleRetrieveAsyncWithHttpInfo($id)
     {
         $returnType = '\Hauki\Model\Rule';
-        $request = $this->v1RuleRetrieveRequest($id, $format);
+        $request = $this->v1RuleRetrieveRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -11240,12 +10806,11 @@ class V1Api
      * Create request for operation 'v1RuleRetrieve'
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1RuleRetrieveRequest($id, $format = null)
+    public function v1RuleRetrieveRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -11261,17 +10826,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -11286,11 +10840,11 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 []
             );
         }
@@ -11330,9 +10884,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -11362,15 +10917,14 @@ class V1Api
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
      * @param  \Hauki\Model\Rule $rule rule (required)
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Hauki\Model\Rule
      */
-    public function v1RuleUpdate($id, $rule, $format = null)
+    public function v1RuleUpdate($id, $rule)
     {
-        list($response) = $this->v1RuleUpdateWithHttpInfo($id, $rule, $format);
+        list($response) = $this->v1RuleUpdateWithHttpInfo($id, $rule);
         return $response;
     }
 
@@ -11381,15 +10935,14 @@ class V1Api
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
      * @param  \Hauki\Model\Rule $rule (required)
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Hauki\Model\Rule, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1RuleUpdateWithHttpInfo($id, $rule, $format = null)
+    public function v1RuleUpdateWithHttpInfo($id, $rule)
     {
-        $request = $this->v1RuleUpdateRequest($id, $rule, $format);
+        $request = $this->v1RuleUpdateRequest($id, $rule);
 
         try {
             $options = $this->createHttpClientOption();
@@ -11471,14 +11024,13 @@ class V1Api
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
      * @param  \Hauki\Model\Rule $rule (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1RuleUpdateAsync($id, $rule, $format = null)
+    public function v1RuleUpdateAsync($id, $rule)
     {
-        return $this->v1RuleUpdateAsyncWithHttpInfo($id, $rule, $format)
+        return $this->v1RuleUpdateAsyncWithHttpInfo($id, $rule)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -11493,15 +11045,14 @@ class V1Api
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
      * @param  \Hauki\Model\Rule $rule (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1RuleUpdateAsyncWithHttpInfo($id, $rule, $format = null)
+    public function v1RuleUpdateAsyncWithHttpInfo($id, $rule)
     {
         $returnType = '\Hauki\Model\Rule';
-        $request = $this->v1RuleUpdateRequest($id, $rule, $format);
+        $request = $this->v1RuleUpdateRequest($id, $rule);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -11542,12 +11093,11 @@ class V1Api
      *
      * @param  int $id A unique integer value identifying this Sääntö. (required)
      * @param  \Hauki\Model\Rule $rule (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1RuleUpdateRequest($id, $rule, $format = null)
+    public function v1RuleUpdateRequest($id, $rule)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -11569,17 +11119,6 @@ class V1Api
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -11594,11 +11133,11 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data']
             );
         }
@@ -11644,9 +11183,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -11670,38 +11210,36 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansCreate
+     * Operation v1TimeSpanCreate
      *
      * Create a Time Span
      *
      * @param  \Hauki\Model\TimeSpanCreate $time_span_create time_span_create (required)
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Hauki\Model\TimeSpanCreate
      */
-    public function v1TimeSpansCreate($time_span_create, $format = null)
+    public function v1TimeSpanCreate($time_span_create)
     {
-        list($response) = $this->v1TimeSpansCreateWithHttpInfo($time_span_create, $format);
+        list($response) = $this->v1TimeSpanCreateWithHttpInfo($time_span_create);
         return $response;
     }
 
     /**
-     * Operation v1TimeSpansCreateWithHttpInfo
+     * Operation v1TimeSpanCreateWithHttpInfo
      *
      * Create a Time Span
      *
      * @param  \Hauki\Model\TimeSpanCreate $time_span_create (required)
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Hauki\Model\TimeSpanCreate, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1TimeSpansCreateWithHttpInfo($time_span_create, $format = null)
+    public function v1TimeSpanCreateWithHttpInfo($time_span_create)
     {
-        $request = $this->v1TimeSpansCreateRequest($time_span_create, $format);
+        $request = $this->v1TimeSpanCreateRequest($time_span_create);
 
         try {
             $options = $this->createHttpClientOption();
@@ -11777,19 +11315,18 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansCreateAsync
+     * Operation v1TimeSpanCreateAsync
      *
      * Create a Time Span
      *
      * @param  \Hauki\Model\TimeSpanCreate $time_span_create (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1TimeSpansCreateAsync($time_span_create, $format = null)
+    public function v1TimeSpanCreateAsync($time_span_create)
     {
-        return $this->v1TimeSpansCreateAsyncWithHttpInfo($time_span_create, $format)
+        return $this->v1TimeSpanCreateAsyncWithHttpInfo($time_span_create)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -11798,20 +11335,19 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansCreateAsyncWithHttpInfo
+     * Operation v1TimeSpanCreateAsyncWithHttpInfo
      *
      * Create a Time Span
      *
      * @param  \Hauki\Model\TimeSpanCreate $time_span_create (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1TimeSpansCreateAsyncWithHttpInfo($time_span_create, $format = null)
+    public function v1TimeSpanCreateAsyncWithHttpInfo($time_span_create)
     {
         $returnType = '\Hauki\Model\TimeSpanCreate';
-        $request = $this->v1TimeSpansCreateRequest($time_span_create, $format);
+        $request = $this->v1TimeSpanCreateRequest($time_span_create);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -11848,52 +11384,40 @@ class V1Api
     }
 
     /**
-     * Create request for operation 'v1TimeSpansCreate'
+     * Create request for operation 'v1TimeSpanCreate'
      *
      * @param  \Hauki\Model\TimeSpanCreate $time_span_create (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1TimeSpansCreateRequest($time_span_create, $format = null)
+    public function v1TimeSpanCreateRequest($time_span_create)
     {
         // verify the required parameter 'time_span_create' is set
         if ($time_span_create === null || (is_array($time_span_create) && count($time_span_create) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $time_span_create when calling v1TimeSpansCreate'
+                'Missing the required parameter $time_span_create when calling v1TimeSpanCreate'
             );
         }
 
-        $resourcePath = '/v1/time_spans/';
+        $resourcePath = '/v1/time_span/';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
 
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data']
             );
         }
@@ -11939,9 +11463,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -11965,37 +11490,35 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansDestroy
+     * Operation v1TimeSpanDestroy
      *
      * Delete existing Time Span
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function v1TimeSpansDestroy($id, $format = null)
+    public function v1TimeSpanDestroy($id)
     {
-        $this->v1TimeSpansDestroyWithHttpInfo($id, $format);
+        $this->v1TimeSpanDestroyWithHttpInfo($id);
     }
 
     /**
-     * Operation v1TimeSpansDestroyWithHttpInfo
+     * Operation v1TimeSpanDestroyWithHttpInfo
      *
      * Delete existing Time Span
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1TimeSpansDestroyWithHttpInfo($id, $format = null)
+    public function v1TimeSpanDestroyWithHttpInfo($id)
     {
-        $request = $this->v1TimeSpansDestroyRequest($id, $format);
+        $request = $this->v1TimeSpanDestroyRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -12035,19 +11558,18 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansDestroyAsync
+     * Operation v1TimeSpanDestroyAsync
      *
      * Delete existing Time Span
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1TimeSpansDestroyAsync($id, $format = null)
+    public function v1TimeSpanDestroyAsync($id)
     {
-        return $this->v1TimeSpansDestroyAsyncWithHttpInfo($id, $format)
+        return $this->v1TimeSpanDestroyAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -12056,20 +11578,19 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansDestroyAsyncWithHttpInfo
+     * Operation v1TimeSpanDestroyAsyncWithHttpInfo
      *
      * Delete existing Time Span
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1TimeSpansDestroyAsyncWithHttpInfo($id, $format = null)
+    public function v1TimeSpanDestroyAsyncWithHttpInfo($id)
     {
         $returnType = '';
-        $request = $this->v1TimeSpansDestroyRequest($id, $format);
+        $request = $this->v1TimeSpanDestroyRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -12095,41 +11616,29 @@ class V1Api
     }
 
     /**
-     * Create request for operation 'v1TimeSpansDestroy'
+     * Create request for operation 'v1TimeSpanDestroy'
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1TimeSpansDestroyRequest($id, $format = null)
+    public function v1TimeSpanDestroyRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling v1TimeSpansDestroy'
+                'Missing the required parameter $id when calling v1TimeSpanDestroy'
             );
         }
 
-        $resourcePath = '/v1/time_spans/{id}/';
+        $resourcePath = '/v1/time_span/{id}/';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -12188,9 +11697,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -12214,11 +11724,10 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansList
+     * Operation v1TimeSpanList
      *
      * List Time Spans
      *
-     * @param  string $format format (optional)
      * @param  string $ordering Which field to use when ordering the results. (optional)
      * @param  string $resource resource (optional)
      *
@@ -12226,28 +11735,27 @@ class V1Api
      * @throws \InvalidArgumentException
      * @return \Hauki\Model\TimeSpan[]
      */
-    public function v1TimeSpansList($format = null, $ordering = null, $resource = null)
+    public function v1TimeSpanList($ordering = null, $resource = null)
     {
-        list($response) = $this->v1TimeSpansListWithHttpInfo($format, $ordering, $resource);
+        list($response) = $this->v1TimeSpanListWithHttpInfo($ordering, $resource);
         return $response;
     }
 
     /**
-     * Operation v1TimeSpansListWithHttpInfo
+     * Operation v1TimeSpanListWithHttpInfo
      *
      * List Time Spans
      *
-     * @param  string $format (optional)
      * @param  string $ordering Which field to use when ordering the results. (optional)
-     * @param  string $resource resource (optional)
+     * @param  string $resource (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Hauki\Model\TimeSpan[], HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1TimeSpansListWithHttpInfo($format = null, $ordering = null, $resource = null)
+    public function v1TimeSpanListWithHttpInfo($ordering = null, $resource = null)
     {
-        $request = $this->v1TimeSpansListRequest($format, $ordering, $resource);
+        $request = $this->v1TimeSpanListRequest($ordering, $resource);
 
         try {
             $options = $this->createHttpClientOption();
@@ -12323,20 +11831,19 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansListAsync
+     * Operation v1TimeSpanListAsync
      *
      * List Time Spans
      *
-     * @param  string $format (optional)
      * @param  string $ordering Which field to use when ordering the results. (optional)
-     * @param  string $resource resource (optional)
+     * @param  string $resource (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1TimeSpansListAsync($format = null, $ordering = null, $resource = null)
+    public function v1TimeSpanListAsync($ordering = null, $resource = null)
     {
-        return $this->v1TimeSpansListAsyncWithHttpInfo($format, $ordering, $resource)
+        return $this->v1TimeSpanListAsyncWithHttpInfo($ordering, $resource)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -12345,21 +11852,20 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansListAsyncWithHttpInfo
+     * Operation v1TimeSpanListAsyncWithHttpInfo
      *
      * List Time Spans
      *
-     * @param  string $format (optional)
      * @param  string $ordering Which field to use when ordering the results. (optional)
-     * @param  string $resource resource (optional)
+     * @param  string $resource (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1TimeSpansListAsyncWithHttpInfo($format = null, $ordering = null, $resource = null)
+    public function v1TimeSpanListAsyncWithHttpInfo($ordering = null, $resource = null)
     {
         $returnType = '\Hauki\Model\TimeSpan[]';
-        $request = $this->v1TimeSpansListRequest($format, $ordering, $resource);
+        $request = $this->v1TimeSpanListRequest($ordering, $resource);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -12396,36 +11902,24 @@ class V1Api
     }
 
     /**
-     * Create request for operation 'v1TimeSpansList'
+     * Create request for operation 'v1TimeSpanList'
      *
-     * @param  string $format (optional)
      * @param  string $ordering Which field to use when ordering the results. (optional)
-     * @param  string $resource resource (optional)
+     * @param  string $resource (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1TimeSpansListRequest($format = null, $ordering = null, $resource = null)
+    public function v1TimeSpanListRequest($ordering = null, $resource = null)
     {
 
-        $resourcePath = '/v1/time_spans/';
+        $resourcePath = '/v1/time_span/';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
         // query params
         if ($ordering !== null) {
             if('form' === 'form' && is_array($ordering)) {
@@ -12454,11 +11948,11 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 []
             );
         }
@@ -12498,9 +11992,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -12524,40 +12019,38 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansPartialUpdate
+     * Operation v1TimeSpanPartialUpdate
      *
      * Update existing Time Span partially
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format format (optional)
      * @param  \Hauki\Model\PatchedTimeSpan $patched_time_span patched_time_span (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Hauki\Model\TimeSpan
      */
-    public function v1TimeSpansPartialUpdate($id, $format = null, $patched_time_span = null)
+    public function v1TimeSpanPartialUpdate($id, $patched_time_span = null)
     {
-        list($response) = $this->v1TimeSpansPartialUpdateWithHttpInfo($id, $format, $patched_time_span);
+        list($response) = $this->v1TimeSpanPartialUpdateWithHttpInfo($id, $patched_time_span);
         return $response;
     }
 
     /**
-     * Operation v1TimeSpansPartialUpdateWithHttpInfo
+     * Operation v1TimeSpanPartialUpdateWithHttpInfo
      *
      * Update existing Time Span partially
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
      * @param  \Hauki\Model\PatchedTimeSpan $patched_time_span (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Hauki\Model\TimeSpan, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1TimeSpansPartialUpdateWithHttpInfo($id, $format = null, $patched_time_span = null)
+    public function v1TimeSpanPartialUpdateWithHttpInfo($id, $patched_time_span = null)
     {
-        $request = $this->v1TimeSpansPartialUpdateRequest($id, $format, $patched_time_span);
+        $request = $this->v1TimeSpanPartialUpdateRequest($id, $patched_time_span);
 
         try {
             $options = $this->createHttpClientOption();
@@ -12633,20 +12126,19 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansPartialUpdateAsync
+     * Operation v1TimeSpanPartialUpdateAsync
      *
      * Update existing Time Span partially
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
      * @param  \Hauki\Model\PatchedTimeSpan $patched_time_span (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1TimeSpansPartialUpdateAsync($id, $format = null, $patched_time_span = null)
+    public function v1TimeSpanPartialUpdateAsync($id, $patched_time_span = null)
     {
-        return $this->v1TimeSpansPartialUpdateAsyncWithHttpInfo($id, $format, $patched_time_span)
+        return $this->v1TimeSpanPartialUpdateAsyncWithHttpInfo($id, $patched_time_span)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -12655,21 +12147,20 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansPartialUpdateAsyncWithHttpInfo
+     * Operation v1TimeSpanPartialUpdateAsyncWithHttpInfo
      *
      * Update existing Time Span partially
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
      * @param  \Hauki\Model\PatchedTimeSpan $patched_time_span (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1TimeSpansPartialUpdateAsyncWithHttpInfo($id, $format = null, $patched_time_span = null)
+    public function v1TimeSpanPartialUpdateAsyncWithHttpInfo($id, $patched_time_span = null)
     {
         $returnType = '\Hauki\Model\TimeSpan';
-        $request = $this->v1TimeSpansPartialUpdateRequest($id, $format, $patched_time_span);
+        $request = $this->v1TimeSpanPartialUpdateRequest($id, $patched_time_span);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -12706,42 +12197,30 @@ class V1Api
     }
 
     /**
-     * Create request for operation 'v1TimeSpansPartialUpdate'
+     * Create request for operation 'v1TimeSpanPartialUpdate'
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
      * @param  \Hauki\Model\PatchedTimeSpan $patched_time_span (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1TimeSpansPartialUpdateRequest($id, $format = null, $patched_time_span = null)
+    public function v1TimeSpanPartialUpdateRequest($id, $patched_time_span = null)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling v1TimeSpansPartialUpdate'
+                'Missing the required parameter $id when calling v1TimeSpanPartialUpdate'
             );
         }
 
-        $resourcePath = '/v1/time_spans/{id}/';
+        $resourcePath = '/v1/time_span/{id}/';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -12756,11 +12235,11 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data']
             );
         }
@@ -12806,9 +12285,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -12832,36 +12312,36 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansPermissionCheckCreate
+     * Operation v1TimeSpanPermissionCheckCreate
+     *
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format format (optional)
-     * @param  \Hauki\Model\TimeSpan $time_span time_span (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Hauki\Model\TimeSpan
+     * @return \Hauki\Model\PermissionCheck
      */
-    public function v1TimeSpansPermissionCheckCreate($id, $format = null, $time_span = null)
+    public function v1TimeSpanPermissionCheckCreate($id)
     {
-        list($response) = $this->v1TimeSpansPermissionCheckCreateWithHttpInfo($id, $format, $time_span);
+        list($response) = $this->v1TimeSpanPermissionCheckCreateWithHttpInfo($id);
         return $response;
     }
 
     /**
-     * Operation v1TimeSpansPermissionCheckCreateWithHttpInfo
+     * Operation v1TimeSpanPermissionCheckCreateWithHttpInfo
+     *
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\TimeSpan $time_span (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Hauki\Model\TimeSpan, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Hauki\Model\PermissionCheck, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1TimeSpansPermissionCheckCreateWithHttpInfo($id, $format = null, $time_span = null)
+    public function v1TimeSpanPermissionCheckCreateWithHttpInfo($id)
     {
-        $request = $this->v1TimeSpansPermissionCheckCreateRequest($id, $format, $time_span);
+        $request = $this->v1TimeSpanPermissionCheckCreateRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -12894,20 +12374,20 @@ class V1Api
             $responseBody = $response->getBody();
             switch($statusCode) {
                 case 200:
-                    if ('\Hauki\Model\TimeSpan' === '\SplFileObject') {
+                    if ('\Hauki\Model\PermissionCheck' === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = (string) $responseBody;
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\Hauki\Model\TimeSpan', []),
+                        ObjectSerializer::deserialize($content, '\Hauki\Model\PermissionCheck', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\Hauki\Model\TimeSpan';
+            $returnType = '\Hauki\Model\PermissionCheck';
             $responseBody = $response->getBody();
             if ($returnType === '\SplFileObject') {
                 $content = $responseBody; //stream goes to serializer
@@ -12926,7 +12406,7 @@ class V1Api
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Hauki\Model\TimeSpan',
+                        '\Hauki\Model\PermissionCheck',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -12937,20 +12417,18 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansPermissionCheckCreateAsync
+     * Operation v1TimeSpanPermissionCheckCreateAsync
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\TimeSpan $time_span (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1TimeSpansPermissionCheckCreateAsync($id, $format = null, $time_span = null)
+    public function v1TimeSpanPermissionCheckCreateAsync($id)
     {
-        return $this->v1TimeSpansPermissionCheckCreateAsyncWithHttpInfo($id, $format, $time_span)
+        return $this->v1TimeSpanPermissionCheckCreateAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -12959,21 +12437,19 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansPermissionCheckCreateAsyncWithHttpInfo
+     * Operation v1TimeSpanPermissionCheckCreateAsyncWithHttpInfo
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\TimeSpan $time_span (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1TimeSpansPermissionCheckCreateAsyncWithHttpInfo($id, $format = null, $time_span = null)
+    public function v1TimeSpanPermissionCheckCreateAsyncWithHttpInfo($id)
     {
-        $returnType = '\Hauki\Model\TimeSpan';
-        $request = $this->v1TimeSpansPermissionCheckCreateRequest($id, $format, $time_span);
+        $returnType = '\Hauki\Model\PermissionCheck';
+        $request = $this->v1TimeSpanPermissionCheckCreateRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -13010,42 +12486,29 @@ class V1Api
     }
 
     /**
-     * Create request for operation 'v1TimeSpansPermissionCheckCreate'
+     * Create request for operation 'v1TimeSpanPermissionCheckCreate'
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\TimeSpan $time_span (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1TimeSpansPermissionCheckCreateRequest($id, $format = null, $time_span = null)
+    public function v1TimeSpanPermissionCheckCreateRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling v1TimeSpansPermissionCheckCreate'
+                'Missing the required parameter $id when calling v1TimeSpanPermissionCheckCreate'
             );
         }
 
-        $resourcePath = '/v1/time_spans/{id}/permission_check/';
+        $resourcePath = '/v1/time_span/{id}/permission_check/';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -13060,23 +12523,17 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
-                ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data']
+                ['application/json'],
+                []
             );
         }
 
         // for model (json/xml)
-        if (isset($time_span)) {
-            if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($time_span));
-            } else {
-                $httpBody = $time_span;
-            }
-        } elseif (count($formParams) > 0) {
+        if (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -13110,9 +12567,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -13136,33 +12594,35 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansPermissionCheckDestroy
+     * Operation v1TimeSpanPermissionCheckDestroy
+     *
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function v1TimeSpansPermissionCheckDestroy($id, $format = null)
+    public function v1TimeSpanPermissionCheckDestroy($id)
     {
-        $this->v1TimeSpansPermissionCheckDestroyWithHttpInfo($id, $format);
+        $this->v1TimeSpanPermissionCheckDestroyWithHttpInfo($id);
     }
 
     /**
-     * Operation v1TimeSpansPermissionCheckDestroyWithHttpInfo
+     * Operation v1TimeSpanPermissionCheckDestroyWithHttpInfo
+     *
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1TimeSpansPermissionCheckDestroyWithHttpInfo($id, $format = null)
+    public function v1TimeSpanPermissionCheckDestroyWithHttpInfo($id)
     {
-        $request = $this->v1TimeSpansPermissionCheckDestroyRequest($id, $format);
+        $request = $this->v1TimeSpanPermissionCheckDestroyRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -13202,19 +12662,18 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansPermissionCheckDestroyAsync
+     * Operation v1TimeSpanPermissionCheckDestroyAsync
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1TimeSpansPermissionCheckDestroyAsync($id, $format = null)
+    public function v1TimeSpanPermissionCheckDestroyAsync($id)
     {
-        return $this->v1TimeSpansPermissionCheckDestroyAsyncWithHttpInfo($id, $format)
+        return $this->v1TimeSpanPermissionCheckDestroyAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -13223,20 +12682,19 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansPermissionCheckDestroyAsyncWithHttpInfo
+     * Operation v1TimeSpanPermissionCheckDestroyAsyncWithHttpInfo
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1TimeSpansPermissionCheckDestroyAsyncWithHttpInfo($id, $format = null)
+    public function v1TimeSpanPermissionCheckDestroyAsyncWithHttpInfo($id)
     {
         $returnType = '';
-        $request = $this->v1TimeSpansPermissionCheckDestroyRequest($id, $format);
+        $request = $this->v1TimeSpanPermissionCheckDestroyRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -13262,41 +12720,29 @@ class V1Api
     }
 
     /**
-     * Create request for operation 'v1TimeSpansPermissionCheckDestroy'
+     * Create request for operation 'v1TimeSpanPermissionCheckDestroy'
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1TimeSpansPermissionCheckDestroyRequest($id, $format = null)
+    public function v1TimeSpanPermissionCheckDestroyRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling v1TimeSpansPermissionCheckDestroy'
+                'Missing the required parameter $id when calling v1TimeSpanPermissionCheckDestroy'
             );
         }
 
-        $resourcePath = '/v1/time_spans/{id}/permission_check/';
+        $resourcePath = '/v1/time_span/{id}/permission_check/';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -13355,9 +12801,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -13381,36 +12828,36 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansPermissionCheckPartialUpdate
+     * Operation v1TimeSpanPermissionCheckPartialUpdate
+     *
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format format (optional)
-     * @param  \Hauki\Model\PatchedTimeSpan $patched_time_span patched_time_span (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Hauki\Model\TimeSpan
+     * @return \Hauki\Model\PermissionCheck
      */
-    public function v1TimeSpansPermissionCheckPartialUpdate($id, $format = null, $patched_time_span = null)
+    public function v1TimeSpanPermissionCheckPartialUpdate($id)
     {
-        list($response) = $this->v1TimeSpansPermissionCheckPartialUpdateWithHttpInfo($id, $format, $patched_time_span);
+        list($response) = $this->v1TimeSpanPermissionCheckPartialUpdateWithHttpInfo($id);
         return $response;
     }
 
     /**
-     * Operation v1TimeSpansPermissionCheckPartialUpdateWithHttpInfo
+     * Operation v1TimeSpanPermissionCheckPartialUpdateWithHttpInfo
+     *
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\PatchedTimeSpan $patched_time_span (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Hauki\Model\TimeSpan, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Hauki\Model\PermissionCheck, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1TimeSpansPermissionCheckPartialUpdateWithHttpInfo($id, $format = null, $patched_time_span = null)
+    public function v1TimeSpanPermissionCheckPartialUpdateWithHttpInfo($id)
     {
-        $request = $this->v1TimeSpansPermissionCheckPartialUpdateRequest($id, $format, $patched_time_span);
+        $request = $this->v1TimeSpanPermissionCheckPartialUpdateRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -13443,20 +12890,20 @@ class V1Api
             $responseBody = $response->getBody();
             switch($statusCode) {
                 case 200:
-                    if ('\Hauki\Model\TimeSpan' === '\SplFileObject') {
+                    if ('\Hauki\Model\PermissionCheck' === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = (string) $responseBody;
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\Hauki\Model\TimeSpan', []),
+                        ObjectSerializer::deserialize($content, '\Hauki\Model\PermissionCheck', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\Hauki\Model\TimeSpan';
+            $returnType = '\Hauki\Model\PermissionCheck';
             $responseBody = $response->getBody();
             if ($returnType === '\SplFileObject') {
                 $content = $responseBody; //stream goes to serializer
@@ -13475,7 +12922,7 @@ class V1Api
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Hauki\Model\TimeSpan',
+                        '\Hauki\Model\PermissionCheck',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -13486,20 +12933,18 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansPermissionCheckPartialUpdateAsync
+     * Operation v1TimeSpanPermissionCheckPartialUpdateAsync
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\PatchedTimeSpan $patched_time_span (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1TimeSpansPermissionCheckPartialUpdateAsync($id, $format = null, $patched_time_span = null)
+    public function v1TimeSpanPermissionCheckPartialUpdateAsync($id)
     {
-        return $this->v1TimeSpansPermissionCheckPartialUpdateAsyncWithHttpInfo($id, $format, $patched_time_span)
+        return $this->v1TimeSpanPermissionCheckPartialUpdateAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -13508,21 +12953,19 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansPermissionCheckPartialUpdateAsyncWithHttpInfo
+     * Operation v1TimeSpanPermissionCheckPartialUpdateAsyncWithHttpInfo
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\PatchedTimeSpan $patched_time_span (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1TimeSpansPermissionCheckPartialUpdateAsyncWithHttpInfo($id, $format = null, $patched_time_span = null)
+    public function v1TimeSpanPermissionCheckPartialUpdateAsyncWithHttpInfo($id)
     {
-        $returnType = '\Hauki\Model\TimeSpan';
-        $request = $this->v1TimeSpansPermissionCheckPartialUpdateRequest($id, $format, $patched_time_span);
+        $returnType = '\Hauki\Model\PermissionCheck';
+        $request = $this->v1TimeSpanPermissionCheckPartialUpdateRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -13559,42 +13002,29 @@ class V1Api
     }
 
     /**
-     * Create request for operation 'v1TimeSpansPermissionCheckPartialUpdate'
+     * Create request for operation 'v1TimeSpanPermissionCheckPartialUpdate'
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\PatchedTimeSpan $patched_time_span (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1TimeSpansPermissionCheckPartialUpdateRequest($id, $format = null, $patched_time_span = null)
+    public function v1TimeSpanPermissionCheckPartialUpdateRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling v1TimeSpansPermissionCheckPartialUpdate'
+                'Missing the required parameter $id when calling v1TimeSpanPermissionCheckPartialUpdate'
             );
         }
 
-        $resourcePath = '/v1/time_spans/{id}/permission_check/';
+        $resourcePath = '/v1/time_span/{id}/permission_check/';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -13609,23 +13039,17 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
-                ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data']
+                ['application/json'],
+                []
             );
         }
 
         // for model (json/xml)
-        if (isset($patched_time_span)) {
-            if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($patched_time_span));
-            } else {
-                $httpBody = $patched_time_span;
-            }
-        } elseif (count($formParams) > 0) {
+        if (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -13659,9 +13083,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -13685,34 +13110,36 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansPermissionCheckRetrieve
+     * Operation v1TimeSpanPermissionCheckRetrieve
+     *
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Hauki\Model\TimeSpan
+     * @return \Hauki\Model\PermissionCheck
      */
-    public function v1TimeSpansPermissionCheckRetrieve($id, $format = null)
+    public function v1TimeSpanPermissionCheckRetrieve($id)
     {
-        list($response) = $this->v1TimeSpansPermissionCheckRetrieveWithHttpInfo($id, $format);
+        list($response) = $this->v1TimeSpanPermissionCheckRetrieveWithHttpInfo($id);
         return $response;
     }
 
     /**
-     * Operation v1TimeSpansPermissionCheckRetrieveWithHttpInfo
+     * Operation v1TimeSpanPermissionCheckRetrieveWithHttpInfo
+     *
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Hauki\Model\TimeSpan, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Hauki\Model\PermissionCheck, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1TimeSpansPermissionCheckRetrieveWithHttpInfo($id, $format = null)
+    public function v1TimeSpanPermissionCheckRetrieveWithHttpInfo($id)
     {
-        $request = $this->v1TimeSpansPermissionCheckRetrieveRequest($id, $format);
+        $request = $this->v1TimeSpanPermissionCheckRetrieveRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -13745,20 +13172,20 @@ class V1Api
             $responseBody = $response->getBody();
             switch($statusCode) {
                 case 200:
-                    if ('\Hauki\Model\TimeSpan' === '\SplFileObject') {
+                    if ('\Hauki\Model\PermissionCheck' === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = (string) $responseBody;
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\Hauki\Model\TimeSpan', []),
+                        ObjectSerializer::deserialize($content, '\Hauki\Model\PermissionCheck', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\Hauki\Model\TimeSpan';
+            $returnType = '\Hauki\Model\PermissionCheck';
             $responseBody = $response->getBody();
             if ($returnType === '\SplFileObject') {
                 $content = $responseBody; //stream goes to serializer
@@ -13777,7 +13204,7 @@ class V1Api
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Hauki\Model\TimeSpan',
+                        '\Hauki\Model\PermissionCheck',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -13788,19 +13215,18 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansPermissionCheckRetrieveAsync
+     * Operation v1TimeSpanPermissionCheckRetrieveAsync
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1TimeSpansPermissionCheckRetrieveAsync($id, $format = null)
+    public function v1TimeSpanPermissionCheckRetrieveAsync($id)
     {
-        return $this->v1TimeSpansPermissionCheckRetrieveAsyncWithHttpInfo($id, $format)
+        return $this->v1TimeSpanPermissionCheckRetrieveAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -13809,20 +13235,19 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansPermissionCheckRetrieveAsyncWithHttpInfo
+     * Operation v1TimeSpanPermissionCheckRetrieveAsyncWithHttpInfo
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1TimeSpansPermissionCheckRetrieveAsyncWithHttpInfo($id, $format = null)
+    public function v1TimeSpanPermissionCheckRetrieveAsyncWithHttpInfo($id)
     {
-        $returnType = '\Hauki\Model\TimeSpan';
-        $request = $this->v1TimeSpansPermissionCheckRetrieveRequest($id, $format);
+        $returnType = '\Hauki\Model\PermissionCheck';
+        $request = $this->v1TimeSpanPermissionCheckRetrieveRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -13859,41 +13284,29 @@ class V1Api
     }
 
     /**
-     * Create request for operation 'v1TimeSpansPermissionCheckRetrieve'
+     * Create request for operation 'v1TimeSpanPermissionCheckRetrieve'
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1TimeSpansPermissionCheckRetrieveRequest($id, $format = null)
+    public function v1TimeSpanPermissionCheckRetrieveRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling v1TimeSpansPermissionCheckRetrieve'
+                'Missing the required parameter $id when calling v1TimeSpanPermissionCheckRetrieve'
             );
         }
 
-        $resourcePath = '/v1/time_spans/{id}/permission_check/';
+        $resourcePath = '/v1/time_span/{id}/permission_check/';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -13908,11 +13321,11 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 []
             );
         }
@@ -13952,9 +13365,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -13978,36 +13392,36 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansPermissionCheckUpdate
+     * Operation v1TimeSpanPermissionCheckUpdate
+     *
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format format (optional)
-     * @param  \Hauki\Model\TimeSpan $time_span time_span (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Hauki\Model\TimeSpan
+     * @return \Hauki\Model\PermissionCheck
      */
-    public function v1TimeSpansPermissionCheckUpdate($id, $format = null, $time_span = null)
+    public function v1TimeSpanPermissionCheckUpdate($id)
     {
-        list($response) = $this->v1TimeSpansPermissionCheckUpdateWithHttpInfo($id, $format, $time_span);
+        list($response) = $this->v1TimeSpanPermissionCheckUpdateWithHttpInfo($id);
         return $response;
     }
 
     /**
-     * Operation v1TimeSpansPermissionCheckUpdateWithHttpInfo
+     * Operation v1TimeSpanPermissionCheckUpdateWithHttpInfo
+     *
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\TimeSpan $time_span (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Hauki\Model\TimeSpan, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Hauki\Model\PermissionCheck, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1TimeSpansPermissionCheckUpdateWithHttpInfo($id, $format = null, $time_span = null)
+    public function v1TimeSpanPermissionCheckUpdateWithHttpInfo($id)
     {
-        $request = $this->v1TimeSpansPermissionCheckUpdateRequest($id, $format, $time_span);
+        $request = $this->v1TimeSpanPermissionCheckUpdateRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -14040,20 +13454,20 @@ class V1Api
             $responseBody = $response->getBody();
             switch($statusCode) {
                 case 200:
-                    if ('\Hauki\Model\TimeSpan' === '\SplFileObject') {
+                    if ('\Hauki\Model\PermissionCheck' === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = (string) $responseBody;
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\Hauki\Model\TimeSpan', []),
+                        ObjectSerializer::deserialize($content, '\Hauki\Model\PermissionCheck', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\Hauki\Model\TimeSpan';
+            $returnType = '\Hauki\Model\PermissionCheck';
             $responseBody = $response->getBody();
             if ($returnType === '\SplFileObject') {
                 $content = $responseBody; //stream goes to serializer
@@ -14072,7 +13486,7 @@ class V1Api
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Hauki\Model\TimeSpan',
+                        '\Hauki\Model\PermissionCheck',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -14083,20 +13497,18 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansPermissionCheckUpdateAsync
+     * Operation v1TimeSpanPermissionCheckUpdateAsync
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\TimeSpan $time_span (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1TimeSpansPermissionCheckUpdateAsync($id, $format = null, $time_span = null)
+    public function v1TimeSpanPermissionCheckUpdateAsync($id)
     {
-        return $this->v1TimeSpansPermissionCheckUpdateAsyncWithHttpInfo($id, $format, $time_span)
+        return $this->v1TimeSpanPermissionCheckUpdateAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -14105,21 +13517,19 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansPermissionCheckUpdateAsyncWithHttpInfo
+     * Operation v1TimeSpanPermissionCheckUpdateAsyncWithHttpInfo
      *
-     * 
+     * Check method permission for object
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\TimeSpan $time_span (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1TimeSpansPermissionCheckUpdateAsyncWithHttpInfo($id, $format = null, $time_span = null)
+    public function v1TimeSpanPermissionCheckUpdateAsyncWithHttpInfo($id)
     {
-        $returnType = '\Hauki\Model\TimeSpan';
-        $request = $this->v1TimeSpansPermissionCheckUpdateRequest($id, $format, $time_span);
+        $returnType = '\Hauki\Model\PermissionCheck';
+        $request = $this->v1TimeSpanPermissionCheckUpdateRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -14156,42 +13566,29 @@ class V1Api
     }
 
     /**
-     * Create request for operation 'v1TimeSpansPermissionCheckUpdate'
+     * Create request for operation 'v1TimeSpanPermissionCheckUpdate'
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
-     * @param  \Hauki\Model\TimeSpan $time_span (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1TimeSpansPermissionCheckUpdateRequest($id, $format = null, $time_span = null)
+    public function v1TimeSpanPermissionCheckUpdateRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling v1TimeSpansPermissionCheckUpdate'
+                'Missing the required parameter $id when calling v1TimeSpanPermissionCheckUpdate'
             );
         }
 
-        $resourcePath = '/v1/time_spans/{id}/permission_check/';
+        $resourcePath = '/v1/time_span/{id}/permission_check/';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -14206,23 +13603,17 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
-                ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data']
+                ['application/json'],
+                []
             );
         }
 
         // for model (json/xml)
-        if (isset($time_span)) {
-            if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($time_span));
-            } else {
-                $httpBody = $time_span;
-            }
-        } elseif (count($formParams) > 0) {
+        if (count($formParams) > 0) {
             if ($multipart) {
                 $multipartContents = [];
                 foreach ($formParams as $formParamName => $formParamValue) {
@@ -14256,9 +13647,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -14282,38 +13674,36 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansRetrieve
+     * Operation v1TimeSpanRetrieve
      *
      * Find Time Span by ID
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Hauki\Model\TimeSpan
      */
-    public function v1TimeSpansRetrieve($id, $format = null)
+    public function v1TimeSpanRetrieve($id)
     {
-        list($response) = $this->v1TimeSpansRetrieveWithHttpInfo($id, $format);
+        list($response) = $this->v1TimeSpanRetrieveWithHttpInfo($id);
         return $response;
     }
 
     /**
-     * Operation v1TimeSpansRetrieveWithHttpInfo
+     * Operation v1TimeSpanRetrieveWithHttpInfo
      *
      * Find Time Span by ID
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Hauki\Model\TimeSpan, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1TimeSpansRetrieveWithHttpInfo($id, $format = null)
+    public function v1TimeSpanRetrieveWithHttpInfo($id)
     {
-        $request = $this->v1TimeSpansRetrieveRequest($id, $format);
+        $request = $this->v1TimeSpanRetrieveRequest($id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -14389,19 +13779,18 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansRetrieveAsync
+     * Operation v1TimeSpanRetrieveAsync
      *
      * Find Time Span by ID
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1TimeSpansRetrieveAsync($id, $format = null)
+    public function v1TimeSpanRetrieveAsync($id)
     {
-        return $this->v1TimeSpansRetrieveAsyncWithHttpInfo($id, $format)
+        return $this->v1TimeSpanRetrieveAsyncWithHttpInfo($id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -14410,20 +13799,19 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansRetrieveAsyncWithHttpInfo
+     * Operation v1TimeSpanRetrieveAsyncWithHttpInfo
      *
      * Find Time Span by ID
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1TimeSpansRetrieveAsyncWithHttpInfo($id, $format = null)
+    public function v1TimeSpanRetrieveAsyncWithHttpInfo($id)
     {
         $returnType = '\Hauki\Model\TimeSpan';
-        $request = $this->v1TimeSpansRetrieveRequest($id, $format);
+        $request = $this->v1TimeSpanRetrieveRequest($id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -14460,41 +13848,29 @@ class V1Api
     }
 
     /**
-     * Create request for operation 'v1TimeSpansRetrieve'
+     * Create request for operation 'v1TimeSpanRetrieve'
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1TimeSpansRetrieveRequest($id, $format = null)
+    public function v1TimeSpanRetrieveRequest($id)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling v1TimeSpansRetrieve'
+                'Missing the required parameter $id when calling v1TimeSpanRetrieve'
             );
         }
 
-        $resourcePath = '/v1/time_spans/{id}/';
+        $resourcePath = '/v1/time_span/{id}/';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -14509,11 +13885,11 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 []
             );
         }
@@ -14553,9 +13929,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];
@@ -14579,40 +13956,38 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansUpdate
+     * Operation v1TimeSpanUpdate
      *
      * Update existing Time Span
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format format (optional)
      * @param  \Hauki\Model\TimeSpan $time_span time_span (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Hauki\Model\TimeSpan
      */
-    public function v1TimeSpansUpdate($id, $format = null, $time_span = null)
+    public function v1TimeSpanUpdate($id, $time_span = null)
     {
-        list($response) = $this->v1TimeSpansUpdateWithHttpInfo($id, $format, $time_span);
+        list($response) = $this->v1TimeSpanUpdateWithHttpInfo($id, $time_span);
         return $response;
     }
 
     /**
-     * Operation v1TimeSpansUpdateWithHttpInfo
+     * Operation v1TimeSpanUpdateWithHttpInfo
      *
      * Update existing Time Span
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
      * @param  \Hauki\Model\TimeSpan $time_span (optional)
      *
      * @throws \Hauki\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Hauki\Model\TimeSpan, HTTP status code, HTTP response headers (array of strings)
      */
-    public function v1TimeSpansUpdateWithHttpInfo($id, $format = null, $time_span = null)
+    public function v1TimeSpanUpdateWithHttpInfo($id, $time_span = null)
     {
-        $request = $this->v1TimeSpansUpdateRequest($id, $format, $time_span);
+        $request = $this->v1TimeSpanUpdateRequest($id, $time_span);
 
         try {
             $options = $this->createHttpClientOption();
@@ -14688,20 +14063,19 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansUpdateAsync
+     * Operation v1TimeSpanUpdateAsync
      *
      * Update existing Time Span
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
      * @param  \Hauki\Model\TimeSpan $time_span (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1TimeSpansUpdateAsync($id, $format = null, $time_span = null)
+    public function v1TimeSpanUpdateAsync($id, $time_span = null)
     {
-        return $this->v1TimeSpansUpdateAsyncWithHttpInfo($id, $format, $time_span)
+        return $this->v1TimeSpanUpdateAsyncWithHttpInfo($id, $time_span)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -14710,21 +14084,20 @@ class V1Api
     }
 
     /**
-     * Operation v1TimeSpansUpdateAsyncWithHttpInfo
+     * Operation v1TimeSpanUpdateAsyncWithHttpInfo
      *
      * Update existing Time Span
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
      * @param  \Hauki\Model\TimeSpan $time_span (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function v1TimeSpansUpdateAsyncWithHttpInfo($id, $format = null, $time_span = null)
+    public function v1TimeSpanUpdateAsyncWithHttpInfo($id, $time_span = null)
     {
         $returnType = '\Hauki\Model\TimeSpan';
-        $request = $this->v1TimeSpansUpdateRequest($id, $format, $time_span);
+        $request = $this->v1TimeSpanUpdateRequest($id, $time_span);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -14761,42 +14134,30 @@ class V1Api
     }
 
     /**
-     * Create request for operation 'v1TimeSpansUpdate'
+     * Create request for operation 'v1TimeSpanUpdate'
      *
      * @param  int $id A unique integer value identifying this Aikaväli. (required)
-     * @param  string $format (optional)
      * @param  \Hauki\Model\TimeSpan $time_span (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function v1TimeSpansUpdateRequest($id, $format = null, $time_span = null)
+    public function v1TimeSpanUpdateRequest($id, $time_span = null)
     {
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling v1TimeSpansUpdate'
+                'Missing the required parameter $id when calling v1TimeSpanUpdate'
             );
         }
 
-        $resourcePath = '/v1/time_spans/{id}/';
+        $resourcePath = '/v1/time_span/{id}/';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($format !== null) {
-            if('form' === 'form' && is_array($format)) {
-                foreach($format as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            }
-            else {
-                $queryParams['format'] = $format;
-            }
-        }
 
 
         // path params
@@ -14811,11 +14172,11 @@ class V1Api
 
         if ($multipart) {
             $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json', 'text/html']
+                ['application/json']
             );
         } else {
             $headers = $this->headerSelector->selectHeaders(
-                ['application/json', 'text/html'],
+                ['application/json'],
                 ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data']
             );
         }
@@ -14861,9 +14222,10 @@ class V1Api
         if ($apiKey !== null) {
             
         }
-        // this endpoint requires Bearer (APIToken) authentication (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
         }
 
         $defaultHeaders = [];

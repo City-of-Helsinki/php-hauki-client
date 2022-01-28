@@ -1,6 +1,6 @@
 <?php
 /**
- * ResourceStateEnum
+ * WeekdaysEnum
  *
  * PHP version 7.2
  *
@@ -31,29 +31,25 @@ namespace Hauki\Model;
 use \Hauki\ObjectSerializer;
 
 /**
- * ResourceStateEnum Class Doc Comment
+ * WeekdaysEnum Class Doc Comment
  *
  * @category Class
  * @package  Hauki
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
-class ResourceStateEnum
+class WeekdaysEnum
 {
     /**
      * Possible values of this enum
      */
-    const OPEN = 'open';
-    const CLOSED = 'closed';
-    const UNDEFINED = 'undefined';
-    const SELF_SERVICE = 'self_service';
-    const WITH_KEY = 'with_key';
-    const WITH_RESERVATION = 'with_reservation';
-    const OPEN_AND_RESERVABLE = 'open_and_reservable';
-    const WITH_KEY_AND_RESERVATION = 'with_key_and_reservation';
-    const ENTER_ONLY = 'enter_only';
-    const EXIT_ONLY = 'exit_only';
-    const WEATHER_PERMITTING = 'weather_permitting';
+    const 1 = 1;
+    const 2 = 2;
+    const 3 = 3;
+    const 4 = 4;
+    const 5 = 5;
+    const 6 = 6;
+    const 7 = 7;
     
     /**
      * Gets allowable values of the enum
@@ -62,17 +58,13 @@ class ResourceStateEnum
     public static function getAllowableEnumValues()
     {
         return [
-            self::OPEN,
-            self::CLOSED,
-            self::UNDEFINED,
-            self::SELF_SERVICE,
-            self::WITH_KEY,
-            self::WITH_RESERVATION,
-            self::OPEN_AND_RESERVABLE,
-            self::WITH_KEY_AND_RESERVATION,
-            self::ENTER_ONLY,
-            self::EXIT_ONLY,
-            self::WEATHER_PERMITTING,
+            self::1,
+            self::2,
+            self::3,
+            self::4,
+            self::5,
+            self::6,
+            self::7,
         ];
     }
 }

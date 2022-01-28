@@ -64,8 +64,8 @@ class PatchedRule implements ModelInterface, ArrayAccess, \JsonSerializable
         'group' => 'int',
         'name' => 'string',
         'description' => 'string',
-        'context' => '\Hauki\Model\ContextEnum',
-        'subject' => '\Hauki\Model\SubjectEnum',
+        'context' => 'ContextEnum',
+        'subject' => 'SubjectEnum',
         'start' => 'int',
         'frequency_ordinal' => 'int',
         'frequency_modifier' => 'OneOfFrequencyModifierEnumBlankEnumNullEnum',
@@ -392,7 +392,7 @@ class PatchedRule implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets context
      *
-     * @return \Hauki\Model\ContextEnum|null
+     * @return ContextEnum|null
      */
     public function getContext()
     {
@@ -402,7 +402,7 @@ class PatchedRule implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets context
      *
-     * @param \Hauki\Model\ContextEnum|null $context context
+     * @param ContextEnum|null $context context
      *
      * @return self
      */
@@ -416,7 +416,7 @@ class PatchedRule implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets subject
      *
-     * @return \Hauki\Model\SubjectEnum|null
+     * @return SubjectEnum|null
      */
     public function getSubject()
     {
@@ -426,7 +426,7 @@ class PatchedRule implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets subject
      *
-     * @param \Hauki\Model\SubjectEnum|null $subject subject
+     * @param SubjectEnum|null $subject subject
      *
      * @return self
      */

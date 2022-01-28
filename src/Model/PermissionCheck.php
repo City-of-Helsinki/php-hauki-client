@@ -1,6 +1,6 @@
 <?php
 /**
- * DataSource
+ * PermissionCheck
  *
  * PHP version 7.2
  *
@@ -33,10 +33,9 @@ use \ArrayAccess;
 use \Hauki\ObjectSerializer;
 
 /**
- * DataSource Class Doc Comment
+ * PermissionCheck Class Doc Comment
  *
  * @category Class
- * @description Moves &#x60;UniqueValidator&#x60;&#39;s from the validation stage to the save stage. It solves the problem with nested validation for unique fields on update.  If you want more details, you can read related issues and articles: https://github.com/beda-software/drf-writable-nested/issues/1 http://www.django-rest-framework.org/api-guide/validators/#updating-nested-serializers  Example of usage: &#x60;&#x60;&#x60;     class Child(models.Model):     field &#x3D; models.CharField(unique&#x3D;True)   class Parent(models.Model):     child &#x3D; models.ForeignKey(&#39;Child&#39;)   class ChildSerializer(UniqueFieldsMixin, serializers.ModelSerializer):     class Meta:         model &#x3D; Child   class ParentSerializer(NestedUpdateMixin, serializers.ModelSerializer):     child &#x3D; ChildSerializer()      class Meta:         model &#x3D; Parent &#x60;&#x60;&#x60;  Note: &#x60;UniqueFieldsMixin&#x60; must be applied only on the serializer which has unique fields.  Note: When you are using both mixins (&#x60;UniqueFieldsMixin&#x60; and &#x60;NestedCreateMixin&#x60; or &#x60;NestedUpdateMixin&#x60;) you should put &#x60;UniqueFieldsMixin&#x60; ahead.
  * @package  Hauki
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
@@ -44,7 +43,7 @@ use \Hauki\ObjectSerializer;
  * @template TKey int|null
  * @template TValue mixed|null  
  */
-class DataSource implements ModelInterface, ArrayAccess, \JsonSerializable
+class PermissionCheck implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -53,7 +52,7 @@ class DataSource implements ModelInterface, ArrayAccess, \JsonSerializable
       *
       * @var string
       */
-    protected static $openAPIModelName = 'DataSource';
+    protected static $openAPIModelName = 'permission_check';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -61,8 +60,7 @@ class DataSource implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
-        'id' => 'string',
-        'name' => 'string'
+        'has_permission' => 'bool'
     ];
 
     /**
@@ -73,8 +71,7 @@ class DataSource implements ModelInterface, ArrayAccess, \JsonSerializable
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'id' => null,
-        'name' => null
+        'has_permission' => null
     ];
 
     /**
@@ -104,8 +101,7 @@ class DataSource implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'id' => 'id',
-        'name' => 'name'
+        'has_permission' => 'has_permission'
     ];
 
     /**
@@ -114,8 +110,7 @@ class DataSource implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'id' => 'setId',
-        'name' => 'setName'
+        'has_permission' => 'setHasPermission'
     ];
 
     /**
@@ -124,8 +119,7 @@ class DataSource implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'id' => 'getId',
-        'name' => 'getName'
+        'has_permission' => 'getHasPermission'
     ];
 
     /**
@@ -188,8 +182,7 @@ class DataSource implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = $data['id'] ?? null;
-        $this->container['name'] = $data['name'] ?? null;
+        $this->container['has_permission'] = $data['has_permission'] ?? null;
     }
 
     /**
@@ -201,15 +194,8 @@ class DataSource implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['id'] === null) {
-            $invalidProperties[] = "'id' can't be null";
-        }
-        if ((mb_strlen($this->container['id']) > 100)) {
-            $invalidProperties[] = "invalid value for 'id', the character length must be smaller than or equal to 100.";
-        }
-
-        if ($this->container['name'] === null) {
-            $invalidProperties[] = "'name' can't be null";
+        if ($this->container['has_permission'] === null) {
+            $invalidProperties[] = "'has_permission' can't be null";
         }
         return $invalidProperties;
     }
@@ -227,53 +213,25 @@ class DataSource implements ModelInterface, ArrayAccess, \JsonSerializable
 
 
     /**
-     * Gets id
+     * Gets has_permission
      *
-     * @return string
+     * @return bool
      */
-    public function getId()
+    public function getHasPermission()
     {
-        return $this->container['id'];
+        return $this->container['has_permission'];
     }
 
     /**
-     * Sets id
+     * Sets has_permission
      *
-     * @param string $id id
+     * @param bool $has_permission has_permission
      *
      * @return self
      */
-    public function setId($id)
+    public function setHasPermission($has_permission)
     {
-        if ((mb_strlen($id) > 100)) {
-            throw new \InvalidArgumentException('invalid length for $id when calling DataSource., must be smaller than or equal to 100.');
-        }
-
-        $this->container['id'] = $id;
-
-        return $this;
-    }
-
-    /**
-     * Gets name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->container['name'];
-    }
-
-    /**
-     * Sets name
-     *
-     * @param string $name name
-     *
-     * @return self
-     */
-    public function setName($name)
-    {
-        $this->container['name'] = $name;
+        $this->container['has_permission'] = $has_permission;
 
         return $this;
     }

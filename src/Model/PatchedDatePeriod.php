@@ -67,12 +67,12 @@ class PatchedDatePeriod implements ModelInterface, ArrayAccess, \JsonSerializabl
         'description' => 'string',
         'start_date' => '\DateTime',
         'end_date' => '\DateTime',
-        'resource_state' => '\Hauki\Model\ResourceStateEnum',
+        'resource_state' => 'ResourceStateEnum',
         'override' => 'bool',
-        'origins' => '\Hauki\Model\PatchedPeriodOrigin[]',
+        'origins' => '\Hauki\Model\PeriodOrigin[]',
         'created' => '\DateTime',
         'modified' => '\DateTime',
-        'time_span_groups' => '\Hauki\Model\PatchedTimeSpanGroup[]'
+        'time_span_groups' => '\Hauki\Model\TimeSpanGroup[]'
     ];
 
     /**
@@ -431,7 +431,7 @@ class PatchedDatePeriod implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Gets resource_state
      *
-     * @return \Hauki\Model\ResourceStateEnum|null
+     * @return ResourceStateEnum|null
      */
     public function getResourceState()
     {
@@ -441,7 +441,7 @@ class PatchedDatePeriod implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets resource_state
      *
-     * @param \Hauki\Model\ResourceStateEnum|null $resource_state resource_state
+     * @param ResourceStateEnum|null $resource_state resource_state
      *
      * @return self
      */
@@ -479,7 +479,7 @@ class PatchedDatePeriod implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Gets origins
      *
-     * @return \Hauki\Model\PatchedPeriodOrigin[]|null
+     * @return \Hauki\Model\PeriodOrigin[]|null
      */
     public function getOrigins()
     {
@@ -489,7 +489,7 @@ class PatchedDatePeriod implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets origins
      *
-     * @param \Hauki\Model\PatchedPeriodOrigin[]|null $origins origins
+     * @param \Hauki\Model\PeriodOrigin[]|null $origins origins
      *
      * @return self
      */
@@ -551,7 +551,7 @@ class PatchedDatePeriod implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Gets time_span_groups
      *
-     * @return \Hauki\Model\PatchedTimeSpanGroup[]|null
+     * @return \Hauki\Model\TimeSpanGroup[]|null
      */
     public function getTimeSpanGroups()
     {
@@ -561,7 +561,7 @@ class PatchedDatePeriod implements ModelInterface, ArrayAccess, \JsonSerializabl
     /**
      * Sets time_span_groups
      *
-     * @param \Hauki\Model\PatchedTimeSpanGroup[]|null $time_span_groups time_span_groups
+     * @param \Hauki\Model\TimeSpanGroup[]|null $time_span_groups time_span_groups
      *
      * @return self
      */

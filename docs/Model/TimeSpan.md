@@ -12,8 +12,8 @@ Name | Type | Description | Notes
 **end_time** | **string** |  | [optional]
 **end_time_on_next_day** | **bool** |  | [optional]
 **full_day** | **bool** |  | [optional]
-**weekdays** | **int[]** |  | [optional]
-**resource_state** | [**\Hauki\Model\ResourceStateEnum**](ResourceStateEnum.md) |  | [optional]
+**weekdays** | [**WeekdaysEnum[]**](WeekdaysEnum.md) |  | [optional]
+**resource_state** | [**ResourceStateEnum**](ResourceStateEnum.md) |  | [optional]
 **created** | [**\DateTime**](\DateTime.md) |  | [readonly]
 **modified** | [**\DateTime**](\DateTime.md) |  | [readonly]
 

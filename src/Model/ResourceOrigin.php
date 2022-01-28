@@ -36,6 +36,7 @@ use \Hauki\ObjectSerializer;
  * ResourceOrigin Class Doc Comment
  *
  * @category Class
+ * @description Adds nested create feature
  * @package  Hauki
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
