@@ -1,5 +1,5 @@
 {
-    "name": "City-of-Helsinki/php-hauki-client",
+    "name": "city-of-helsinki/php-hauki-client",
     "description": "API for the City of Helsinki opening hours database  # Introduction  To do.  # Authentication methods  <SecurityDefinitions />",
     "keywords": [
         "openapitools",

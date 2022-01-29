@@ -10,7 +10,7 @@ Method | HTTP request | Description
 ## `openapiRetrieve()`
 
 ```php
-openapiRetrieve($format, $lang): map[string,mixed]
+openapiRetrieve($format, $lang): array<string,mixed>
 ```
 
 
@@ -66,7 +66,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**map[string,mixed]**
+**array<string,mixed>**
 
 ### Authorization
 

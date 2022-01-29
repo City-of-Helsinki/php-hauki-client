@@ -28,11 +28,11 @@ To install the bindings via [Composer](https://getcomposer.org/), add the follow
   "repositories": [
     {
       "type": "vcs",
-      "url": "https://github.com/City-of-Helsinki/php-hauki-client.git"
+      "url": "https://github.com/city-of-helsinki/php-hauki-client.git"
     }
   ],
   "require": {
-    "City-of-Helsinki/php-hauki-client": "*@dev"
+    "city-of-helsinki/php-hauki-client": "*@dev"
   }
 }
 ```
