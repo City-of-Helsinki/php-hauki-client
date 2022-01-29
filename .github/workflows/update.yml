@@ -2,7 +2,7 @@ name: Update OAS definitions
 on:
   workflow_dispatch:
   schedule:
-    - cron:  '0 2 * * *'
+    - cron:  '0 0 * * 0'
 jobs:
   update-definitions:
     runs-on: ubuntu-latest
