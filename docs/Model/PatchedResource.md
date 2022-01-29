@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 **last_modified_by** | [**User**](User.md) |  | [optional] [readonly]
 **created** | [**\DateTime**](\DateTime.md) |  | [optional] [readonly]
 **modified** | [**\DateTime**](\DateTime.md) |  | [optional] [readonly]
-**extra_data** | **map[string,mixed]** |  | [optional]
+**extra_data** | **array<string,mixed>** |  | [optional]
 **is_public** | **bool** |  | [optional]
 **timezone** | **string** |  | [optional]
 

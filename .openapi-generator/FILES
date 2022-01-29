@@ -81,7 +81,3 @@ src/Model/TimeSpanGroup.php
 src/Model/User.php
 src/Model/WeekdaysEnum.php
 src/ObjectSerializer.php
-test/Model/AuthRequiredTestTest.php
-test/Model/IsOpenNowTest.php
-test/Model/PermissionCheckTest.php
-test/Model/WeekdaysEnumTest.php
