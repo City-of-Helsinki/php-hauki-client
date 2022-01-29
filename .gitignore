@@ -1,4 +1,4 @@
-hauki.json
+openapi-spec
 .travis.yml
 git_push.sh
 phpunit.xml.dist

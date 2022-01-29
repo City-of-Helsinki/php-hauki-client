@@ -1,0 +1,4 @@
+invokerPackage: "Hauki"
+packagePath: "php-hauki-client"
+packageName: "php-hauki-client"
+srcBasePath: "src"
