@@ -9,7 +9,7 @@ openapi-spec:
 	curl $(OPENAPI_URL) > openapi-spec
 
 build-client: openapi-spec
-	docker container run -v ${PWD}:/app openapitools/openapi-generator-cli:$(OPENAPI_VERSION) \
+	docker container run --rm -v ${PWD}:/app openapitools/openapi-generator-cli:$(OPENAPI_VERSION) \
 		generate \
 		$(OPENAPI_GENERATE_ARGS) \
 		--config /app/config.yaml \
